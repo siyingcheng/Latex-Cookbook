@@ -107,10 +107,10 @@ LaTeX的用户群体依旧十分庞大，这主要得益于LaTeX强大的文档�
             文章 (article)、报告 (report)、幻灯片 (beamer)等，在.tex文件中申明文档类型后，
             我们就可以开始文档创作了。
       \item 宏包 (package)。它是LaTeX中的重要辅助工具，也可以把它理解为一般意义上的工具
-            包。在使用时，调用宏包的基本命令为\emph{\textbackslash usepackage{}}，举例来说，包含颜色命令的
-            宏包为\emph{color}，其调用语句为\emph{\textbackslash usepackage{color}}。随着LaTeX的发展，越来
+            包。在使用时，调用宏包的基本命令为\emph{\textbackslash usepackage\{\}}，举例来说，包含颜色命令的
+            宏包为\emph{color}，其调用语句为\emph{\textbackslash usepackage\{color\}}。随着LaTeX的发展，越来
             越多的宏包被开发出来，这些宏包能满足特定的需求（如制表、插图、绘图），同时也能让
-            LaTeX代码变得更加简洁，我们只需要用简单的\emph{\textbackslash usepackage{}}命令就能调用
+            LaTeX代码变得更加简洁，我们只需要用简单的\emph{\textbackslash usepackage\{\}}命令就能调用
             所我们需要用到的宏包。
       \item 模板 (template)。LaTeX的发展催生了很多视觉和审美效果极好的模板，包括论文模板、
             幻灯片模板、报告模板甚至著作模板，这些模板在一定程度上能减少创作者在文档排版上的时间
@@ -331,8 +331,8 @@ LaTeX模板开源项目：
             \begin{itemize}
                   \item \emph{BayesNet}：用于绘制贝叶斯网络、图模型和因素图形的TikZ库。开源网址
                         为https://github.com/jluttine/tikz-bayesnet。一般而言，使用BayesNet绘制特定图
-                        形时，需要使用以下两行命令调用该库：\emph{\textbackslash usepackage{tikz}}和
-                        \emph{\textbackslash usetikzlibrary{bayesnet}}
+                        形时，需要使用以下两行命令调用该库：\emph{\textbackslash usepackage\{tikz\}}和
+                        \emph{\textbackslash usetikzlibrary\{bayesnet\}}
                   \item \emph{matlab2tikz}：将由Matlab代码绘制的图形转换成PGFPlots图形。开源网
                         址为https://github.com/matlab2tikz/matlab2tikz。
                   \item \emph{tikzplotlib}：将由Python绘图工具matplotlib绘制的图形转换成PGFPlots
@@ -399,9 +399,9 @@ LaTeX最初只提供英文的编译环境，随着其在文档编辑领域的优
 在开源网站Overleaf中调用并实现中文文档制作。
 
 \subsection{使用CJKutf8宏包}
-\emph{CJKutf8}宏包提供了两种中文简体字体制作中文文档：使用\emph{\textbackslash begin{CJK}{UTF8}{gbsn}}
-和\emph{\textbackslash end{CJK}}环境将以宋体（gbsn）制作文档，而使用\emph{\textbackslash begin{CJK}{UTF8}{gkai}}
-和\emph{\textbackslash end{CJK}}环境则以楷体（gkai）制作文档内容。在默认的pdfLaTeX
+\emph{CJKutf8}宏包提供了两种中文简体字体制作中文文档：使用\emph{\textbackslash begin\{CJK\}\{UTF8\}\{gbsn\}}
+和\emph{\textbackslash end\{CJK\}}环境将以宋体（gbsn）制作文档，而使用\emph{\textbackslash begin\{CJK\}\{UTF8\}\{gkai\}}
+和\emph{\textbackslash end\{CJK\}}环境则以楷体（gkai）制作文档内容。在默认的pdfLaTeX
 编译环境中即可得到文档编译结果。
 
 \emph{【例】}使用\emph{CJKutf8}红包制作中文文档：
