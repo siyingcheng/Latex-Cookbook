@@ -226,3 +226,96 @@ book、report两个文档类中有定义，article类型中设置章节可以通
 \textbackslash paragraph\{name\}和\textbackslash subparagraph\{name\}插入带标题的
 段落和亚段落。
 
+\subsubsection{生成目录}
+在LaTeX中，我们可以通过一行简单的命令便可以生成文档的目录，即\textbackslash tableofcontents。
+命令放在哪里，就会在哪里自动创建一个目录。默认情况下，该命令会根据用户定义的篇章节标题生
+成文档目录。目录中包含\textbackslash subsubsection及其更高层次的结构标题，而段落和子段
+信息则不会出现在文档目录中。注意如果有带\emph{*}号的章节命令，则该章节标题也不会出现在
+目录中。如果想让文档正文内容与目录不在同一页，可在\textbackslash tableofcontents命令
+后使用\textbackslash newpage命令或者\textbackslash clearpage命令。
+
+类似对章节编号深度的设置，我们通过调用计数器命令\textbackslash mintinline\{tex\}\{\textbackslash setcounter\}
+也可以指定目录层次深度。例如：
+\begin{itemize}
+    \item \textbackslash setcounter\{tocdepth\}\{0\} 目录层次仅包括part
+    \item \textbackslash setcounter\{tocdepth\}\{1\} 目录层次深入到section
+    \item \textbackslash setcounter\{tocdepth\}\{2\} 目录层次深入到subsection
+    \item \textbackslash setcounter\{tocdepth\}\{3\} 目录层次深入到subsubsection，默认值
+\end{itemize}
+
+除此之外，我们还可以在章节前面添加\textbackslash addtocontents\{toc\}\{\textbackslash setcounter\{tocdepth\}\{\}\}
+命令对每个章节设置不同深度的目录。另外还有一些其他的目录格式调整命令，如果我们想让创建的
+目录在文档中独占一页，只需要在目录生成命令前后添加\textbackslash newpage；如果我们需要
+让目录页面不带有全文格式，只需要在生成目录命令后面加上\textbackslash thispagestyle\{empty\}
+命令；如果我们想设置目录页之后设置页码为1，则需要在生成目录命令后面加上\textbackslash setcounter\{page\}\{1\}
+命令。
+
+如果我们想要创建图目录或表目录，分别使用\textbackslash listoffigures、\textbackslash listoftables
+命令即可，与创建章节目录的过程类似，这两个命令会根据文档中图表的标题产生图表目录，但不同
+之处在于，图目录或表目录中所有标题均属于同一层次。
+
+\emph{【例】}基于当前已掌握的知识的一个简单的article:
+\lstinputlisting[language=TeX]{code/demo_1.tex}
+
+\section{一些基本命令}
+当我们运用LateX进行文档编辑时，需要用到一些基本命令。
+
+\subsection{全局格式设置}
+在前面，我们介绍了一些全局设置的命令在申明文档类型时可以进行的一些全局参数设置，使用方法
+为在\textbackslash documentclass[可省参数]\{article\}的中括号中根据需要进行参数设置，
+然而有些全局设置需要用到一些其他方法进行调整。例如，纸张方向、页边距等需要调用宏包进行参
+数调整。同样地，我们以article类型文档进行举例说明。
+
+\subsubsection{纸张方向}
+article类型文档的纸张方向默认为\emph{portrait}（纵向），也可以设置成\emph{landscape}（横向）。
+在文档中可以调用\emph{lscape}宏包中的\textbackslash begin\{landscape\} \textbackslash end\{landscape\}
+环境将默认的纵向文档调整为横向。
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black,
+        title=How to change certain pages into landscape/portrait mode]
+    https://tex.stackexchange.com/q/337/227605
+\end{tcolorbox}
+
+\subsubsection{页边距}
+article类型文档的页边距可以通过调用\emph{geometry}宏包进行调整
+\begin{lstlisting}[language=TeX]
+    \usepackage{geometry} % 使用页面设置宏包
+    \geometry{left=3.0cm,right=3.0cm,top=2.5cm,bottom=2.5cm} % 设置页边距
+\end{lstlisting}
+
+\subsubsection{章节标题的字体格式}
+article类型文档的章节标题的字体格式可以通过调用\emph{sectsty}宏包进行调整。
+
+一些设置例举：
+\begin{lstlisting}
+    \usepackage{sectsty}
+    \sectionfont{\fontfamily{phv}\fontseries{b}\fontsize{11pt}{20pt}\selectfont} % 一级标题字体格式设置
+    \subsectionfont{\fontfamily{phv}\fontseries{b}\fontsize{11pt}{20pt}\selectfont} % 二级标题字体格式设置
+    \subsubsectionfont{\fontfamily{phv}\fontseries{b}\fontsize{11pt}{20pt}\selectfont} % 三级标题字体格式设置
+\end{lstlisting}
+
+\subsubsection{图、表、公式格式全局设置}
+当我们需要批量设置图、表及公式的格式时，可以通过调用caption宏包进行全局设置。
+例：
+\begin{lstlisting}[language=TeX]
+    \usepackage[labelfont=bf,labelsep=period,font={bf,sf,normalsize}]{caption}
+\end{lstlisting}
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black,
+        title=Changing/Defining Fonts for an Entire Document]
+    https://tex.stackexchange.com/q/337/227605
+\end{tcolorbox}
+
+\subsubsection{自定义命令全局设置}
+有时，我们需要也可以使用一些自定义命令来更改全局设置。例如在更改整个文档的字体格式时，
+我们也可以使用：
+\begin{lstlisting}[language=TeX]
+    \renewcommand{\sfdefault}{\fontencoding{T1}\fontfamily{phv}\selectfont}
+    \renewcommand{\familydefault}{\sfdefault}
+\end{lstlisting}
+等命令。
+
+在更改目录标题时,我们可以使用：
+\begin{lstlisting}[language=TeX]
+    \renewcommand{\contentsname}{new name of Contents}
+\end{lstlisting}
