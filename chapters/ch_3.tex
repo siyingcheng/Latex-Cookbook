@@ -22,13 +22,13 @@
 
 \subsection{创建标题部分}
 \begin{itemize}
-    \item 使用\verb|\|title\{\}命令设置文档标题，对于较长的文档标题，
-          可以使用\verb|\\|对标题内容进行分行。
-    \item 使用\verb|\|author\{\}命令设置作者，如果有多个作者，作者之间可以使
-          用\verb|\|and进行分隔。
-    \item 使用\verb|\|date\{\}命令设置日期信息，在实际使用时，有时需要省略日期
-          信息，那么在\{\}中不写任何内容即可。如果想要使用默认值（当前日期），则应使用\verb|\|date命令。
-    \item 使用\verb|\|maketitle命令完成标题部分的创建。
+      \item 使用\verb|\|title\{\}命令设置文档标题，对于较长的文档标题，
+            可以使用\verb|\\|对标题内容进行分行。
+      \item 使用\verb|\|author\{\}命令设置作者，如果有多个作者，作者之间可以使
+            用\verb|\|and进行分隔。
+      \item 使用\verb|\|date\{\}命令设置日期信息，在实际使用时，有时需要省略日期
+            信息，那么在\{\}中不写任何内容即可。如果想要使用默认值（当前日期），则应使用\verb|\|date命令。
+      \item 使用\verb|\|maketitle命令完成标题部分的创建。
 \end{itemize}
 
 仅仅执行上述三行语句无法在文档编译时生成标题部分，还必须在之后加上\verb|\|maketitle
@@ -51,21 +51,91 @@ book、report类型文档中，则可以调用上述所有章节命令。
 要调整章节标题的格式。
 
 \begin{itemize}
-    \item 自动编号与取消自动编号：在LaTeX中使用上述命令创建章节时，默认会对各章节进行自
-          动编号。如果用户想要对某章节取消自动编号，只需要在章节命令后加上星号即可，如\verb|\|section*\{\}
-          命令。
-    \item 设置章节自动编号深度：用户也可以通过在导言区使用\verb|\|setcounter\{secnumdepth\}\{\}
-          计数器命令设置章节自动编号深度，从而达到批量取消自动编号的效果。在\{\}中填写编号深度
-          值，编号深度值从0开始设置，表示章节自动编号深入层次：
-          \begin{itemize}
-              \item \verb|\|setcounter\{secnumdepth\}\{0\}表示自动编号章节层次仅包括\verb|\|part和\verb|\|chapter；
-              \item \verb|\|setcounter\{secnumdepth\}\{1\}表示自动编号层次深入到\verb|\|section级；
-              \item \verb|\|setcounter\{secnumdepth\}\{2\}表示自动编号层次深入到\verb|\|subsection级；
-              \item \verb|\|setcounter\{secnumdepth\}\{3\}表示自动编号层次深入到\verb|\|subsubsection级，默认值。
-          \end{itemize}
-    \item 改变字体样式：对于改变字体样式，我们需要使用\emph{titlesec}宏包，使用该宏包中
-          的命令\verb|\|titleformat*\{\}\{\}来改变字体样式。
+      \item 自动编号与取消自动编号：在LaTeX中使用上述命令创建章节时，默认会对各章节进行自
+            动编号。如果用户想要对某章节取消自动编号，只需要在章节命令后加上星号即可，如\verb|\|section*\{\}
+            命令。
+      \item 设置章节自动编号深度：用户也可以通过在导言区使用\verb|\|setcounter\{secnumdepth\}\{\}
+            计数器命令设置章节自动编号深度，从而达到批量取消自动编号的效果。在\{\}中填写编号深度
+            值，编号深度值从0开始设置，表示章节自动编号深入层次：
+            \begin{itemize}
+                  \item \verb|\|setcounter\{secnumdepth\}\{0\}表示自动编号章节层次仅包括\verb|\|part和\verb|\|chapter；
+                  \item \verb|\|setcounter\{secnumdepth\}\{1\}表示自动编号层次深入到\verb|\|section级；
+                  \item \verb|\|setcounter\{secnumdepth\}\{2\}表示自动编号层次深入到\verb|\|subsection级；
+                  \item \verb|\|setcounter\{secnumdepth\}\{3\}表示自动编号层次深入到\verb|\|subsubsection级，默认值。
+            \end{itemize}
+      \item 改变字体样式：对于改变字体样式，我们需要使用\emph{titlesec}宏包，使用该宏包中
+            的命令\verb|\|titleformat*\{\}\{\}来改变字体样式。
 \end{itemize}
 
 当然，有时我们也会遇到一些出版商要求我们将标题居中显示，在LaTeX的article文档类型中，我们
 可以调用\emph{sectsty}宏包，并用到\verb|\|sectionfont\{\verb|\|centering\}使标题居中。
+
+\section{生成目录}
+章节目录一般在摘要之后创建，使用\verb|\|tableofcontents命令即可。命令放在哪里，就会在
+哪里自动创建一个章节目录。默认情况下，该命令会根据用户定义的篇章节标题生成文章目录，目录
+中将包含\verb|\|subsubsection及其更高层次的结构标题。但对于带星号的章节命令，其章节标
+题不会出现在目录中。
+
+根据需要，用户可以对目录格式进行各项调整。
+
+\subsection{调整章节层次深度}
+在前一节中我们介绍了使用\verb|\|setcounter\{secnumdepth\}\{\}计数器命令调整章节自动编
+号深度，类似地，我们可以通过在导言区使用\verb|\|setcounter\{tocdepth\}\{\}命令指定目录
+中的章节层次深度。
+\begin{itemize}
+      \item \verb|\|setcounter\{tocdepth\}\{0\}，目录层次仅包括part和chapter;
+      \item \verb|\|setcounter\{tocdepth\}\{1\}，设置目录层次深入到section级；
+      \item \verb|\|setcounter\{tocdepth\}\{2\}，设置目录层次深入到subsection级；
+      \item \verb|\|setcounter\{tocdepth\}\{3\}，设置目录层次深入到subsubsection级，默认值；
+\end{itemize}
+
+上面的语句可以为所有章节指定了相同的目录层次深度。此外，我们也可以为每个章节设置不同的目录
+层次，具体是通过在每个章节创建命令前，使用\verb|\|addtocontents\{toc\}{\verb|\|setcounter\{tocdepth\}\{\}\}
+命令为该章节指定目录层次深度。
+
+\subsection{给目录设置别名}
+对于章节标题特别长的情况，直接在目录中显示完整标题显然可视化效果不佳，因此需要为长章节标题
+设置一个比较短的“目录别名”。通过这种设置，在正文中可以显示完整标题，而在目录中将显示“短标题”。
+为此，只需要在章节创建命令中添加目录别名选项即可。例：\verb|\|section[FS]\{First Section\}
+
+\subsection{给目录设置链接}
+如果想要为目录中的章节引用添加链接，使得点击链接后就能跳转到相应章节所在页面，那么只需要
+在导言区调用\emph{hyperref}宏包。如果设置colorlinks=true选项，此时文档中章节引用及其
+它交叉引用均会被自动添加链接（添加了链接的引用将显示为红色）。
+
+\section{编辑段落}
+\subsection{段落首行缩进}
+许多出版社要求文章段落必须首行缩进，若想调整段落首行缩进的距离，可以使用\verb|\|setlength\{\verb|\|parindent\}\{长度\}
+命令，在\{长度\}处填写需要设置的距离即可。例：\verb|\|setlength\{\verb|\|parindent\}\{2em\}
+
+当然，如果不想让段落自动首行缩进, 在段落前使用命令\verb|\|noindent即可。
+
+需要注意的是，在段落设置在章节后面时，每一节后的第一段默认是不缩进的，为了使第一段向其他
+段一样缩进，可以在段落前使用\verb|\|hspace*\{\verb|\|parindent\}命令，也可以在源文件的
+前导代码中直接调用宏包\verb|\|usepackage\{indentfirst\}。
+
+\subsection{段落间距调整}
+在使用LaTeX排版时，有时为了使段落与段落之间的区别更加明显，我们可以在段落之间设置一定的
+间距，最简单的方式是使用\verb|\|smallskip、\verb|\|medskip和\verb|\|bigskip等命令。
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black,
+            title=设置段落间距的几种方法]
+      https://latex.org/forum/viewtopic.php?f=44\&t=6934
+      \tcblower
+      https://tex.stackexchange.com/questions/41476/lengths-and-when-to-use-them
+\end{tcolorbox}
+
+\subsection{段落添加文本框}
+有时因为文档没有图全都是文字，版面显得极其单调。如果想让版面有所变化，可以通过给文字加边
+框来实现对段落文本新增边框。在LaTeX中，我们可以使用\verb|\|fbox\{\}命令对文本新增边框。
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black,
+            title=How to put a box around multiple lines?]
+      https://latex.org/forum/viewtopic.php?f=44\&t=4117
+\end{tcolorbox}
+
+\subsection{段落对齐方式调整}
+LaTeX默认的对齐方式是两端对齐，有时在进行文档排版的过程中，我们为了突出某一段落的内容，
+会选择将其居中显示，在LaTeX中，我们可以使用center环境对文本进行居中对齐。另外还有一些出
+版商要求文档是左对齐或者右对齐，这时我们同样可以使用\emph{flushleft}环境和\emph{flushright}
+环境将文档设置为左对齐或右对齐。
