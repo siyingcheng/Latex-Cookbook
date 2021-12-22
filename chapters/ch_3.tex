@@ -136,6 +136,181 @@ book、report类型文档中，则可以调用上述所有章节命令。
 
 \subsection{段落对齐方式调整}
 LaTeX默认的对齐方式是两端对齐，有时在进行文档排版的过程中，我们为了突出某一段落的内容，
-会选择将其居中显示，在LaTeX中，我们可以使用center环境对文本进行居中对齐。另外还有一些出
+会选择将其居中显示，在LaTeX中，我们可以使用\emph{center}环境对文本进行居中对齐。另外还有一些出
 版商要求文档是左对齐或者右对齐，这时我们同样可以使用\emph{flushleft}环境和\emph{flushright}
 环境将文档设置为左对齐或右对齐。
+
+\section{文字编辑}
+文字编辑是制作文档非常重要的一部分，主要关注如何调整字体样式、字体设置、增加下划线、突出
+文字、调整字体大小、调整对齐格式等内容。
+
+\subsection{调整字体样式}
+调整文字的样式有很多对应的命令，这些命令包括\verb|\|textit、\verb|\|textbf、\verb|\|textsc、\verb|\|texttt，
+在使用的过程中，需要用到花括号\{\}。具体而言，\verb|\|textit对应着斜体字，\verb|\|textbf对应着粗体字，
+\verb|\|textsc对应着小型大写字母，\verb|\|texttt对应着打印机字体（即等宽字体）。
+
+除了这几种字体样式，有时候，如果想对文本中的英文字母进行全部大写，可用\verb|\|uppercase和
+\verb|\|MakeUppercase两个命令中的任意一个。
+
+一般而言，当我们需要对段落、句子、关键词等做特殊标记时，往往会用到上述几种字体样式，其中，
+打字机字体主要用于代码的排版，有时候，如果需要添加一个网站，通常也会选用打字机字体对文本进行
+突出，例如\verb|\|texttt\{https://www.overleaf.com\}。
+
+\subsection{调整字体大小}
+字体大小的设置一方面可以在申明文档类型的命令\verb|\|documentclass[]\{\}中指定具体的字体
+大小（如11pt、12pt）来实现，另一方面也可以通过一些简单的命令来调整。
+\begin{lstlisting}[language=TeX]
+      \documentclass[12pt]{article}
+      \begin{document}
+
+      Produce {\tiny tiny word}
+
+      Produce {\scriptsize script size word}
+
+      Produce {\footnotesize footnote size word}
+
+      Produce {\normalsize normal size word}
+
+      Produce {\large large word}
+
+      Produce {\Large Large word}
+
+      Produce {\LARGE LARGE word}
+
+      Produce {\huge huge word}
+
+      Produce {\Huge Huge word}
+
+      \end{document}
+\end{lstlisting}
+
+在这里，这些命令对应的字体依次是从小到大。当然，这些命令也有另外一种使用方法，以
+\verb|\|large、\verb|\|Large、\verb|\|LARGE为例，我们可以使用\verb|\|begin\{\} \verb|\|end\{\}
+语句来实现对字体的加大：
+\begin{lstlisting}[language=TeX]
+      \documentclass[12pt]{article}
+      \begin{document}
+
+      Produce \begin{large}large word\end{large}
+
+      Produce \begin{Large}large word\end{Large}
+
+      Produce \begin{LARGE}large word\end{LARGE}
+
+      \end{document}
+\end{lstlisting}
+
+\subsection{调整字体颜色}
+一般而言，文本默认的颜色是黑色，但有时候，我们可以根据需要改变字体的颜色，这通过LaTeX一些
+拓展的宏包就可以实现，例如\emph{xcolor}。
+
+使用颜色宏包时，我们也可以根据需要自定义颜色，相应的命令为\verb|\|definecolor\{A\}\{B\}\{C\}，其中
+位置A是颜色标签，位置B是制定颜色系统为RGB（英文缩写RGB是红色、绿色和蓝色三种颜色的英文
+单词首字母），位置C是具体的RGB数值。
+\begin{lstlisting}[language=TeX]
+      \documentclass[12pt]{article}
+
+      \usepackage{color}
+      \definecolor{kugreen}{RGB}{50, 93, 61}
+      \definecolor{kugreenlys}{RGB}{132, 158, 139}
+      \definecolor{kugreenlyslys}{RGB}{173, 190, 177}
+      \definecolor{kugreenlyslyslys}{RGB}{214, 223, 216}
+
+      \begin{document}
+
+      This is a simple example for using \LaTeX.
+
+      {\color{kugreen}This is a simple example for using \LaTeX.}
+
+      {\color{kugreenlys}This is a simple example for using \LaTeX.}
+
+      {\color{kugreenlyslys}This is a simple example for using \LaTeX.}
+
+      {\color{kugreenlyslyslys}This is a simple example for using \LaTeX.}
+
+      \end{document}
+\end{lstlisting}
+
+\subsection{字体设置}
+不管是英文还是中文，我们都会越到各种各样的字体，因此，使用LaTeX编译出想要的字体对于整个
+文档也非常重要。对于英文文档的编译，一般会用宏包fontspec设置具体的字体，调用格式为\verb|\|usepackage\{fontspec\}，
+需要说明的是，这个宏包只能设置英文的字体。例如：
+\begin{lstlisting}[language=TeX]
+      \setmainfont{Times New Roman}
+      \setsansfont{DejaVu Sans}
+      \setmonofont{Latin Modern Mono}
+      \setsansfont{[foo.ttf]}   
+\end{lstlisting}
+
+如果文档输入的是中文，首先需要申明文档类型为ctex中的ctexart、ctexrep之类的。
+
+在LaTeX中，编译文档一般默认的英文字体为Computer Modern，如果要将其调整为其他特定类型的
+字体，可以在前导代码中使用各种字体对应的工具包。
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black,
+            title=更多字体设置参考]
+      https://www.overleaf.com/learn/latex/Font\_typefaces
+\end{tcolorbox}
+
+\subsection{下划线与删除线}
+有时候，为了突出特定的文本，我们也会使用到各种下划线。最常用的下划线命令是\verb|\|underline，
+然而，这个命令存在一个缺陷，即当文本过长，超过页面宽度时，下划线不会自动跳到下一行，因此，
+我们需要用到一个叫\emph{ulem}的宏包，使用这个宏包中的命令\verb|\|uline可以增加单下划线，
+使用\verb|\|uuline可以增加双下划线，而使用\verb|\|uwave则可以增加波浪线。
+
+\begin{lstlisting}[language=TeX]
+      \documentclass[12pt]{article}
+      \usepackage{ulem}
+      \begin{document}
+
+      Generate \underline{underlined} text. \\     % 生成带下划线的文本（使用\underline命令）
+
+      Generate \uline{underlined} text. \\         % 生成单下划线的文本（使用\uline命令）
+
+      Generate \uuline{double underlined} text. \\ % 生成单下划线的文本
+
+      Generate \uwave{wavy underlined} text. \\    % 生成波浪线的文本
+
+      \end{document}
+\end{lstlisting}
+
+删除线是文字中间划出的线段，常见于文档的审阅。在LaTeX中，我们可以使用宏包\emph{soul}中的\verb|\|st
+命令生成删除线。
+
+下划线在LaTeX环境中属于特殊字符，如果需要在文本中使用下划线，则需要家上反斜线进行转义，例：
+\begin{lstlisting}[language=TeX]
+      \documentclass[12pt]{article}
+      \begin{document}
+
+      This\_is\_text\_with\_underscores.
+
+      \end{document}
+\end{lstlisting}
+
+\subsection{特殊字符}
+在LaTeX中，有很多特殊字符的编译需要遵循一定的规则，例如:
+\begin{itemize}
+      \item 反斜杠 (backslash) 符号是LaTeX中定义和使用各类命令的基本符号，如果要在文档
+            中编译出反斜杠，可使用\verb|\|textbackslash；
+      \item 百分号通常用于注释代码，如果要在文档中编译出百分号，可使用\verb|\|\%；
+      \item 美元符号通常用于书写公式，如果要在文档中编译出美元符号，可使用\verb|\|\$。
+\end{itemize}
+
+带圆圈数字可用于各类编号，我们可以根据需要插入这种特殊符号。在LaTeX中，比较常用的一种生
+成带圆圈数字的方法是使用宏包\emph{pifont}，在前导代码中申明使用宏包，即\verb|\|usepackage\{pifont\}，
+根据工宏包所提供的命令\verb|\|ding\{\}可以生成从1到10的带圆圈数字，且圆圈样式也各异。
+
+\emph{【例】}使用pifont宏包中的命令生成从1到10的带圆圈数字：
+\begin{lstlisting}[language=TeX]
+      \documentclass[12pt]{article}
+      \usepackage{pifont}
+      \begin{document}
+
+      How to write a number in a circle? \\
+      Type 1: \ding{172}-\ding{173}-\ding{174}-\ding{175}-\ding{176}-\ding{177}-\ding{178}-\ding{179}-\ding{180}-\ding{181} \\     % 样式1是从172开始
+      Type 2: \ding{182}-\ding{183}-\ding{184}-\ding{185}-\ding{186}-\ding{187}-\ding{188}-\ding{189}-\ding{190}-\ding{191} \\     % 样式2是从182开始
+      Type 3: \ding{192}-\ding{193}-\ding{194}-\ding{195}-\ding{196}-\ding{197}-\ding{198}-\ding{199}-\ding{200}-\ding{201} \\     % 样式3是从192开始
+      Type 4: \ding{202}-\ding{203}-\ding{204}-\ding{205}-\ding{206}-\ding{207}-\ding{208}-\ding{209}-\ding{210}-\ding{211} \\     % 样式4是从202开始
+
+      \end{document}
+\end{lstlisting}
