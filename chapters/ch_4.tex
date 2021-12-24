@@ -1,0 +1,171 @@
+\chapter{公式编辑}
+在一些文档特别是科技文档写作的过程中，难免涉及复杂数学公式的编辑工作。Macrosoft office
+等办公软件繁琐低效的数学公式编辑问题长期困扰着广大科研工作者。为什么这些办公软件数学公式
+编辑效率低下，主要原因是数学公式本身就是复杂多变的，而这些软件采用交互式的操作会让用户使
+用起来效率变低。而LaTeX具有简洁又强大的数学公式编辑功能，可以通过调用特定的工具包、使用
+一些简单的代码就能生成优雅美观的数学公式，这也是LaTeX深受广大科研工作者喜爱的重要原因之一。
+
+本章将介绍在Latex中进行编写公式编辑的方法和技巧。为了方便读者查用和学习，我们将公式编辑
+内容主要分为以下部分：公式编辑的基本介绍、常用的数学符号、希腊字母、微积分中的常用公式、
+线性代数中的常用公式、概率论和数理统计、优化理论中的公式。这样分类的目的就是便于读者根据
+需要，可以很快查找出合适的公式编辑方法。公式编辑的基本介绍主要是关于数学公式换的设定和基
+本格式的调整；而常用的数学符号包括运算符号、标记符号、各类括号、空心符号和特殊函数；希腊
+字母主要用于一些数学的变量表示。
+
+而微积分部分主要包括极限、导数和积分；线性代数部分包括矩阵、符合和范数；概率论和数理统计
+部分包括概率论基础和概率分布；最后是优化理论部分。以上这些是科研工作者在数学公式编辑时高
+频率遇到的公式编辑内容，因此我们将其分类进行介绍，这样可以方便读者提高编辑的效率和质量。
+
+\section{基本介绍}
+由于LaTeX编辑的数学公式颜值非常高，很多理工科研究领域的顶级期刊甚至明确要求投稿论文必须
+按照给定的LaTeX模板进行论文排版，这样做一方面能保证论文整体排版的美观程度，另一方面也能
+让生成出来的数学公式更加规范。一般而言，使用LaTeX编辑公式的一系列规则与数学公式的编写原
+则是一致的，例如，在LaTeX中，我们可以用\$\verb|\|frac\{\verb|\|partial f\}\{\verb|\|partial x\}\$
+生成偏导数$\frac{\partial f}{\partial x}$。
+
+\subsection{数学公式环境}
+\subsubsection{美元符号}
+在LaTeX中生成数学公式也有一些基本规则，插入公式的方式有很多种，最基本的一种方式是使用美元
+符号，这种方式不仅在LaTeX适用，在Markdown中也是适用的，具体插入数学公式的方法是：
+\begin{itemize}
+    \item 如果我们想插入行内公式，可以直接在两个美元符号中间编辑需要的公式。
+    \item 如果想用美元符号插入行间公式，我们需要输入四个美元符号，与此同时，在四个美元符
+          号中间编辑需要的公式。需要注意的是，这里生成的数学公式会自动居中对齐。
+\end{itemize}
+
+需要注意的是，LaTeX源文件中的美元符号一般都默认为申明数学公式环境，如果想要在文档中编译出
+美元符号，需要在美元符号前加上一个反斜线，这种做法同样适用于百分号，百分号一般被默认为注释功能。
+
+\subsubsection{equation环境}
+尽管美元符号可以在行间插入公式，但却没办法对公式进行编号。自动生成带有公式编号的行间公式
+需要用到\emph{equation}环境，使用\emph{equation}环境， LaTeX编译时会自动将公式进行居中对齐。
+
+在equation环境中，如果不需要公式编号，只需要在数学公式环境中加上一个星号，例如，
+使用\verb|\|begin\{equation*\} \verb|\|end\{equation*\}就可以移除公式编号。
+
+更进一步，在equation环境中，如果想对公式进行索引，可以使用\verb|\|label和\verb|\|eqref两个命令。
+
+\emph{【例】}在数学公式环境中对数学公式进行索引：
+\begin{lstlisting}[language=TeX]
+    \documentclass[12pt]{article}
+    \begin{document}
+
+    Equation~\eqref{eq1} shows a simple formula.
+
+    \begin{equation}\label{eq1}
+    x+y=2
+    \end{equation}
+
+    \end{document}
+\end{lstlisting}
+
+\subsubsection{align环境}
+在LaTeX中，除了equation数学公式环境，还有其他几种数学公式环境可以使用。我们要介绍的第一种
+是\emph{align}环境，它主要用于数组型的数学表达式，align环境可以将公式进行自动对齐，它也
+能对每一条数学表达式分别进行公式编号。
+
+\emph{【例】}使用align环境编译一个方程组：
+\begin{lstlisting}[language=TeX]
+    \documentclass[12pt]{article}
+    \usepackage{amsmath}
+    \begin{document}
+
+    %% 使用align环境
+    \begin{align}
+    x+y=2 \\
+    2x+y=3
+    \end{align}
+
+    \end{document}
+\end{lstlisting}
+
+在align环境中，如果不需要公式编号，同样只需要在数学公式环境中加上一个星号即可，利用这一
+特性，我们可以使用align环境，定义多列公式。
+
+需要注意的是，如果想对多行公式对齐，并且共用同一个公式编号，可以在equation环境内使用\emph{aligned}
+环境，这里的aligned与align功能类似。
+
+\emph{【例】}在equation内使用aligned编译多列公式：
+\begin{lstlisting}[language=TeX]
+    \documentclass[12pt]{article}
+    \usepackage{amsmath}
+    \begin{document}
+
+    \begin{equation}
+    \begin{aligned}
+    2x+1&=7 & 3y-2&=-5 & -5z+8&=-2 \\
+    2x&=6 &   3y&=-3 &   -5z&=-10 \\
+    x&=3 &    y&=-1 &     z&=2
+    \end{aligned}
+    \end{equation}
+
+    \end{document}
+\end{lstlisting}
+
+当然，我们也能只对align环境中的某一些公式进行编号，而其他公式不作编号。
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black,
+        title=Eqnarray: numbering last line only.]
+    https://latex.org/forum/viewtopic.php?f=46\&t=4543
+\end{tcolorbox}
+
+\emph{【例】}使用align编译一个方程组，并且只对第2个方程进行编号：
+\begin{lstlisting}[language=TeX]
+    \documentclass[12pt]{article}
+    \usepackage{amsmath}
+    \begin{document}
+
+    \begin{equation}
+    \begin{aligned}
+    2x+1&=7 & 3y-2&=-5 & -5z+8&=-2 \\
+    2x&=6 &   3y&=-3 &   -5z&=-10 \\
+    x&=3 &    y&=-1 &     z&=2
+    \end{aligned}
+    \end{equation}
+
+    \end{document}
+\end{lstlisting}
+
+\subsubsection{gather环境}
+我们要介绍的第二种数学公式环境是\emph{gather}，它既可以将公式进行居中对齐，也能对每一条
+数学表达式分别进行公式编号。同样的，如果想要移除公式编号，只需要在公式环境中加上星号即可。
+
+\emph{【例】}使用gather编译一个方程组：
+\begin{lstlisting}[language=TeX]
+    \documentclass[12pt]{article}
+    \usepackage{amsmath}
+    \begin{document}
+
+    \begin{gather}
+    x+y=2 \\
+    2x+y=3
+    \end{gather}
+
+    \end{document}
+\end{lstlisting}
+
+\subsection{基本格式调整}
+\subsubsection{字符类型}
+在文本编辑中，我们已经介绍了几种常见的字符类型，实际上，对于数学公式而言，书写时也可以设
+置不同的字符类型。以$X,Y,Z,x,y,z$为例，具体而言：
+\begin{itemize}
+    \item 命令\verb|\|boldsymbol\{X,Y,Z,x,y,z\}，编译后的效果为 $\boldsymbol{X,Y,Z,x,y,z}$ ，
+          使用之前需申明\verb|\|usepackage\{amsmath\}；
+    \item 命令\verb|\|mathrm\{X,Y,Z,x,y,z\}，编译后的效果为 $\mathrm{X,Y,Z,x,y,z}$ ；
+    \item 命令\verb|\|mathit\{X,Y,Z,x,y,z\}，编译后的效果为 $\mathit{X,Y,Z,x,y,z}$ ；
+    \item 命令\verb|\|mathbf\{X,Y,Z,x,y,z\}，编译后的效果为 $\mathbf{X,Y,Z,x,y,z}$ ；
+    \item 命令\verb|\|mathsf\{X,Y,Z,x,y,z\}，编译后的效果为 $\mathsf{X,Y,Z,x,y,z}$ ；
+    \item 命令\verb|\|mathtt\{X,Y,Z,x,y,z\}，编译后的效果为 $\mathtt{X,Y,Z,x,y,z}$ ；
+    \item 命令\verb|\|boldmath\{X,Y,Z,x,y,z\}，编译后的效果为 $\boldmath{X,Y,Z,x,y,z}$ ；
+          依赖于特定工具包，使用之前需申明\verb|\|usepackage\{amssymb\}；
+    \item 命令\verb|\|mathcal\{X,Y,Z\}，编译后的效果为 $\mathcal{X,Y,Z}$ ；
+    \item 命令\verb|\|mathbb\{X,Y,Z\}，依赖于特定工具包，使用之前需申明\verb|\|usepackage\{amssymb, amsfonts\}，
+          编译后的效果为 $\mathbb{X,Y,Z}$ ，概率论与数理统计中常见的数学期望符号 $\mathbb{E}$
+          也是用该命令编译的，即\verb|\|mathbb\{E\}；
+    \item 命令\verb|\|mathfrak\{X,Y,Z,x,y,z\}，依赖于特定工具包，使用之前需申明
+          \verb|\|usepackage\{amssymb, amsfonts, eufrak\}，编译后的效果为 $\mathfrak{X,Y,Z,x,y,z}$ 。
+\end{itemize}
+
+除此之外，如果想在公式中插入正常的文本，可以使用\verb|\|text\{\}命令，例如T\_\{\verb|\|text\{start\}\}
+编译后的效果为 $T_{\text{start}}$ 。
+
