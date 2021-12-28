@@ -563,3 +563,79 @@ x,y,z等其他变量。
     $$\Delta x+\Delta y$$
     $$(i,j,k)\in\Omega$$
 \end{lstlisting}
+
+\section{微积分}
+事实上，数学公式的范畴极为广泛，我们所熟知的大学数学课程中，微积分、线性代数、概率论与
+数理统计中数学表达式的符号系统均大不相同。本节将主要介绍如何使用LaTeX对微积分中的数学表
+达式进行书写和编译。
+
+\subsection{极限}
+求极限是整个微积分中的基石，例如$\lim_{x\to 2}x^{2}$ 对应的LaTeX代码为
+\$\texttt{\textbackslash{}lim\_\{x\textbackslash{}to 2\}x\^\{2\}}\$。
+
+\emph{【例】}书写以下求极限的表达式：
+$$\lim_{x\to-\infty}\frac{3x^{2}-2}{3x-2x^{2}}=\lim_{x\to-\infty}\frac{x^{2}\left(3-\frac{2}{x^{2}}\right)}{x^{2}\left(\frac{3}{x}-2\right)}=\lim_{x\to-\infty}\frac{3-\frac{2}{x^{2}}}{\frac{3}{x}-2}=-\frac{3}{2}$$
+\begin{lstlisting}[language=TeX]
+    $$\lim_{x\to-\infty}\frac{3x^{2}-2}{3x-2x^{2}}=\lim_{x\to-\infty}\frac{x^{2}\left(3-\frac{2}{x^{2}}\right)}{x^{2}\left(\frac{3}{x}-2\right)}=\lim_{x\to-\infty}\frac{3-\frac{2}{x^{2}}}{\frac{3}{x}-2}=-\frac{3}{2}$$
+\end{lstlisting}
+
+\emph{【例】}书写极限$\lim_{\Delta t\to0}\frac{s(t+\Delta t)+s(t)}{\Delta t}$ \& $\displaystyle{\lim_{\Delta t\to0}\frac{s(t+\Delta t)+s(t)}{\Delta t}}$：
+\begin{lstlisting}[language=TeX]
+    $\lim_{\Delta t\to0}\frac{s(t+\Delta t)+s(t)}{\Delta t}$ \& $\displaystyle{\lim_{\Delta t\to0}\frac{s(t+\Delta t)+s(t)}{\Delta t}}$
+\end{lstlisting}
+
+\subsection{导数}
+在微积分中，给定函数$𝑓\left(x\right)$后，我们能够将其导数定义为：
+$$f^\prime(a)=\lim_{x\to a}\frac{f(x)-f(a)}{x-a}$$
+
+用LaTeX书写这条公式为：
+\begin{lstlisting}[language=TeX]
+    $$f^\prime(a)=\lim_{x\to a}\frac{f(x)-f(a)}{x-a}$$
+\end{lstlisting}
+
+有时候，为了让分数的形式在直观上不显得过大，可以用：
+$$f^\prime(a)=\lim\limits_{x\to a}\frac{f(x)-f(a)}{x-a}$$
+
+用LaTeX书写这条公式为：
+\begin{lstlisting}[language=TeX]
+    $$f^\prime(a)=\lim\limits_{x\to a}\frac{f(x)-f(a)}{x-a}$$
+\end{lstlisting}
+
+其中，\texttt{\textbackslash{}lim}和\texttt{\textbackslash{}limits}两个命令需要配合使用。
+
+需要注意的是，\texttt{f\^\textbackslash{}prime(x)}中的\texttt{\textbackslash{}prime}
+命令是标准写法。
+
+\emph{【例】}书写导数的定义$f^\prime(x)=\lim_{\Delta x\to 0}\frac{f(x+\Delta x)-f(x)}{\Delta x}$：
+\begin{lstlisting}[language=TeX]
+    $$f^\prime(x)=\lim_{\Delta x\to 0}\frac{f(x+\Delta x)-f(x)}{\Delta x}$$
+\end{lstlisting}
+
+\emph{【例】}书写函数$f\left(x\right)=3x^{2}+2x^{3}+1$的导数$f^\prime(x)=15x^{4}+6x^{2}$：
+\begin{lstlisting}[language=TeX]
+    $$f^\prime(x)=15x^{4}+6x^{2}$$
+\end{lstlisting}
+
+微分在微积分中举足轻重，\texttt{\textbackslash{}mathrm\{d\}}为微分符号$\mathrm{d}$的
+命令，一般而言，微分的标准写法为$\frac{\mathrm{d}^{n}}{\mathrm{d}_{x^{n}}}f\left(x\right)$。
+
+\emph{【例】}书写微分$\frac{\mathrm{d}}{\mathrm{d}x}f(x)=15x^{4}+6x^{2}$和$\frac{\mathrm{d}^{2}}{\mathrm{d}^{2}x}f(x)=60x^{3}+12x$：
+\begin{lstlisting}[language=TeX]
+    $$\frac{\mathrm{d}}{\mathrm{d}x}f(x)=15x^{4}+6x^{2}$$
+    $$\frac{\mathrm{d}^{2}}{\mathrm{d}^{2}x}f(x)=60x^{3}+12x$$
+\end{lstlisting}
+
+在微积分中，偏微分符号$\partial$的命令为\texttt{\textbackslash{}partial}，对于任意函
+数$f\left(x,y\right)$，偏微分的标准写法为$\frac{\partial^{n}}{\partial_{x^{n}}}f\left(x,y\right)$
+或$\frac{\partial^{n}}{\partial_{y^{n}}}f\left(x,y\right)$。
+
+\emph{【例】}书写函数$f\left(x,y\right)=3x^5y^2+2x^3y+1$的偏微分$\frac{\partial}{\partial x}f(x,y)=15x^{4}y^{2}+6x^{2}y$和$\frac{\partial}{\partial y}f(x,y)=6x^{5}y+2x^{3}$：
+\begin{lstlisting}[language=TeX]
+    $$\frac{\partial}{\partial x}f(x,y)=15x^{4}y^{2}+6x^{2}y$$
+    $$\frac{\partial}{\partial y}f(x,y)=6x^{5}y+2x^{3}$$
+\end{lstlisting}
+
+\emph{【例】}书写偏导数$z=\mu\,\frac{\partial y}{\partial x}\bigg|_{x=0}$：
+\begin{lstlisting}[language=TeX]
+    $$z=\mu\,\frac{\partial y}{\partial x}\bigg|_{x=0}$$
+\end{lstlisting}
