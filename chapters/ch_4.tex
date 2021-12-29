@@ -639,3 +639,61 @@ $$f^\prime(a)=\lim\limits_{x\to a}\frac{f(x)-f(a)}{x-a}$$
 \begin{lstlisting}[language=TeX]
     $$z=\mu\,\frac{\partial y}{\partial x}\bigg|_{x=0}$$
 \end{lstlisting}
+
+\subsection{积分}
+积分的标准写法为$\int_{a}^{b}f(x)\,\mathrm{d}x$，代码为\texttt{\textbackslash{}int\_\{a\}\^\{b\}f(x)\textbackslash{},\textbackslash{}mathrm\{d\}x}，
+其中，\texttt{\textbackslash{}int}表示积分，是英文单词integral的缩写形式，使用\texttt{\textbackslash{},}
+的目的是引入一个空格。
+
+\emph{【例】}书写积分$\int\frac{\mathrm{d}x}{\sqrt{a^{2}+x^{2}}}=\frac{1}{a}\arcsin\left(\frac{x}{a}\right)+C$
+和$\int\tan^{2}x\,\mathrm{d}x=\tan x-x+C$：
+\begin{lstlisting}[language=TeX]
+    $$\int\frac{\mathrm{d}x}{\sqrt{a^{2}+x^{2}}}=\frac{1}{a}\arcsin\left(\frac{x}{a}\right)+C$$
+    $$\int\tan^{2}x\,\mathrm{d}x=\tan x-x+C$$
+\end{lstlisting}
+
+\emph{【例】}书写积分$\int_{a}^{b}\left[\lambda_{1}f_{1}(x)+\lambda_{2}f_{2}(x)\right]\,\mathrm{d}x=\lambda_{1}\int_{a}^{b}f_{1}(x)\,\mathrm{d}x+\lambda_{2}\int_{a}^{b}f_{2}(x)\,\mathrm{d}x$
+和$\int_{a}^{b}f(x)\,\mathrm{d}x=\int_{a}^{c}f(x)\,\mathrm{d}x+\int_{c}^{b}f(x)\,\mathrm{d}x$：
+\begin{lstlisting}[language=TeX]
+    $$\int_{a}^{b}\left[\lambda_{1}f_{1}(x)+\lambda_{2}f_{2}(x)\right]\,\mathrm{d}x=\lambda_{1}\int_{a}^{b}f_{1}(x)\,\mathrm{d}x+\lambda_{2}\int_{a}^{b}f_{2}(x)\,\mathrm{d}x$$
+    $$\int_{a}^{b}f(x)\,\mathrm{d}x=\int_{a}^{c}f(x)\,\mathrm{d}x+\int_{c}^{b}f(x)\,\mathrm{d}x$$
+\end{lstlisting}
+
+\emph{【例】}书写积分：
+\begin{equation}
+    \begin{aligned}
+        V & =2\pi\int_{0}^{1} x\left\{1-(x-1)^{2}\right\}\,\mathrm{d}x     \\
+          & =2\pi\int_{0}^{2}\left\{-x^{3}+2 x^{2}\right\}\,\mathrm{d}x    \\
+          & =2\pi\left[-\frac{1}{4} x^{4}+\frac{2}{3} x^{3}\right]_{0}^{2} \\
+          & =8\pi/3
+    \end{aligned}
+\end{equation}
+
+\begin{lstlisting}[language=TeX]
+    \begin{equation}
+        \begin{aligned}
+        V&=2\pi\int_{0}^{1} x\left\{1-(x-1)^{2}\right\}\,\mathrm{d}x \\
+        &=2\pi\int_{0}^{2}\left\{-x^{3}+2 x^{2}\right\}\,\mathrm{d}x \\
+        &=2\pi\left[-\frac{1}{4} x^{4}+\frac{2}{3} x^{3}\right]_{0}^{2} \\
+        &=8\pi/3
+        \end{aligned}
+    \end{equation}
+\end{lstlisting}
+
+上述介绍的都是一重积分，在微积分课程中，还有二重积分、三重积分等，对于一重积分，LaTeX提
+供的基本命令为\texttt{\textbackslash{}int}，二重积分为\texttt{\textbackslash{}iint}，
+三重积分为\texttt{\textbackslash{}iiint}、四重积分为\texttt{\textbackslash{}iiiint}，
+当积分为五重或以上时，一般使用\texttt{\textbackslash{}idotsint}，即$\idotsint$。
+
+\emph{【例】}书写积分$\iint\limits_{D}f(x,y)\,\mathrm{d}\sigma$
+和$\iiint\limits_{\Omega}\left(x^{2}+y^{2}+z^{2}\right)\,\mathrm{d}v$：
+\begin{lstlisting}[language=TeX]
+    $$\iint\limits_{D}f(x,y)\,\mathrm{d}\sigma$$
+    $$\iiint\limits_{\Omega}\left(x^{2}+y^{2}+z^{2}\right)\,\mathrm{d}v$$
+\end{lstlisting}
+
+在积分中，有一种特殊的积分符号是在标准的积分符号上加上一个圈，可用来表示计算曲线曲面积分，
+即$\oint_{C}f(x)\,\mathrm{d}x+g(y)\,\mathrm{d}y$，代码为:
+\begin{lstlisting}[language=TeX]
+    $$\oint_{C}f(x)\,\mathrm{d}x+g(y)\,\mathrm{d}y$$
+\end{lstlisting}
