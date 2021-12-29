@@ -697,3 +697,51 @@ $$f^\prime(a)=\lim\limits_{x\to a}\frac{f(x)-f(a)}{x-a}$$
 \begin{lstlisting}[language=TeX]
     $$\oint_{C}f(x)\,\mathrm{d}x+g(y)\,\mathrm{d}y$$
 \end{lstlisting}
+
+\section{线性代数}
+\subsection{矩阵}
+在线性代数和众多代数课程中，矩阵是最基础的代数结构，可以直观上理解为数表。使用LaTeX时，
+我们可以用\texttt{\textbackslash{}begin\{array\}} \texttt{\textbackslash{}end\{array\}}
+环境来书写矩阵。
+
+\emph{【例】}书写矩阵$\left[\begin{array}{ccc} 1 & 2 & 3 \\ 4 & 5 & 6 \\ \end{array}\right]$
+和$\left[\begin{array}{c|cc} 1 & 2 & 3 \\ \hline 4 & 5 & 6 \\ \end{array}\right]$：
+\begin{lstlisting}[language=TeX]
+    $$\left[\begin{array}{ccc} 1 & 2 & 3 \\ 4 & 5 & 6 \\ \end{array}\right]$$
+    $$\left[\begin{array}{c|cc} 1 & 2 & 3 \\ \hline 4 & 5 & 6 \\ \end{array}\right]$$
+\end{lstlisting}
+
+当然，除了\texttt{\textbackslash{}begin\{array\}} \texttt{\textbackslash{}end\{array\}}，
+我们还可以用\texttt{\textbackslash{}begin\{matrix\}} \texttt{\textbackslash{}end\{matrix\}}
+等一系列环境来书写矩阵。
+
+\begin{itemize}
+    \item \emph{smallmatrix}环境，编译结果为：
+          $$\begin{smallmatrix}
+                  1 & 2 & 3 \\ 4 & 5 & 7
+              \end{smallmatrix}$$
+    \item \emph{matrix}环境，编译结果为：
+          $$\begin{matrix}
+                  1 & 2 & 3 \\ 4 & 5 & 7
+              \end{matrix}$$
+    \item \emph{pmatrix}环境，编译结果为：
+          $$\begin{pmatrix}
+                  1 & 2 & 3 \\ 4 & 5 & 7
+              \end{pmatrix}$$
+    \item \emph{bmatrix}环境，编译结果为：
+          $$\begin{bmatrix}
+                  1 & 2 & 3 \\ 4 & 5 & 7
+              \end{bmatrix}$$
+    \item \emph{Bmatrix}环境，编译结果为：
+          $$\begin{Bmatrix}
+                  1 & 2 & 3 \\ 4 & 5 & 7
+              \end{Bmatrix}$$
+    \item \emph{vmatrix}环境，编译结果为：
+          $$\begin{vmatrix}
+                  1 & 2 & 3 \\ 4 & 5 & 7
+              \end{vmatrix}$$
+    \item \emph{Vmatrix}环境，编译结果为：
+          $$\begin{Vmatrix}
+                  1 & 2 & 3 \\ 4 & 5 & 7
+              \end{Vmatrix}$$
+\end{itemize}
