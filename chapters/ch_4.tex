@@ -745,3 +745,168 @@ $$f^\prime(a)=\lim\limits_{x\to a}\frac{f(x)-f(a)}{x-a}$$
                   1 & 2 & 3 \\ 4 & 5 & 7
               \end{Vmatrix}$$
 \end{itemize}
+
+在线性代数中，一般用粗体字母或者符号表示矩阵，例如$\mathbf{A}$,$\mathbf{B}$,$\mathbf{C}$,
+$\mathbf{X}$,$\mathbf{Y}$,$\mathbf{Z}$。
+\begin{lstlisting}[language=TeX]
+    $\mathbf{A}$,
+    $\mathbf{B}$,
+    $\mathbf{C}$,
+    $\mathbf{X}$,
+    $\mathbf{Y}$,
+    $\mathbf{Z}$
+\end{lstlisting}
+
+\emph{【例】}书写矩阵$\mathbf{A}=\begin{bmatrix}
+        a_{11} & a_{12} & \cdots & a_{1n} \\
+        a_{21} & a_{22} & \cdots & a_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{m1} & a_{m2} & \cdots & a_{mn} \\
+    \end{bmatrix}$
+\begin{lstlisting}[language=TeX]
+    $$\mathbf{A}=\begin{bmatrix}
+        a_{11} & a_{12} & \cdots & a_{1n} \\
+        a_{21} & a_{22} & \cdots & a_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{m1} & a_{m2} & \cdots & a_{mn} \\
+    \end{bmatrix}$$
+\end{lstlisting}
+
+\emph{【例】}书写矩阵$\begin{bmatrix}
+        0 & 0 & 1 \\
+        0 & 1 & 0 \\
+        1 & 0 & 0 \\
+    \end{bmatrix}\begin{bmatrix}
+        a & b & c \\
+        b & d & e \\
+        c & e & f \\
+    \end{bmatrix}=\begin{bmatrix}
+        c & e & f \\
+        b & d & e \\
+        a & b & c \\
+    \end{bmatrix}$
+\begin{lstlisting}[language=TeX]
+    $$\begin{bmatrix}
+        0 & 0 & 1\\
+        0 & 1 & 0\\
+        1 & 0 & 0\\
+    \end{bmatrix}\begin{bmatrix}
+        a & b & c\\
+        b & d & e\\
+        c & e & f\\
+    \end{bmatrix}=\begin{bmatrix}
+        c & e & f\\
+        b & d & e\\
+        a & b & c\\
+    \end{bmatrix}$$
+\end{lstlisting}
+
+\subsection{符号}
+作用于矩阵的符号可分为标记符号和运算符号，就标记符号而言，有：
+\begin{itemize}
+    \item 矩阵的逆，写作$\mathbf{A}^{-1}$；
+    \item 矩阵的伪逆，写作$\mathbf{A}^{+}$或$\mathbf{A}^{\dagger}$；
+    \item 矩阵的转置，写作$\mathbf{A}^{T}$或$\mathbf{A}^{\top}$；
+    \item 酉矩阵的转置，写作$\mathbf{A}^{H}$；
+    \item 矩阵的秩，写作$\operatorname{rank}\left(\mathbf{A}\right)$；
+    \item 矩阵的迹，写作$\operatorname{Tr}\left(\mathbf{A}\right)$；
+    \item 矩阵的行列式，写作$\det\left(\mathbf{A}\right)$；
+\end{itemize}
+上面的相关代码如下：
+\begin{lstlisting}[language=TeX]
+    $$\mathbf{A}^{-1}$$ % 矩阵的逆
+    $$\mathbf{A}^{+}$$ % 矩阵的伪逆
+    $$\mathbf{A}^{\dagger}$$ % 矩阵的伪逆
+    $$\mathbf{A}^{T}$$ % 矩阵的转置
+    $$\mathbf{A}^{T}$$ % 矩阵的转置
+    $$\mathbf{A}^{H}$$ % 酉矩阵的转置
+    $$\operatorname{rank}\left(\mathbf{A}\right)$$ % 矩阵的秩
+    $$\operatorname{Tr}\left(\mathbf{A}\right)$$ % 矩阵的迹
+    $$\det\left(\mathbf{A}\right)$$ % 矩阵的行列式
+\end{lstlisting}
+
+\emph{【例】}书写矩阵运算规则
+$$\left(\mathbf{A}\mathbf{B}\right)^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}$$
+$$\left(\mathbf{A}+\mathbf{B}\right)^{\top}=\mathbf{A}^{\top}+\mathbf{B}^{\top}$$
+$$\left(\mathbf{A}+\mathbf{B}\right)^{H}=\mathbf{A}^{H}+\mathbf{B}^{H}$$
+$$\operatorname{Tr}\left(\mathbf{A}+\mathbf{B}\right)=\operatorname{Tr}\left(\mathbf{A}\right)+\operatorname{Tr}\left(\mathbf{B}\right)$$
+$$\det\left(\mathbf{A}\mathbf{B}\right)=\det\left(\mathbf{A}\right)\det\left(\mathbf{B}\right)$$
+\begin{lstlisting}[language=TeX]
+    $$\left(\mathbf{A}\mathbf{B}\right)^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}$$
+    $$\left(\mathbf{A}+\mathbf{B}\right)^{\top}=\mathbf{A}^{\top}+\mathbf{B}^{\top}$$
+    $$\left(\mathbf{A}+\mathbf{B}\right)^{H}=\mathbf{A}^{H}+\mathbf{B}^{H}$$
+    $$\operatorname{Tr}\left(\mathbf{A}+\mathbf{B}\right)=\operatorname{Tr}\left(\mathbf{A}\right)+\operatorname{Tr}\left(\mathbf{B}\right)$$
+    $$\det\left(\mathbf{A}\mathbf{B}\right)=\det\left(\mathbf{A}\right)\det\left(\mathbf{B}\right)$$
+\end{lstlisting}
+
+\emph{【例】}书写$\frac{\partial}{\partial\mathbf{X}}\operatorname{Tr}\left(\mathbf{A}\mathbf{X}\mathbf{B}\right)=\mathbf{A}^{\top}\mathbf{B}^{\top}$
+\begin{lstlisting}[language=TeX]
+    $$\frac{\partial}{\partial\mathbf{X}}\operatorname{Tr}\left(\mathbf{A}\mathbf{X}\mathbf{B}\right)=\mathbf{A}^{\top}\mathbf{B}^{\top}$$
+\end{lstlisting}
+
+\emph{【例】}书写多元正态分布的概率密度函数
+$$p\left(\mathbf{x}\right)=\frac{1}{\sqrt{\operatorname{det}\left(2\pi\mathbf{\Sigma}\right)}}\exp\left[-\frac{1}{2}\left(\mathbf{x}-\mathbf{\mu}\right)^{\top}\mathbf{\Sigma}^{-1}\left(\mathbf{x}-\mathbf{\mu}\right)\right]$$
+\begin{lstlisting}[language=TeX]
+    $$p\left(\mathbf{x}\right)=\frac{1}{\sqrt{\operatorname{det}\left(2\pi\mathbf{\Sigma}\right)}}\exp\left[-\frac{1}{2}\left(\mathbf{x}-\mathbf{\mu}\right)^{\top}\mathbf{\Sigma}^{-1}\left(\mathbf{x}-\mathbf{\mu}\right)\right]$$
+\end{lstlisting}
+
+\emph{【例】}书写混合高斯分布的概率密度函数
+$$p\left(\mathbf{x}\right)=\sum_{k=1}^{K}\rho_{k}\frac{1}{\sqrt{\operatorname{det}\left(2\pi\mathbf{\Sigma}_{k}\right)}}\exp\left[-\frac{1}{2}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)^{\top}\mathbf{\Sigma}_{k}^{-1}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)\right]$$
+\begin{lstlisting}[language=TeX]
+    $$p\left(\mathbf{x}\right)=\sum_{k=1}^{K}\rho_{k}\frac{1}{\sqrt{\operatorname{det}\left(2\pi\mathbf{\Sigma}_{k}\right)}}\exp\left[-\frac{1}{2}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)^{\top}\mathbf{\Sigma}_{k}^{-1}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)\right]$$
+\end{lstlisting}
+
+\emph{【例】}书写混合高斯分布的概率密度函数
+$$p\left(\mathbf{x}\right)=\sum_{k=1}^{K}\rho_{k}\frac{1}{\sqrt{\operatorname{det}\left(2\pi\mathbf{\Sigma}_{k}\right)}}\exp\left[-\frac{1}{2}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)^{\top}\mathbf{\Sigma}_{k}^{-1}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)\right]$$
+\begin{lstlisting}[language=TeX]
+    $$p\left(\mathbf{x}\right)=\sum_{k=1}^{K}\rho_{k}\frac{1}{\sqrt{\operatorname{det}\left(2\pi\mathbf{\Sigma}_{k}\right)}}\exp\left[-\frac{1}{2}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)^{\top}\mathbf{\Sigma}_{k}^{-1}\left(\mathbf{x}-\mathbf{\mu}_{k}\right)\right]$$
+\end{lstlisting}
+
+就运算符号而言，有:
+\begin{itemize}
+    \item Hadamard积，如$\mathbf{A} \circle\mathbf{B}$；
+    \item Hadamard积，如$\mathbf{A} \otimes\mathbf{B}$；
+    \item 内积，如$\left<\mathbf{A},\mathbf{B}\right>$；
+\end{itemize}
+上面的相关代码如下：
+\begin{lstlisting}[language=TeX]
+    $\mathbf{A}\circle\mathbf{B}$ % Hadamard积
+    $\mathbf{A}\otimes\mathbf{B}$ % Kronecker积
+    $\left<\mathbf{A},\mathbf{B}\right>$ % 内积
+\end{lstlisting}
+
+\emph{【例】}书写Kronecker积运算
+$$\begin{equation}
+        \mathbf{X}\otimes\mathbf{Y}=\left[\begin{array}{cccc}
+                x_{11}\mathbf{Y} & x_{12}\mathbf{Y} & \cdots & x_{1n}\mathbf{Y} \\
+                x_{21}\mathbf{Y} & x_{22}\mathbf{Y} & \cdots & x_{2n}\mathbf{Y} \\
+                \vdots           & \vdots           & \ddots & \vdots           \\
+                x_{m1}\mathbf{Y} & x_{m2}\mathbf{Y} & \cdots & x_{mn}\mathbf{Y}
+            \end{array}\right]
+    \end{equation}$$
+\begin{lstlisting}[language=TeX]
+    \begin{equation}
+        \mathbf{X}\otimes\mathbf{Y}=\left[\begin{array}{cccc}
+        x_{11}\mathbf{Y} & x_{12}\mathbf{Y} & \cdots & x_{1n}\mathbf{Y} \\
+        x_{21}\mathbf{Y} & x_{22}\mathbf{Y} & \cdots & x_{2n}\mathbf{Y} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        x_{m1}\mathbf{Y} & x_{m2}\mathbf{Y} & \cdots & x_{mn}\mathbf{Y}
+        \end{array}\right]
+        \end{equation}
+\end{lstlisting}
+
+\emph{【例】}书写李亚普诺夫方程
+$$\begin{equation}
+        \begin{aligned}
+                             & \mathbf{A}\mathbf{X}+\mathbf{X}\mathbf{B}=\mathbf{C}                                                                                                                \\
+            \Rightarrow\quad & \operatorname{vec}\left(\mathbf{X}\right)=\left(\mathbf{I}\otimes\mathbf{A}+\mathbf{B}^{\top}\otimes\mathbf{I}\right)^{-1}\operatorname{vec}\left(\mathbf{C}\right)
+        \end{aligned}
+    \end{equation}$$
+\begin{lstlisting}[language=TeX]
+    \begin{equation}
+    \begin{aligned}
+    &\mathbf{A}\mathbf{X}+\mathbf{X}\mathbf{B}=\mathbf{C} \\
+    \Rightarrow\quad&\operatorname{vec}\left(\mathbf{X}\right)=\left(\mathbf{I}\otimes\mathbf{A}+\mathbf{B}^{\top}\otimes\mathbf{I}\right)^{-1}\operatorname{vec}\left(\mathbf{C}\right)
+    \end{aligned}
+    \end{equation}
+\end{lstlisting}
