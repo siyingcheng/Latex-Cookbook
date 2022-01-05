@@ -864,26 +864,27 @@ $$p\left(\mathbf{x}\right)=\sum_{k=1}^{K}\rho_{k}\frac{1}{\sqrt{\operatorname{de
 
 就运算符号而言，有:
 \begin{itemize}
-    \item Hadamard积，如$\mathbf{A} \circle\mathbf{B}$；
-    \item Hadamard积，如$\mathbf{A} \otimes\mathbf{B}$；
-    \item 内积，如$\left<\mathbf{A},\mathbf{B}\right>$；
+    \item Hadamard积，如 $\mathbf{A}\odot\mathbf{B}$ ；
+    \item Hadamard积，如 $\mathbf{A}\otimes\mathbf{B}$ ；
+    \item 内积，如 $\left<\mathbf{A},\mathbf{B}\right>$ ；
 \end{itemize}
+
 上面的相关代码如下：
 \begin{lstlisting}[language=TeX]
-    $\mathbf{A}\circle\mathbf{B}$ % Hadamard积
+    $\mathbf{A}\odot\mathbf{B}$ % Hadamard积
     $\mathbf{A}\otimes\mathbf{B}$ % Kronecker积
     $\left<\mathbf{A},\mathbf{B}\right>$ % 内积
 \end{lstlisting}
 
 \emph{【例】}书写Kronecker积运算
-$$\begin{equation}
-        \mathbf{X}\otimes\mathbf{Y}=\left[\begin{array}{cccc}
-                x_{11}\mathbf{Y} & x_{12}\mathbf{Y} & \cdots & x_{1n}\mathbf{Y} \\
-                x_{21}\mathbf{Y} & x_{22}\mathbf{Y} & \cdots & x_{2n}\mathbf{Y} \\
-                \vdots           & \vdots           & \ddots & \vdots           \\
-                x_{m1}\mathbf{Y} & x_{m2}\mathbf{Y} & \cdots & x_{mn}\mathbf{Y}
-            \end{array}\right]
-    \end{equation}$$
+\begin{equation}
+    \mathbf{X}\otimes\mathbf{Y}=\left[\begin{array}{cccc}
+            x_{11}\mathbf{Y} & x_{12}\mathbf{Y} & \cdots & x_{1n}\mathbf{Y} \\
+            x_{21}\mathbf{Y} & x_{22}\mathbf{Y} & \cdots & x_{2n}\mathbf{Y} \\
+            \vdots           & \vdots           & \ddots & \vdots           \\
+            x_{m1}\mathbf{Y} & x_{m2}\mathbf{Y} & \cdots & x_{mn}\mathbf{Y}
+        \end{array}\right]
+\end{equation}
 \begin{lstlisting}[language=TeX]
     \begin{equation}
         \mathbf{X}\otimes\mathbf{Y}=\left[\begin{array}{cccc}
@@ -892,21 +893,66 @@ $$\begin{equation}
         \vdots & \vdots & \ddots & \vdots \\
         x_{m1}\mathbf{Y} & x_{m2}\mathbf{Y} & \cdots & x_{mn}\mathbf{Y}
         \end{array}\right]
-        \end{equation}
+    \end{equation}
 \end{lstlisting}
 
 \emph{【例】}书写李亚普诺夫方程
-$$\begin{equation}
-        \begin{aligned}
-                             & \mathbf{A}\mathbf{X}+\mathbf{X}\mathbf{B}=\mathbf{C}                                                                                                                \\
-            \Rightarrow\quad & \operatorname{vec}\left(\mathbf{X}\right)=\left(\mathbf{I}\otimes\mathbf{A}+\mathbf{B}^{\top}\otimes\mathbf{I}\right)^{-1}\operatorname{vec}\left(\mathbf{C}\right)
-        \end{aligned}
-    \end{equation}$$
+\begin{equation}
+    \begin{aligned}
+                         & \mathbf{A}\mathbf{X}+\mathbf{X}\mathbf{B}=\mathbf{C}                                                                                                                \\
+        \Rightarrow\quad & \operatorname{vec}\left(\mathbf{X}\right)=\left(\mathbf{I}\otimes\mathbf{A}+\mathbf{B}^{\top}\otimes\mathbf{I}\right)^{-1}\operatorname{vec}\left(\mathbf{C}\right)
+    \end{aligned}
+\end{equation}
 \begin{lstlisting}[language=TeX]
     \begin{equation}
     \begin{aligned}
     &\mathbf{A}\mathbf{X}+\mathbf{X}\mathbf{B}=\mathbf{C} \\
     \Rightarrow\quad&\operatorname{vec}\left(\mathbf{X}\right)=\left(\mathbf{I}\otimes\mathbf{A}+\mathbf{B}^{\top}\otimes\mathbf{I}\right)^{-1}\operatorname{vec}\left(\mathbf{C}\right)
     \end{aligned}
+    \end{equation}
+\end{lstlisting}
+
+\subsection{范数}
+一般而言，代数结构有标量、向量、矩阵、张量这几种，对于这几种代数结构来说，有时候，为了描
+述数据特征等，会引入范数这个概念。对于向量而言，常用的范数包括$\ell_{0}$范数、$\ell_{1}$范
+数、$\ell_{2}$范数，具体来说，给定任意向量$\mathbf{x}$，有：
+\begin{itemize}
+    \item $\ell_{0}$范数为$\left\|\mathbf{x}\right\|_{0}=\sqrt[0]{\sum_{i} x_{i}^{0}}$；
+    \item $\ell_{1}$范数为$\left\|\mathbf{x}\right\|_{1}=\sum_{i}|x_{i}|$；
+    \item $\ell_{2}$范数为$\left\|\mathbf{x}\right\|_{2}=\sqrt{\sum_{i}x_{i}^{2}}$；
+\end{itemize}
+上面的相关代码如下：
+\begin{lstlisting}[language=TeX]
+    $\left\|\mathbf{x}\right\|_{0}=\sqrt[0]{\sum_{i} x_{i}^{0}}$            % 范数ℓ0
+    $\left\|\mathbf{x}\right\|_{1}=\sum_{i}|x_{i}|$                         % 范数ℓ1
+    $\ell_{2}$范数为$\left\|\mathbf{x}\right\|_{2}=\sqrt{\sum_{i}x_{i}^{2}}$ % 范数ℓ2
+\end{lstlisting}
+
+对于矩阵而言，常用的范数包括F范数、核范数。给定任意矩阵$\mathbf{X}$，F范数的表达式为$\left\|\mathbf{X}\right\|_{F}$；
+核范数的表达式为$\left\|\mathbf{X}\right\|_{*}$。
+\begin{lstlisting}[language=TeX]
+    $\left\|\mathbf{X}\right\|_{F}$ % F范数
+    $\left\|\mathbf{X}\right\|_{*}$ % 核范数
+\end{lstlisting}
+
+\emph{【例】}书写
+$$\frac{1}{2}\mathbf{x}^{\top}\mathbf{A}^{\top}\mathbf{A}\mathbf{x}-\mathbf{x}^{\top}\mathbf{A}^{\top}\mathbf{b}=\frac{1}{2}\left\|\mathbf{A}\mathbf{x}-\mathbf{b}\right\|_{2}^{2}-\frac{1}{2}\left\|\mathbf{b}\right\|_{2}^{2}$$
+\begin{lstlisting}[language=TeX]
+    $$\frac{1}{2}\mathbf{x}^{\top}\mathbf{A}^{\top}\mathbf{A}\mathbf{x}-\mathbf{x}^{\top}\mathbf{A}^{\top}\mathbf{b}=\frac{1}{2}\left\|\mathbf{A}\mathbf{x}-\mathbf{b}\right\|_{2}^{2}-\frac{1}{2}\left\|\mathbf{b}\right\|_{2}^{2}$$
+\end{lstlisting}
+
+\emph{【例】}书写
+\begin{equation}
+    \begin{aligned}
+          & \left\|\left[\begin{array}{cc|cc} a_{11} & a_{12} & a_{13} & a_{14} \\ a_{21} & a_{22} & a_{23} & a_{24} \\ \hline a_{31} & a_{32} & a_{33} & a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44} \\ \hline a_{51} & a_{52} & a_{53} & a_{54} \\ a_{61} & a_{62} & a_{63} & a_{64} \\ \end{array}\right]-\left[\begin{array}{cc} b_{11} & b_{12} \\ b_{21} & b_{22} \\ b_{31} & b_{32} \\ \end{array}\right]\otimes\left[\begin{array}{cc} c_{11} & c_{12} \\ c_{21} & c_{22} \\ \end{array}\right]\right\|_{F} \\
+        = & \left\|\left[\begin{array}{cc|cc} a_{11} & a_{12} & a_{13} & a_{14} \\ a_{21} & a_{22} & a_{23} & a_{24} \\ \hline a_{31} & a_{32} & a_{33} & a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44} \\ \hline a_{51} & a_{52} & a_{53} & a_{54} \\ a_{61} & a_{62} & a_{63} & a_{64} \\ \end{array}\right]-\left[\begin{array}{c} b_{11} \\ b_{21} \\ b_{31} \\ b_{12} \\ b_{22} \\ b_{32} \\ \end{array}\right]\otimes\left[\begin{array}{cccc} c_{11} & c_{21} & c_{12} & c_{22} \\ \end{array}\right]\right\|_{F}
+    \end{aligned}
+\end{equation}
+\begin{lstlisting}[language=TeX]
+    \begin{equation}
+        \begin{aligned}
+        &\left\|\left[\begin{array}{cc|cc} a_{11} & a_{12} & a_{13} & a_{14} \\ a_{21} & a_{22} & a_{23} & a_{24} \\ \hline a_{31} & a_{32} & a_{33} & a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44} \\ \hline a_{51} & a_{52} & a_{53} & a_{54} \\ a_{61} & a_{62} & a_{63} & a_{64} \\ \end{array}\right]-\left[\begin{array}{cc} b_{11} & b_{12} \\ b_{21} & b_{22} \\ b_{31} & b_{32} \\ \end{array}\right]\otimes\left[\begin{array}{cc} c_{11} & c_{12} \\ c_{21} & c_{22} \\ \end{array}\right]\right\|_{F} \\
+        =&\left\|\left[\begin{array}{cc|cc} a_{11} & a_{12} & a_{13} & a_{14} \\ a_{21} & a_{22} & a_{23} & a_{24} \\ \hline a_{31} & a_{32} & a_{33} & a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44} \\ \hline a_{51} & a_{52} & a_{53} & a_{54} \\ a_{61} & a_{62} & a_{63} & a_{64} \\ \end{array}\right]-\left[\begin{array}{c} b_{11} \\ b_{21} \\ b_{31} \\ b_{12} \\ b_{22} \\ b_{32} \\ \end{array}\right]\otimes\left[\begin{array}{cccc} c_{11} & c_{21} & c_{12} & c_{22} \\ \end{array}\right]\right\|_{F}
+        \end{aligned}
     \end{equation}
 \end{lstlisting}
