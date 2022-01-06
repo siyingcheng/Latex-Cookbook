@@ -1,0 +1,315 @@
+\chapter{表格制作}
+表格是一种针对信息和数据的有效呈现方式，一般采用行和列组合的结构。在撰写科技论文时，往往
+需要使用表格对信息或数据进行归纳、整理以及比较分析。本章主要介绍如何在LaTeX中制作和编辑
+表格，内容包括：
+\begin{itemize}
+    \item 第1节是对制作表格的环境和命令进行基本介绍；
+    \item 第2、3节介绍如何合并单元格、插入斜线与表注；
+    \item 第4节介绍如何调整表格样式，包括表格尺寸、单元格自动对齐与换行、小数点对齐、行高、列宽、线宽、以及字体大小；
+    \item 第5~8节介绍如何创建特殊表格，分别为彩色表格、三线表格、跨页表格、旋转表格（或纵向表格）；
+    \item 第9节介绍如何从csv文件中导入表格。
+\end{itemize}
+
+通过本章的学习，读者会对LaTeX制作和编辑表格有较为全面的认识，能够制作出科技论文中的各类表格。
+
+\section{基本介绍}
+表格是展现数据的一种常用方式。LaTeX提供了多种表格环境可用于制作各类表格，例如\emph{tabular}、
+\emph{tabular*}、\emph{tabularx}、\emph{tabulary}、\emph{table}和\emph{longtable}
+等。其中比较常用的方法是将tabular环境嵌入到table环境中，可以创建包含表格内容、表格标题、引
+用标签等属性的完整表格。
+
+\subsection{tabular环境：创建表格内容}
+通过创建tabular环境可以定义表格内容、对齐方式、外观样式等，使用方式与前面章节中介绍的使
+用array环境制作数表（即矩阵）的方式类似。例如：
+$$\left[
+        \begin{array}{c|c|c}
+            a        & b & c \\
+            \hline d & e & f \\
+            \hline g & h & i \\
+        \end{array}
+        \right]$$
+
+上面矩阵的代码为：
+\begin{lstlisting}[language=TeX]
+$$\left[
+    \begin{array}{c|c|c}
+        a        & b & c \\
+        \hline d & e & f \\
+        \hline g & h & i \\
+    \end{array}
+\right]$$
+\end{lstlisting}
+
+不妨将上述代码中的array环境改写为tabular环境，并去掉\texttt{\textbackslash{}left[}和
+\texttt{\textbackslash{}right]}命令，得到如下所示的代码语句：
+\begin{lstlisting}[language=TeX]
+    \begin{tabular}{c|c|c}
+        a & b & c \\
+        \hline
+        d & e & f \\
+        \hline
+        g & h & i \\
+    \end{tabular}        
+\end{lstlisting}
+
+编译上述代码，可以得到类似的结果：
+\begin{center}
+    \begin{tabular}{c|c|c}
+        a & b & c \\
+        \hline
+        d & e & f \\
+        \hline
+        g & h & i \\
+    \end{tabular}
+\end{center}
+
+不同之处在于，array环境制作的数表是属于数学公式，而使用tabular环境制作得到的表格则属于
+文本内容，但两者的用法及命令格式极其相似。在tabular环境下：
+\begin{itemize}
+    \item 在\texttt{\textbackslash{}begin\{tabular\}}命令后的\{\}内设置表格的列类型参数，包括：
+          \begin{itemize}
+              \item 设置每列的单元格对齐方式。对齐方式选项包括\emph{l}、\emph{c}和\emph{r}，即
+                    left、center和right的首字母，分别对应左对齐、居中对齐和右对齐，每个字母对应一列；
+              \item 创建表格列分隔线。表格列分隔线以|符号表示，|符号的个数表示
+                    列分隔线中线的个数，如|表示使用单线分隔列，||表示使用双线分隔列，以此
+                    类推。分割线符号可以设置在列对齐方式选项的左侧或右侧，分别表示创建列的左分隔线和右分隔线。
+          \end{itemize}
+    \item 使用\texttt{\textbackslash{}\textbackslash{}}符号表示一行内容的结束；
+    \item 使用\&符号划分行内的单元格；
+    \item 使用\texttt{\textbackslash{}hline}命令创建行分隔线。
+\end{itemize}
+
+下面给出一个示例让读者对tabular环境的使用方式能有更深刻的印象。
+
+\emph{【例】}使用tabular环境制作一个简单的表格，\{l|cccr\}命令调整列对齐方式：
+\begin{lstlisting}[language=TeX]
+    \begin{tabular}{l|cccr} % 调整对齐方式
+        \hline
+        & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+        \hline
+        $y=x$ & 1 & 2 & 3 & 4 \\
+        $y=x^{2}$ & 1 & 4 & 9 & 16 \\
+        $y=x^{3}$ & 1 & 8 & 27 & 64 \\
+        \hline
+    \end{tabular}
+\end{lstlisting}
+
+\begin{table}
+    \centering
+    \begin{tabular}{l|cccr} % 调整对齐方式
+        \hline
+                  & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+        \hline
+        $y=x$     & 1     & 2     & 3     & 4     \\
+        $y=x^{2}$ & 1     & 4     & 9     & 16    \\
+        $y=x^{3}$ & 1     & 8     & 27    & 64    \\
+        \hline
+    \end{tabular}
+    \caption{编译后的表格}
+    \label{tb1}
+\end{table}
+编译上述代码，得到表格如表\ref{tb1}所示。
+
+\subsection{table环境：自动编号与浮动表格}
+使用table环境嵌套tabular环境，能够为创建的表格进行自动递增编号。此外，可以使用\texttt{\textbackslash{}caption\{\}}
+命令设置表格标题、使用\texttt{\textbackslash{}label\{\}}命令为表格建立索引标签、使用
+\texttt{\textbackslash{}centering}命令将表格置于文档中间，如下所示：
+\begin{lstlisting}[language=TeX]
+    \begin{table}
+    \centering
+        \caption{Title of a table.}
+        \label{Label of the table}
+        \begin{tabular}
+        % 表格内容
+        \end{tabular}
+    \end{table}
+\end{lstlisting}
+
+下例创建表格嵌入到table环境中，创建了一个位置居中、并且具有标题、索引、自动编号的表格。
+
+\emph{【例】}使用table和tabular环境制作一个简单的表格：
+\begin{lstlisting}[language=TeX]
+    \begin{table}
+    \centering
+        \begin{tabular}{l|cccr}
+            \hline
+            & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+            \hline
+            $y=x$ & 1 & 2 & 3 & 4 \\
+            $y=x^{2}$ & 1 & 4 & 9 & 16 \\
+            $y=x^{3}$ & 1 & 8 & 27 & 64 \\
+            \hline
+        \end{tabular}
+    \end{table}
+\end{lstlisting}
+
+\begin{table}
+    \centering
+    \begin{tabular}{l|cccr}
+        \hline
+                  & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+        \hline
+        $y=x$     & 1     & 2     & 3     & 4     \\
+        $y=x^{2}$ & 1     & 4     & 9     & 16    \\
+        $y=x^{3}$ & 1     & 8     & 27    & 64    \\
+        \hline
+    \end{tabular}
+    \caption{编译后的表格}
+    \label{tb2}
+\end{table}
+
+编译上述代码，得到表格如\ref{tb2}。
+
+事实上，在table环境中创建的表格属于浮动元素:
+\begin{quote}
+    浮动元素（floating）是指不能跨页分割的元素，比如图片和表格。一般而言，浮动元素的显示
+    位置未必是代码的位置，比如，当页面空间不足时，LaTeX会根据内置的算法尝试将浮动元素放置
+    到后面的页面中，避免出现内容跨页分割或者页面大量留白的情况，从而创建更协调也更专业的文档。
+\end{quote}
+
+通过在\texttt{\textbackslash{}begin\{table\}[]}的[]中设置位置控制参数，可以为浮动表格
+指定期望放置位置，各参数值及其含义如下：
+\begin{itemize}
+    \item \texttt{h}：英文单词here的首写字母，表示代码当前位置；
+    \item \texttt{t}：英文单词top的首写字母，表示页面顶部位置；
+    \item \texttt{b}：英文单词bottom的首写字母，表示页面底部位置；
+    \item \texttt{p}：英文单词page的首写字母，表示后面的页面；
+    \item \texttt{!}：\texttt{!}参数一般与其它位置参数配合使用，表示当空间足够时，强制
+          将表格放在指定位置。如\texttt{!h}表示将表格强制放到当前页面，但当页面空间不足时，也
+          可能被放置到后续页面中；
+    \item \texttt{H}：表示将表格强制放在代码当前位置，具有比\texttt{!h}更严格的效果，
+          使用时需要先在导言区使用\texttt{\textbackslash{}usepackage\{float\}}声明语句调用
+          float宏包。
+\end{itemize}
+
+根据需要，浮动元素的位置控制参数一般可以设置为\texttt{h}、\texttt{b}、\texttt{t}、
+\texttt{p}、\texttt{!}和\texttt{H}的任意无需组合。该参数的缺省值为\texttt{tbp}，此时
+LaTeX会尝试将表格放在页面的顶端或者底端，否则会将表格放在下一页。
+
+\emph{【例】}在table环境中将表格的位置控制参数设置为htbp：
+\begin{lstlisting}[language=TeX]
+    \begin{table}[htbp] % 设置位置参数
+        \centering
+        % \caption{The values of some basic functions.}
+        \begin{tabular}{l|cccr}
+            \hline
+            & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+            \hline
+            $y=x$ & 1 & 2 & 3 & 4 \\
+            $y=x^{2}$ & 1 & 4 & 9 & 16 \\
+            $y=x^{3}$ & 1 & 8 & 27 & 64 \\
+            \hline
+        \end{tabular}
+        % \label{table1}
+    \end{table}
+\end{lstlisting}
+
+\begin{table}[htbp] % 设置位置参数
+    \centering
+    \begin{tabular}{l|cccr}
+        \hline
+                  & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+        \hline
+        $y=x$     & 1     & 2     & 3     & 4     \\
+        $y=x^{2}$ & 1     & 4     & 9     & 16    \\
+        $y=x^{3}$ & 1     & 8     & 27    & 64    \\
+        \hline
+    \end{tabular}
+    \caption{编译后的表格}
+    \label{tb3}
+\end{table}
+
+编译上述代码，得到表格如表\ref{tb3}所示。
+
+\section{创建色彩表格}
+通过对表格的单元格、行或列填充颜色，可以创建不同的彩色表格。为此，首先应在导言区使用
+\texttt{\textbackslash{}usepackage[table]\{xcolor\}}声明语句，通过调用xcolor宏包提
+供的相关命令可以实现颜色填充。
+
+填充单元格时，使用\texttt{\textbackslash{}cellcolor\{单元格填充颜色\}}单元格内容命令
+定义单元格内容即可。
+
+\emph{【例】}定义具有颜色填充效果的单元格：
+\begin{lstlisting}[language=TeX]
+    \documentclass[12pt]{article}
+    \usepackage[table]{xcolor} % 调用设置了table选项的xcolor宏包
+    \begin{document}
+    \begin{table}
+        \centering
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            Column1              & Column2 & Column3 & Column4 \\
+            \hline
+            \cellcolor{red!80}A1 & A2      & A3      & A4      \\ % 使用\cellcolor命令设置单元格填充颜色
+            \hline
+            \cellcolor{red!50}B1 & B2      & B3      & B4      \\
+            \hline
+            \cellcolor{red!20}C1 & C2      & C3      & C4      \\
+            \hline
+        \end{tabular}
+        \caption{表格示例1}
+        \label{table1}
+    \end{table}
+    \end{document}
+\end{lstlisting}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1              & Column2 & Column3 & Column4 \\
+        \hline
+        \cellcolor{red!80}A1 & A2      & A3      & A4      \\ % 使用\cellcolor命令设置单元格填充颜色
+        \hline
+        \cellcolor{red!50}B1 & B2      & B3      & B4      \\
+        \hline
+        \cellcolor{red!20}C1 & C2      & C3      & C4      \\
+        \hline
+    \end{tabular}
+    \caption{表格示例1}
+    \label{table1}
+\end{table}
+编译上述代码，得到表\ref{table1} ：
+
+为了达到更好的可视化效果，有时候需要为表格的奇数行和偶数行交替设置不同的填充颜色，那么只
+需要在tabular环境前使用\texttt{\textbackslash{}rowcolors\{开始填充的行编号\}\{第一个行填充颜色\}\{第二个行填充颜色\}}
+命令即可：
+\begin{lstlisting}[language=TeX]
+    \begin{table}
+        \centering
+        \rowcolors{2}{red!50}{red!20} % 设置表格交替填充行颜色
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            Column1 & Column2 & Column3 & Column4 \\
+            \hline
+            A1      & A2      & A3      & A4      \\
+            \hline
+            B1      & B2      & B3      & B4      \\
+            \hline
+            C1      & C2      & C3      & C4      \\
+            \hline
+        \end{tabular}
+        \caption{表格示例2}
+        \label{table2}
+    \end{table}
+\end{lstlisting}
+
+\begin{table}
+    \centering
+    \rowcolors{2}{red!50}{red!20} % 设置表格交替填充行颜色
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1 & Column2 & Column3 & Column4 \\
+        \hline
+        A1      & A2      & A3      & A4      \\
+        \hline
+        B1      & B2      & B3      & B4      \\
+        \hline
+        C1      & C2      & C3      & C4      \\
+        \hline
+    \end{tabular}
+    \caption{表格示例2}
+    \label{table2}
+\end{table}
+编译上述代码，得到表\ref{table2} ：
+
