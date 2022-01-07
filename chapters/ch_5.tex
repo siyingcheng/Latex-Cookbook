@@ -1,4 +1,5 @@
 \chapter{表格制作}
+
 表格是一种针对信息和数据的有效呈现方式，一般采用行和列组合的结构。在撰写科技论文时，往往
 需要使用表格对信息或数据进行归纳、整理以及比较分析。本章主要介绍如何在LaTeX中制作和编辑
 表格，内容包括：
@@ -220,6 +221,288 @@ LaTeX会尝试将表格放在页面的顶端或者底端，否则会将表格放
 \end{table}
 
 编译上述代码，得到表格如表\ref{tb3}所示。
+
+\section{合并单元格}
+如果需要合并单元格，首先应在导言区声明\texttt{\textbackslash{}usepackage\{multirow\}}
+导入\emph{multirow}宏包，并使用\texttt{\textbackslash{}multicolumn}命令合并同行不同
+列的单元格、使用\\texttt{\textbackslash{}multirow}命令合并同列不同行的单元格。
+
+\subsection{合并不同列的单元格}
+合并不同列的单元格时，应在tabular环境中使用\texttt{\textbackslash{}multicolumn\{合并列数\}
+    \{合并后的列类型参数\}\{单元格内容\}}语句定义合并单元格。此时，合并后的单元格的列类型将
+由\texttt{\textbackslash{}multicolumn}给出，而非\texttt{\textbackslash{}begin\{tabular\}}
+中预设的列类型参数。
+
+\emph{【例】}合并不同列的单元格：
+\begin{lstlisting}[language=TeX]
+    \usepackage{multirow}
+    \begin{document}
+
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1 & Column2 & Column3 & Column4 \\
+        \hline
+        \multicolumn{2}{|c|}{A1 and A2} & A3 & A4 \\
+        \hline
+        B1 & B2 & B3 & B4 \\
+        \hline
+        C1 & C2 & C3 & C4 \\
+        \hline
+    \end{tabular}
+
+    \end{document}
+\end{lstlisting}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1                         & Column2 & Column3 & Column4 \\
+        \hline
+        \multicolumn{2}{|c|}{A1 and A2} & A3      & A4                \\
+        \hline
+        B1                              & B2      & B3      & B4      \\
+        \hline
+        C1                              & C2      & C3      & C4      \\
+        \hline
+    \end{tabular}
+    \caption{编译后的表格}
+    \label{tb4}
+\end{table}
+
+编译上述代码，得到表格如\ref{tb4}所示。
+
+\subsection{合并不同行的单元格}
+
+合并不同行的单元格时使用的语句为\texttt{\textbackslash{}multirow\{合并行数\}\{合并后的宽度\}\{单元格内容\}}。
+如果把\{合并后的宽度\}参数设置为\{*\}，那么LaTeX会根据文本内容自动设置单元格宽度。在绘
+制行分隔线时，使用\texttt{\textbackslash{}hline}命令会创建一条横跨表格左右两端的横线，
+显然不适用于合并单元格后的行。此时应用\texttt{\textbackslash{}cline\{起始列号-终止列号\}}命令，
+通过指定行分隔线的起始列和终止列，从而定制跨越了部分列的行分隔线。
+
+\emph{【例】}合并不同列的单元格，并定制行分隔线的起始点：
+\begin{lstlisting}[language=TeX]
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1 & Column2 & Column3 & Column4 \\
+        \hline
+        \multirow{2}{*}{A1 and B1} & A2 & A3 & A4 \\
+        \cline{2-4} % 创建一条从第2列到第4列的行分隔线
+        & B2 & B3 & B4 \\
+        \hline
+        C1 & C2 & C3 & C4 \\
+        \hline
+    \end{tabular}
+\end{lstlisting}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1                    & Column2 & Column3 & Column4 \\
+        \hline
+        \multirow{2}{*}{A1 and B1} & A2      & A3      & A4      \\
+        \cline{2-4} % 创建一条从第2列到第4列的行分隔线
+                                   & B2      & B3      & B4      \\
+        \hline
+        C1                         & C2      & C3      & C4      \\
+        \hline
+    \end{tabular}
+    \caption{编译后的表格}
+    \label{tb5}
+\end{table}
+
+编译上述代码，得到表格如\ref{tb5}所示。
+
+从上例可以看出，合并多行的单元格时，除了第一个单元格处使用\texttt{\textbackslash{}multirow}
+命令定义单元格，其余被合并的单元格处均留空。
+
+\subsection{合并不同行不同列的单元格}
+通过嵌套使用\texttt{\textbackslash{}multicolumn}和\texttt{\textbackslash{}multirow}
+命令可以实现对不同行不同列单元格的合并操作，具体语句为\texttt{\textbackslash{}multicolumn\{合并列数\}\{合并后的列类型参数\}\{\textbackslash{}multirow\{合并行数\}\{合并后的宽度\}\{单元格内容\}\}}。
+
+\emph{【例】}合并不同行不同列的单元格：
+\begin{lstlisting}[language=TeX]
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1 & Column2 & Column3 & Column4 \\
+        \hline
+        \multicolumn{2}{|c|}{\multirow{2}{*}{A1, A2, B1 and B2}} & A3 & A4 \\ % 合并不同行不同列的单元格
+        \cline{3-4} % 创建一条从第3列到第4列的行分隔线
+        \multicolumn{2}{|c|}{} & B3 & B4 \\
+        \hline
+        C1 & C2 & C3 & C4 \\
+        \hline
+    \end{tabular}
+\end{lstlisting}
+
+编译上述代码，得到表格如表\ref{tb6}所示。
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Column1                                                  & Column2 & Column3 & Column4 \\
+        \hline
+        \multicolumn{2}{|c|}{\multirow{2}{*}{A1, A2, B1 and B2}} & A3      & A4                \\ % 合并不同行不同列的单元格
+        \cline{3-4} % 创建一条从第3列到第4列的行分隔线
+        \multicolumn{2}{|c|}{}                                   & B3      & B4                \\
+        \hline
+        C1                                                       & C2      & C3      & C4      \\
+        \hline
+    \end{tabular}
+    \caption{编译后的表格}
+    \label{tb6}
+\end{table}
+
+\section{插入斜线与表注}
+
+\subsection{插入斜线}
+
+在制作斜线表头或填充空白单元格时，经常需要用到斜线。在LaTeX中，我们可以通过调用\emph{diagbox}
+宏包及其提供的\texttt{\textbackslash{}diagbox[参数]\{单元格内容1\}...\{单元格内容n\}}
+命令将一个单元格划分为n个部分（即插入(n-1)条斜线），并且可以在[]中设置不同参数，从而对斜
+线宽度、高度、方向等属性进行调整，主要包括：
+\begin{itemize}
+    \item width：设置斜线宽度；
+    \item height：设置斜线高度；
+    \item font：设置单元格字体大小和字体类型；
+    \item linewidth：设置线宽；
+    \item linecolor：设置线的颜色（需结合xcolor或其他宏包使用）；
+    \item dir：设置斜线方向，包括NW（默认）、NE、SW和SE，分别表示西北方向、东北方向、
+          西南方向、东南方向。当仅插入一个斜线时，dir=NW与dir=SE、dir=NE与dir=SW效果相同，
+          分别表示插入反斜线和斜线；
+\end{itemize}
+
+当插入两个斜线时，如\texttt{\textbackslash{}diagbox[设置dir参数]\{A\}\{B\}\{C\}}，
+使用NW、NE、SW和SE的效果分别如表\ref{tb7}所示：
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|}
+        \hline
+        \diagbox[dir=NW]{A}{B}{C} \\
+        \hline
+    \end{tabular}
+    \begin{tabular}{|c|}
+        \hline
+        \diagbox[dir=NE]{A}{B}{C} \\
+        \hline
+    \end{tabular}
+    \begin{tabular}{|c|}
+        \hline
+        \diagbox[dir=SW]{A}{B}{C} \\
+        \hline
+    \end{tabular}
+    \begin{tabular}{|c|}
+        \hline
+        \diagbox[dir=SE]{A}{B}{C} \\
+        \hline
+    \end{tabular}
+    \caption{将方向参数设置为NW、NE、SW和SE的效果示意图}
+    \label{tb7}
+\end{table}
+
+\emph{【例】}制作双斜线表头：
+\begin{lstlisting}[language=TeX]
+    \begin{table}[htbp] % 设置位置参数
+        \centering
+        \caption{The values of some basic functions.}
+        \begin{tabular}{l|cccr}
+            \hline
+            \diagbox[width=5em]{$y$}{value}{$x$} & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+            \hline
+            $y=x$ & 1 & 2 & 3 & 4 \\
+            $y=x^{2}$ & 1 & 4 & 9 & 16 \\
+            $y=x^{3}$ & 1 & 8 & 27 & 64 \\
+            \hline
+        \end{tabular}
+        \label{table1}
+    \end{table}
+\end{lstlisting}
+
+编译上述代码，得到表格如表\ref{tb8}所示。
+
+\begin{table}[htbp] % 设置位置参数
+    \centering
+    \begin{tabular}{l|cccr}
+        \hline
+        \diagbox[width=5em]{$y$}{value}{$x$} & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+        \hline
+        $y=x$                                & 1     & 2     & 3     & 4     \\
+        $y=x^{2}$                            & 1     & 4     & 9     & 16    \\
+        $y=x^{3}$                            & 1     & 8     & 27    & 64    \\
+        \hline
+    \end{tabular}
+    \caption{斜线表示例}
+    \label{tb8}
+\end{table}
+
+\subsection{插入表注}
+
+为了对表格内容进行解释说明，通常会在表格底部添加注释，即表注。在LaTeX中添加表注的方式有
+多种，其中比较常用的一种是使用\emph{threeparttable}宏包及其相关命令，可以在表格底部生
+成与表格内容同宽的表注，并且当注释内容过长时可以实现自动换行，相比于其它方式更协调一致。
+
+具体是在tabular环境外嵌套一层\emph{threeparttable}环境，并在tabular环境之后将表注内容添加在
+\emph{tablenotes}环境中，由此得到的表注将会显示在表格底部。如果需要将表格内容与表注建立
+关联关系，可以在表格内容的相应位置使用\texttt{\textbackslash{}tnote\{索引标记\}}添加
+表注的索引标记，并且在tablenotes环境中使用item[索引标记]命令创建这项表注。
+
+\emph{【例】}添加表注：
+\begin{lstlisting}[language=TeX]
+    \usepackage{booktabs}
+    \usepackage{threeparttable}
+    \begin{document}
+
+    \begin{table}
+        \centering
+        \begin{threeparttable}
+            \begin{tabular}{l|cccr}
+                \toprule
+                & $x=1$ & $x=2$ & $x=3$ & $x=4$ \\
+                \midrule
+                $y=x$ & 1\tnote{*} & 2 & 3 & 4 \\
+                $y=x^{2}$ & 1 & 4 & 9 & 16 \\
+                $y=x^{3}$ & 1 & 8 & 27 & 64 \\
+                \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+                \footnotesize
+                \item[1] This is a remark example.
+                \item[2] This is another remark example and with a very long content, but the contents will be wrapped.
+                \item[*] This is 1.
+            \end{tablenotes}
+        \end{threeparttable}
+    \end{table}
+
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到表格如表\ref{tb9}所示。
+
+\begin{table}[htbp]
+    \centering
+    \begin{threeparttable}
+        \begin{tabular}{l|cccr}
+            \toprule
+                      & $x=1$      & $x=2$ & $x=3$ & $x=4$ \\
+            \midrule
+            $y=x$     & 1\tnote{*} & 2     & 3     & 4     \\
+            $y=x^{2}$ & 1          & 4     & 9     & 16    \\
+            $y=x^{3}$ & 1          & 8     & 27    & 64    \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \footnotesize
+            \item[1] This is a remark example.
+            \item[2] This is another remark example and with a very long content, but the contents will be wrapped.
+            \item[*] This is 1.
+        \end{tablenotes}
+    \end{threeparttable}
+    \caption{表注示例}
+    \label{tb9}
+\end{table}
+
 
 \section{创建色彩表格}
 通过对表格的单元格、行或列填充颜色，可以创建不同的彩色表格。为此，首先应在导言区使用
