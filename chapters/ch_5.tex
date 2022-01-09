@@ -503,6 +503,429 @@ LaTeX会尝试将表格放在页面的顶端或者底端，否则会将表格放
     \label{tb9}
 \end{table}
 
+\section{调整表格样式}
+
+通过调用一些宏包及命令可以定制表格样式，从而创建更符合要求的表格。对表格样式的调整可以分
+为以下7个方面：表格尺寸、单元格自动对齐与换行、小数点对齐、行高、列宽、线宽、以及表格字
+体大小。
+
+\subsection{表格尺寸}
+如果想要修改表格尺寸，首先使用\texttt{\textbackslash{}usepackage\{graphicx\}}语句调用
+\textmd{graphicx}宏包，并使用\texttt{\textbackslash{}resizebox\{宽度\}\{高度\}\{内容\}}命令，
+该命令以tabular环境构建的表格作为内容。为了避免产生不协调的尺寸，在设置参数时只需要设置
+\{宽度\}和\{高度\}中的其中一个即可，另一个以!作为参数，表示根据宽高比进行自动调整。
+
+\emph{【例】}调整表格尺寸：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+
+    \begin{table}[h]
+    \centering
+        \resizebox{0.8\textwidth}{!}{
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            Column1 & Column2 & Column3 & Column4 \\
+            \hline
+            A1 & A2 & A3 & A4 \\
+            \hline
+            B1 & B2 & B3 & B4 \\
+            \hline
+            C1 & C2 & C3 & C4 \\
+            \hline
+        \end{tabular}}
+    \end{table}
+\end{lstlisting}
+
+编译后得到表\ref{tb10}。
+
+\begin{table}[h]
+    \centering
+    \resizebox{0.8\textwidth}{!}{
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            Column1 & Column2 & Column3 & Column4 \\
+            \hline
+            A1      & A2      & A3      & A4      \\
+            \hline
+            B1      & B2      & B3      & B4      \\
+            \hline
+            C1      & C2      & C3      & C4      \\
+            \hline
+        \end{tabular}}
+    \caption{调整表格尺寸=0.8}
+    \label{tb10}
+\end{table}
+
+\subsection{单元格自动对齐与换行}
+
+使用列类型参数\emph{l}、\emph{c}或\emph{r}可以对每列的单元格设置左对齐、横向居中对齐和
+右对齐，但由此创建的单元格不仅无法设置顶部对齐、纵向居中对齐、以及底部对齐方式，而且单元
+格内容不论长短都被拉长为一行，显得不够灵活。下面介绍几种方式用于实现单元格自动对齐与换行。
+
+\subsubsection{使用array宏包实现单元格自动对齐与换行}
+
+首先在导言区使用\texttt{\textbackslash{}usepackage\{array\}}语句声明调用\emph{array}宏包，
+该宏包提供了以下6个列类型参数分别对应不同的对齐方式：
+\begin{itemize}
+    \item p\{列宽\}：单元格内容将根据设置的列宽自动换行，并且对齐方式为顶部对齐；
+    \item m\{列宽\}：单元格内容将根据设置的列宽自动换行，并且对齐方式为纵向居中对齐；
+    \item b\{列宽\}：单元格内容将根据设置的列宽自动换行，并且对齐方式为底部对齐；
+    \item \texttt{>\{\textbackslash{}raggedright\textbackslash{}arraybackslash\}}：将一列的单元格内容设置为左对齐；
+    \item \texttt{>\{\textbackslash{}centering\textbackslash{}arraybackslash\}}：将一列的单元格内容设置为横向居中对齐；
+    \item \texttt{>\{\textbackslash{}raggedleft\textbackslash{}arraybackslash\}}：将一列的单元格内容设置为右对齐。
+\end{itemize}
+
+默认情况下，如果单独使用\emph{p}、\emph{m}或\emph{b}参数，默认为左对齐。我们可以对上述
+参数进行组合使用，从而获得不同的对齐效果。需要注意的是，此时应使用\texttt{\textbackslash{}tabularnewline}
+取代\texttt{\textbackslash{}\textbackslash{}}符号作为表格一行的结束。
+
+\emph{【例】}调用array宏包及其提供的列类型参数实现单元格自动对齐与分行：
+\begin{lstlisting}[language=TeX]
+    \usepackage{array}
+
+    \begin{table}[h]
+    \centering
+        \begin{tabular}{|>{\raggedright\arraybackslash}m{2.3cm}|>{\centering\arraybackslash}m{2.3cm}|>{\centering}m{2.3cm}|>{\raggedleft\arraybackslash}m{2.3cm}|}
+            \hline
+            Column1 & Column2 Column2 & Column3 Column3 Column3 & Column4 Column4 Column4 Column4 \tabularnewline
+            \hline
+            Value1 & Value2 Value2 & Value3 Value3 Value3 & Value4 Value4 Value4 Value4 \tabularnewline
+            \hline
+            Value1 & Value2 Value2 & Value3 Value3 Value3 & Value4 Value4 Value4 Value4 \tabularnewline
+            \hline
+        \end{tabular}
+    \end{table}
+\end{lstlisting}
+
+编译后得到表\ref{tb11}。
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{2.3cm}|>{\centering\arraybackslash}m{2.3cm}|>{\centering}m{2.3cm}|>{\raggedleft\arraybackslash}m{2.3cm}|}
+        \hline
+        Column1 & Column2 Column2 & Column3 Column3 Column3 & Column4 Column4 Column4 Column4 \tabularnewline
+        \hline
+        Value1  & Value2 Value2   & Value3 Value3 Value3    & Value4 Value4 Value4 Value4 \tabularnewline
+        \hline
+        Value1  & Value2 Value2   & Value3 Value3 Value3    & Value4 Value4 Value4 Value4 \tabularnewline
+        \hline
+    \end{tabular}
+    \caption{单元格自动对齐与分行}
+    \label{tb11}
+\end{table}
+
+通过调用array宏包的方式虽然可以实现自动换行，但常常需要经过反复试验才能获得想要的宽度，
+更方便的方式是使用\emph{tabularx}宏包或\emph{tabulary}宏包及其相关命令自动计算列宽。
+对于涉及文本的表格，更推荐使用tabulary宏包。下面分别介绍通过这两个宏包及其命令如何实现
+自动换行。
+
+\subsubsection{使用tabularx宏包实现自动换行}
+
+首先在导言区声明调用\emph{tabularx}宏包，然后使用\emph{tabularx}环境取代tabular环境创
+建表格内容，tabularx环境的使用方式与tabular类似，不同之处主要在于：\texttt{\textbackslash{}begin\{tabularx\}
+    \{表格宽度\}\{列类型\}}中应设置表格宽度；在tabularx环境中，对于需要自动换行的列，其列类
+型应设置为大写的\emph{X}。X参数可以与\texttt{>\{\textbackslash{}raggedright\textbackslash{}arraybackslash\}}、
+\texttt{>\{\textbackslash{}centering\textbackslash{}arraybackslash\}}或
+\texttt{>\{\textbackslash{}raggedleft\textbackslash{}arraybackslash\}}进行组合使用，
+从而修改单元格的对齐方式。
+
+\emph{【例】}调用tabularx宏包并设置列类型参数X从而实现单元格内容自动换行：
+\begin{lstlisting}[language=TeX]
+    \usepackage{tabularx} % 调用tabularx宏包
+
+    \begin{table}[h]
+    \centering
+        \caption{Title of a table.}
+        \label{first label}
+        \begin{tabularx}{\linewidth}{|X|X|X|>{\centering\arraybackslash}X|} % 将需要自动换行的列的列类型参数设为X
+            \hline
+            Column1 & Column2 & Column3 & Column4 \\
+            \hline
+            This is Value1. This is Value1. & This is Value2. This is Value2. & This is Value3. This is Value3. & This is Value4. This is Value4. \\
+            \hline
+            This is Value1. This is Value1. This is Value1. & This is Value2. This is Value2. This is Value2. & This is Value3. This is Value3. This is Value3. & This is Value4. This is Value4. This is Value4. \\
+            \hline
+        \end{tabularx}
+    \end{table}
+\end{lstlisting}
+
+编译上述代码，得到表\ref{tb12}。
+
+\begin{table}[h]
+    \centering
+    \begin{tabularx}{\linewidth}{|X|X|X|>{\centering\arraybackslash}X|} % 将需要自动换行的列的列类型参数设为X
+        \hline
+        Column1                                         & Column2                                         & Column3                                         & Column4                                         \\
+        \hline
+        This is Value1. This is Value1.                 & This is Value2. This is Value2.                 & This is Value3. This is Value3.                 & This is Value4. This is Value4.                 \\
+        \hline
+        This is Value1. This is Value1. This is Value1. & This is Value2. This is Value2. This is Value2. & This is Value3. This is Value3. This is Value3. & This is Value4. This is Value4. This is Value4. \\
+        \hline
+    \end{tabularx}
+    \caption{使用宏包tabularx实现单元格内容自动换行}
+    \label{tb12}
+\end{table}
+
+\subsubsection{使用tabulary宏包实现自动换行}
+
+类似地，调用\emph{tabulary}宏包并使用\texttt{\textbackslash{}begin\{tabulary\}\{表格宽度\}
+    \{列类型\}}环境创建表格。对于需要自动换行的列，只需将列类型改为大写字母即可，即，大写\emph{L}
+表示左对齐并自动换行、大写\emph{C}表示居中对齐并自动换行、大写\emph{R}表示右对齐并自动换行。
+
+\emph{【例】}调用tabulary宏包并设置大写列类型参数（L、C和R）从而实现单元格内容自动换行：
+\begin{lstlisting}[language=TeX]
+    \usepackage{tabulary} % 调用tabulary宏包
+
+    \begin{table}[h]
+    \centering
+        \caption{Title of a table.}
+        \label{first label}
+        \begin{tabulary}{\linewidth}{|L|C|C|R|} % 将需要自动换行的列的列类型参数改为大写
+            \hline
+            Column1 & Column2 & Column3 & Column4 \\
+            \hline
+            This is Value1. This is Value1. & This is Value2. This is Value2. & This is Value3. This is Value3. & This is Value4. This is Value4. \\
+            \hline
+            This is Value1. This is Value1. This is Value1. & This is Value2. This is Value2. This is Value2. & This is Value3. This is Value3. This is Value3. & This is Value4. This is Value4. This is Value4. \\
+            \hline
+        \end{tabulary}
+    \end{table}
+\end{lstlisting}
+
+编译上述代码，得到表\ref{tb13}。
+
+\begin{table}[h]
+    \centering
+    \begin{tabulary}{\linewidth}{|L|C|C|R|} % 将需要自动换行的列的列类型参数改为大写
+        \hline
+        Column1 & Column2 & Column3 & Column4 \\
+        \hline
+        This is Value1. This is Value1. & This is Value2. This is Value2. & This is Value3. This is Value3. & This is Value4. This is Value4. \\
+        \hline
+        This is Value1. This is Value1. This is Value1. & This is Value2. This is Value2. This is Value2. & This is Value3. This is Value3. This is Value3. & This is Value4. This is Value4. This is Value4. \\
+        \hline
+    \end{tabulary}
+    \caption{使用tabulary宏包让单元格自动换行}
+    \label{tb13}
+\end{table}
+
+\subsubsection{使用parbox命令实现人工换行}
+
+我们也可以通过使用\texttt{\textbackslash{}parbox}命令对表格内容进行强制换行。
+
+\emph{【例】}用parbox命令来实现单元格中文本强制换行：
+\begin{lstlisting}[language=TeX]
+    \begin{center}    
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            a & b & c & d \\ 
+            \hline
+            a & b & c & \parbox[t]{5cm}{In probability theory and statistics, the continuous uniform distribution\\ or rectangular distribution is a family of symmetric probability distributions.} \\ 
+            \hline
+        \end{tabular} 
+    \end{center}
+\end{lstlisting}
+
+编译上述代码，得到表\ref{tb14}。
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        a & b & c & d                                                                                         \\
+        \hline
+        a & b & c & \parbox[t]{5cm}{In probability theory and statistics, the continuous uniform distribution \\ or rectangular distribution is a family of symmetric probability distributions.} \\
+        \hline
+    \end{tabular}
+    \caption{使用parbox强制换行}
+    \label{tb14}
+\end{table}
+
+\subsection{小数点对齐}
+
+为了更好地描述数据，在表格中常常将数据在小数点处进行对齐，在LaTeX中我们可以通过使用\emph{dcolumn}包
+实现这一目的。这个包提供了一个名为\emph{D}的列类型，可以方便实现基于小数点的数字对齐以及
+基于其它符号的对齐，使用方式为D\{输入符号\}\{输出符号\}\{符号后的数字位数\}。对于基于小
+数点的数字对齐，输入符号一般为“.”；有时需要根据特定符号进行数字对齐，比如千分位逗号，这时
+输入符号即为“,”。例如，\texttt{D\{.\}\{\textbackslash{}cdot\}\{2\}}表示将某列的数据
+根据“.”符号对齐，输出时将该符号显示为点乘符号，并且显示2个小数位数。
+
+列类型D可以像其它列类型一样在表格环境的开始命令处直接进行设置，但会导致语句过长，所以一
+般使用array宏包的\texttt{\textbackslash{}newcolumntype}命令定义一个新的列类型，并为
+这个列类型赋予一个比较短的名称以方便调用。定义新的列类型的语句为\texttt{\textbackslash{}newcolumntype
+\{新列类型名称\}[新列类型的参数个数]\{定义新列类型\}}，例如：\texttt{\textbackslash{}newcolumntype\{d\}[1]\{D\{.\}\{\textbackslash{}cdot\}\{\#1\}\}}表示创建一个名为d的新列类型，该列类型的内容为\texttt{D\{.\}\{\textbackslash{}cdot\}\{符号后的数字位数\}}，其中数字位数是传给d的参数。
+
+\emph{【例】}调用dcolumn宏包和列类型D来实现表格数据的小数点对齐：
+\begin{lstlisting}[language=TeX]
+    \usepackage{dcolumn}
+    \newcolumntype{d}[1]{D{.}{\cdot}{#1}}
+    \begin{document}
+        \begin{tabular}{|l|c|r|d{3}|}
+            \hline
+            Left & Center & Right & \mathrm{Decimal}\\
+            \hline
+            1.1 & 1.1 & 1.1 & 1.1\\
+            \hline
+            33.3 & 33.3 & 33.3 & 33.3\\
+            \hline
+            3.333 & 3.333 & 3.333 & 3.333\\
+            \hline
+        \end{tabular}
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到表\ref{tb15}。
+
+\newcolumntype{d}[1]{D{.}{\cdot}{#1}}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|r|d{3}|}
+        \hline
+        Left  & Center & Right & \mathrm{Decimal} \\
+        \hline
+        1.1   & 1.1    & 1.1   & 1.1              \\
+        \hline
+        33.3  & 33.3   & 33.3  & 33.3             \\
+        \hline
+        3.333 & 3.333  & 3.333 & 3.333            \\
+        \hline
+    \end{tabular}
+    \caption{dcolumn宏包实现小数点对齐}
+    \label{tb15}
+\end{table}
+
+\subsection{行高}
+
+如果需要调整表格整体行高，可以在导言区使用\texttt{\textbackslash{}renewcommand\{\textbackslash{}arraystretch\}\{行高倍数\}}
+命令，从而根据设置的行高倍数在默认值的基础上对行高进行扩大或缩小。
+
+\emph{【例】}将表格整体行高设为两倍行距：
+\begin{lstlisting}[language=TeX]
+    \documentclass[12pt]{article}
+    \renewcommand{\arraystretch}{2}
+    \begin{document}
+    % 文章内容
+    \end{document}
+\end{lstlisting}
+
+另一种调整行高的方式是通过在每行的结束标志\texttt{\textbackslash{}\textbackslash{}}
+后加上行高增减量选项，即\texttt{\textbackslash{}\textbackslash{}[行高增减量]}，从而
+在默认值的基础上对各行行高进行增减。
+
+\emph{【例】}为表格各行设置不同的行高：
+\begin{lstlisting}[language=TeX]
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Column1 & Column2 & Column3 & Column4\\[0cm]
+        \hline
+        A1 & A2 & A3 & A4\\[0.2cm]
+        \hline
+        B1 & B2 & B3 & B4\\[0.4cm]
+        \hline
+        C1 & C2 & C3 & C4\\[0.6cm]
+        \hline
+    \end{tabular}
+\end{lstlisting}
+
+编译上述代码，得到表\ref{tb16}。
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Column1 & Column2 & Column3 & Column4 \\[0cm]
+        \hline
+        A1      & A2      & A3      & A4      \\[0.2cm]
+        \hline
+        B1      & B2      & B3      & B4      \\[0.4cm]
+        \hline
+        C1      & C2      & C3      & C4      \\[0.6cm]
+        \hline
+    \end{tabular}
+    \caption{为表格各行设置不同的行高}
+    \label{tb16}
+\end{table}
+
+\subsection{列宽}
+
+在上面，我们介绍了使用array宏包提供的列类型参数可以在设置单元格对齐方式的同时对列宽进行
+调整。此外，也可以在导言区使用\texttt{\textbackslash{}setlength\{textbackslash{}tabcolsep\}\{文本和列分隔线的间距\}}
+命令修改表格列宽，默认情况下，单元格内容与列分隔线的间距为6pt。
+
+\emph{【例】}将表格单元格文本和列分隔线的间距设为12pt：
+\begin{lstlisting}[language=TeX]
+    \setlength{\tabcolsep}{12pt}
+    \begin{document}
+    % 文章内容
+    \end{document}
+\end{lstlisting}
+
+\subsection{线宽}
+
+通过在导言区使用\texttt{\textbackslash{}setlength\{\textbackslash{}arrayrulewidth\}\{线宽\}}命令，可以修改表格线宽，默认为0.4pt。然而当线宽设置过大时，可能导致表格线交叉处不连续的情况。对此，在导言区调用xcolor宏包、并
+设置table选项可以解决。
+
+\emph{【例】}设置表格线宽：
+\begin{lstlisting}[language=TeX]
+    \usepackage[table]{xcolor} % 调用设置了table选项的xcolor宏包
+    \setlength{\arrayrulewidth}{2pt} % 修改表格线宽
+    \begin{document}
+    % 文章内容
+    \end{document}
+\end{lstlisting}
+
+\subsection{表格字体大小}
+
+在文本编辑中我们知道，调整字体大小的方式既有全局方式也有局部方式，其中，全局方式是通过在
+文档类型中指定字体大小，而局部方式则是通过一系列设置字体大小的命令，例如\texttt{\textbackslash{large}}、
+\texttt{\textbackslash{Large}}、\texttt{\textbackslash{huge}}、\texttt{\textbackslash{fontsize}}等，
+在全局字体大小的基础上作进一步的调整。类似地，在使用LaTeX创建表格时，我们也可以对表格字
+体大小做全局或局部调整。
+
+\emph{【例】}使用Large调整表格局部字体大小：
+\begin{lstlisting}[language=TeX]
+    \begin{table}[htp]
+        \Large % 调整表格局部字体大小
+        \centering
+        \begin{tabular}{l|cccr}
+            % 表格内容
+        \end{tabular}
+    \end{table}
+\end{lstlisting}
+
+\emph{【例】}使用fontsize调整表格局部字体大小：
+\begin{lstlisting}[language=TeX]
+    \begin{table}[htp]
+        \fontsize{18pt}{24pt}\selectfont % 将字体大小设为18pt、行距设为24pt
+        \centering
+        \begin{tabular}{l|cccr}
+            % 表格内容
+        \end{tabular}
+    \end{table}
+\end{lstlisting}
+
+\subsection{文字环绕表格}
+
+如果想要实现文字环绕表格效果，可以使用\emph{wrapfig}宏包，并使用其提供的\emph{wraptable}环境
+嵌套tabular环境创建表格，从而达到文字环绕表格的效果。
+
+\emph{【例】}使用wraptable环境嵌套tabular环境创建表格，实现文字环绕表格；并使用
+\texttt{\textbackslash{}begin\{wraptable\}\{r\}\{8cm\}}将表格置于文字右侧，同时将表
+格和文字的距离设为8cm：
+
+\begin{lstlisting}[language=TeX]
+    \usepackage{wrapfig}
+    \begin{document}
+    % 段落
+    \begin{wraptable}{r}{8cm}
+        \centering
+        \begin{tabular}{lcccc}
+            % 表格内容
+        \end{tabular}
+    \end{wraptable}
+    % 段落
+    \end{document}
+\end{lstlisting}
 
 \section{创建色彩表格}
 通过对表格的单元格、行或列填充颜色，可以创建不同的彩色表格。为此，首先应在导言区使用
