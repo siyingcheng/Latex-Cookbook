@@ -80,3 +80,452 @@ LaTeX中可以支持插入\emph{.pdf}、\emph{.jpg}、\emph{.jpeg}、\emph{.png}
     \caption*{The second figure.} % 创建标题“The second figure.”
     \caption{The third figure.} % 创建标题“Figure 2:  The third figure.”
 \end{lstlisting}
+
+\section{插入非浮动图片}
+
+通过figure环境插入图片虽然能够实现自动编号和创建图片标题，但创建结果为浮动图片，图片的显
+示位置与在代码中的位置未必一致。然而有时我们想要以非浮动体的形式插入图片，使得图片显示位
+置与代码中的位置一致，同时能够实现自动编号和创建标题，要实现这一效果，我们可以使用\emph{minipage}
+环境或center环境替代figure环境插入图片，同时使用\emph{caption}宏包提供的\texttt{\textbackslash{}captionof\{figure\}\{图片标题名称\}}命令创建图片标题。
+
+使用minipage环境插入图片的方式与figure环境类似，不同之处主要在于使用minipage环境插入的
+图片与上下文中的文本内容紧挨着，为了避免这种情况，minipage环境前后可以使用\texttt{\textbackslash{}vspace\{纵向距离\}}
+调整图片与文本的纵向空间距离。
+
+\emph{【例】}使用minipage环境语句取代figure环境语句插入非浮动图片，使用captionof命令创
+建图片标题，并使用vspace命令调整图片与文本的纵向距离：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+    \usepackage{caption}
+    \begin{document}
+
+    Figure \ref{fig:1} shows a beautiful butterfly.
+
+    \vspace{12pt}
+
+    \begin{minipage}{\linewidth}
+    \centering
+        \includegraphics[width = 0.6\linewidth]{butterfly.JPG}
+        \captionof{figure}{A beautiful butterfly.}
+        \label{fig:1}
+    \end{minipage}
+
+    \vspace{12pt}
+
+    According to the picture, we know ...
+
+    \end{document}
+\end{lstlisting}
+
+使用center环境语句插入图片时可以自动将图片居中放置。
+
+\emph{【例】}使用center环境语句取代figure环境语句插入非浮动图片，并使用captionof命令创
+建图片标题：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+    \usepackage{caption}
+    \begin{document}
+
+    Figure \ref{fig:1} shows a beautiful butterfly.
+
+    \begin{center}
+    \includegraphics[width = 0.6\linewidth]{butterfly.JPG}
+    \captionof{figure}{A beautiful butterfly.}
+    \label{fig:1}
+    \end{center}
+
+    According to the picture, we know ...
+
+    \end{document}
+\end{lstlisting}
+
+\section{插入图表目录}
+
+插入图目录或表目录的命令语句分别为\texttt{\textbackslash{}listoffigures}和\texttt{\textbackslash{}listoftables}，
+可以罗列\texttt{\textbackslash{}caption}命令创建的图表标题名称，但对于使用\texttt{\textbackslash{}caption*}
+命令创建的无编号的标题名称而言，则不会出现在目录中。
+
+在一份专业文档中，目录总是和正文内容在不同页显示，为此可以使用\texttt{\textbackslash{}newpage}
+命令进行分页；此外目录页中一般无页码编号，为此可以使用\texttt{\textbackslash{}thispagestyle\{empty\}}
+取消当页页码设置，并在正文页之前使用\texttt{\textbackslash{}pagenumbering\{页码样式\}}
+命令表示重新从1开始设置页码、同时设置页码样式。
+
+默认的图目录名和表目录名分别是“List of Figures”、“List of Tables”，读者可以在导言区通
+过使用\texttt{\textbackslash{}renewcommand\{\textbackslash{}listfigurename\}\{新图目录名\}}
+命令修改图目录名、使用\texttt{\textbackslash{}renewcomman\{\textbackslash{}listtablename\}\{新表目录名\}}
+命令修改表目录名。
+
+\emph{【例】}使用listoffigures命令和listoftables命令创建图目录和表目录，使用renewcommand
+命令修改图目录名和表目录名，并使用newpage、thispagestyle和pagenumbering命令对页码进行
+相应调整：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+
+    \renewcommand{\listfigurename}{Figures}
+    \renewcommand{\listtablename}{Tables}
+
+    \begin{document}
+
+    \thispagestyle{empty} % 取消页码编号
+
+    \listoffigures
+    \listoftables
+
+    \newpage  % 插入新页
+    \pagenumbering{arabic}  % 设置页码样式为小写的阿拉伯数字
+
+    Here are three created tables...
+    \begin{table}[h!]
+    % ...
+    \caption{The first table.}
+    \caption{The second table.}
+    \caption{The third table.}
+    \end{table}
+
+    Here are three inserted figures...
+    \begin{figure}[h!]
+    % ...
+    \caption{The first figure.}
+    \caption*{The second figure.}
+    \caption{The third figure.}
+    % ...
+    \end{figure}
+
+    \end{document}
+\end{lstlisting}
+
+\section{定制图表标题样式}
+
+使用\texttt{\textbackslash{}caption}命令为浮动图片或者浮动表格创建的标题主要包含四部分：
+①标题头部、②自动编号、③编号分隔符、以及④标题名称，如下图所示。其中，对标题名称的设置比较简单，
+下面分别就标题前三部分的调整方式展开介绍。
+
+\begin{center}
+    \includegraphics{images/Image_title_part.png}
+    \captionof{figure}{图片标题的四个部分示意图}
+    \label{fig:1}
+\end{center}
+
+\subsection{调整标题头部}
+
+默认情况下，图片和表格标题头部分别为“Figure”和“Table”，我们可以分别使用\texttt{\textbackslash{}renewcommand\{\textbackslash{}figurename\}\{新的图片标题头部\}}和\texttt{\textbackslash{}renewcommand\{\textbackslash{}tablename\}\{新的表格标题头部\}}命令对其进行修改。
+
+\subsection{调整编号}
+
+创建浮动表格或者浮动图片时，LaTeX会根据内置的计数器对其进行自动递增计数，计数值即为图表标
+题编号和引用编号，默认为小写的阿拉伯数字。
+
+如果需要取消图表的自动编号，可以使用caption宏包提供的\texttt{\textbackslash{}captionsetup[浮动体类型]\{labelformat=empty\}}命令，其中浮动体类型可以为figure、subfigure、table、或subtable，分别表示图片、子图、
+表格、子表。使用该命令后，指定浮动体类型下的所有浮动体将取消自动编号，但其标题和编号仍会
+显示在图表目录中。
+
+\emph{【例】}使用caption*命令取消部分表格的自动编号，同时使用captionsetup命令取消所有
+图片的自动编号：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+    \usepackage{caption}
+    \begin{document}
+
+    \captionsetup[figure]{labelformat=empty} % 取消所有图片的自动编号
+
+    Here are three created tables...
+    \begin{table}[h!]
+    % ...
+    \caption{The first table.}
+    \caption*{The second table.} % 取消该标题的自动编号
+    \caption{The third table.}
+    \end{table}
+
+    Here are three inserted figures...
+    \begin{figure}[h!]
+    % ...
+    \caption{The first figure.}
+    \caption{The second figure.}
+    \caption{The third figure.}
+    % ...
+    \end{figure}
+
+    \end{document}
+\end{lstlisting}
+
+如果想要修改图表编号样式，可以在导言区使用\texttt{\textbackslash{}renewcommand\{浮动体的自动计数器\}\{计数器样式\}}
+命令。其中，浮动体的自动计数器名称可以为\texttt{\textbackslash{}thefigure}、\texttt{\textbackslash{}thesubfigure}、\texttt{\textbackslash{}thetable}、或\texttt{\textbackslash{}thesubtable}；定义计数器样式
+可以使用\texttt{\textbackslash{}alph\{浮动体类型\}}、\texttt{\textbackslash{}Alph\{浮动体类型\}}、
+\texttt{\textbackslash{}Roman\{浮动体类型\}}、\texttt{\textbackslash{}arabic\{浮动体类型\}}
+等命令。
+
+\emph{【例】}使用renewcommand命令调整图表标题头部和编号样式：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+
+    \renewcommand{\figurename}{Fig} % 调整图片头部
+    \renewcommand{\tablename}{Tab} % 调整新表格头部
+    \renewcommand{\thefigure}{\Alph{figure}} % 调整图片编号样式为大写字母
+    \renewcommand{\thetable}{\alph{table}} % 调整表格编号样式为小写字母
+
+    \begin{document}
+
+    Here are three created tables...
+    \begin{table}[h!]
+    % ...
+    \caption{The first table.}
+    \caption{The second table.}
+    \caption{The third table.}
+    \end{table}
+
+    Here are three inserted figures...
+    \begin{figure}[h!]
+    % ...
+    \caption{The first figure.}
+    \caption{The second figure.}
+    \caption{The third figure.}
+    % ...
+    \end{figure}
+
+    \end{document}
+\end{lstlisting}
+
+\subsection{调整编号分隔符}
+
+图表中的编号分隔符默认为英文冒号“:”，如果需要对其进行调整，可以使用caption宏包提供的
+\texttt{\textbackslash{}captionsetup[浮动体类型]\{设置labelsep选项\}}命令，通过设置
+不同的labelsep选项实现，各选项及其含义如下：
+\begin{itemize}
+    \item colon：默认值，即英文冒号“:”；
+    \item none：无编号分隔符；
+    \item period：英文句号“.”；
+    \item space：一个空格；
+    \item quad：一个字符“M”大小的空格；
+    \item newline：换行。
+\end{itemize}
+
+\section{插入子图}
+
+有时候需要将一组图片以子图的方式呈现，达到对比或者互补的效果。在LaTeX中，插入子图比较常
+用的方式是使用\emph{subcaption}宏包及其相关命令。
+
+\subsection{基本介绍}
+
+子图一般在\emph{subfigure}环境中创建，多个子图环境嵌套在figure环境中从而形成同一组子图。
+subfigure环境与figure环境的使用方式基本类似，可以为每个子图分别创建标题和索引标签，方便
+说明和引用。
+
+\emph{【例】}在导言区使用\texttt{\textbackslash{}usepackage\{subcaption\}}语句，在代码主体区域使用figure环境嵌套三个subfigure环境从而创建三个子图，并为各子图分别创建索引和标题：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+    \usepackage{subcaption}
+    \begin{document}
+
+    Figure \ref{fig:fig1} contains sub-figure \ref{subfig:subfig1}, sub-figure \ref{subfig:subfig2} and sub-figure \ref{subfig:subfig3}.
+
+    \begin{figure}[h!]
+    \centering
+        % 插入第一张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{redflower.png}
+            \caption{A red flower.}
+            \label{subfig:subfig1}
+        \end{subfigure}
+        % 插入第二张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{yellowFlower.png}
+            \caption{A yellow flower.}
+            \label{subfig:subfig2}
+        \end{subfigure}
+        % 插入第三张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{blueFlower.png}
+            \caption{A blue flower.}
+            \label{subfig:subfig3}
+        \end{subfigure}
+    \caption{Three flowers with different colors.}
+    \label{fig:fig1}
+    \end{figure}
+\end{lstlisting}
+
+编译后的图片如图\ref{fig:2}所示。
+
+\begin{center}
+    \includegraphics[width = 0.7\textwidth]{images/eg_9.png}
+    \captionof{figure}{编译后的插图}
+    \label{fig:2}
+\end{center}
+
+在上例中，每个子图都用到了两次宽度设置选项，分别具有不同含义：
+\begin{itemize}
+    \item \texttt{\textbackslash{}begin\{subfigure\}\{.3\textbackslash{}linewidth\}}表示将该子图环境的宽度设置为页面宽度的0.3倍；
+    \item \texttt{\textbackslash{}includegraphics[width=.5\textbackslash{}linewidth]}表示将该图片的宽度设置为当前子图环境宽度的0.5倍。
+\end{itemize}
+
+\subsection{调整子图间距}
+
+通过调整子图的横向和纵向间距，可以创建更协调美观的图片。
+
+具体而言，存在以下三类命令可用于调整图片的横向间距：
+\begin{itemize}
+    \item \texttt{\textbackslash{}hfill}：对于位于相同行的子图，通过在相邻的subfigure环境间使用该命令，可以实现多个子图横向等距分布的效果；（通过调整子图环境的宽度，可以让子图位于相同行）
+    \item \texttt{\textbackslash{}hspace\{横向距离\}}：定制任意长度的横向图片距离。当该值设为负值时，可以产生图片重叠的效果；
+    \item \texttt{\textbackslash{}quad}、\texttt{\textbackslash{}qquad}等：设置不同预设长度的横向图片距离。
+\end{itemize}
+
+\emph{【例】}使用\texttt{\textbackslash{}hfilll}命令实现子图横向等距分布，以及使用\texttt{\textbackslash{}hspace\{\}}命令实现子图重叠效果：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+    \usepackage{subcaption}
+    \usepackage{amssymb}
+    \usepackage{amsmath}
+    \begin{document}
+
+    % 使用\hfill命令调整子图横向间距
+
+    The horizontal space among Sub-figures in figure \ref{fig:fig1} is controlled by $\backslash$\textit{hfill}.
+
+    \begin{figure}[h!]
+    \centering
+        % 插入第一张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{redflower.png}
+            \caption{A red flower.}
+        \end{subfigure}
+        \hfill
+        % 插入第二张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{yellowFlower.png}
+            \caption{A yellow flower.}
+        \end{subfigure}
+        \hfill
+        % 插入第三张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{blueFlower.png}
+            \caption{A blue flower.}
+        \end{subfigure}
+    \caption{Three flowers with different colors.}
+    \label{fig:fig1}
+    \end{figure}
+
+    % 使用\space{}命令调整子图横向间距
+
+    The horizontal space among Sub-figures in figure \ref{fig:fig2} is controlled by $\backslash$\textit{space}.
+
+    \begin{figure}[h!]
+    \centering
+        % 插入第一张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{redflower.png}
+        \end{subfigure}
+        \hspace{-5cm}
+        % 插入第二张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{yellowFlower.png}
+        \end{subfigure}
+        \hspace{-5cm}
+        % 插入第三张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{blueFlower.png}
+        \end{subfigure}
+    \caption{Three flowers with different colors.}
+    \label{fig:fig2}
+    \end{figure}
+
+    \end{document}
+\end{lstlisting}
+
+编译后的图片如图\ref{fig:3}所示。
+
+\begin{center}
+    \includegraphics[width = 0.7\textwidth]{images/eg_10.png}
+    \captionof{figure}{编译后的插图}
+    \label{fig:3}
+\end{center}
+
+如果想让图片实现纵向等距分布，可以使用\texttt{\textbackslash{}vfill}命令。
+
+\emph{【例】}使用\texttt{\textbackslash{}vfill}命令实现子图纵向等距分布：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+    \usepackage{subcaption}
+    \begin{document}
+
+    \begin{figure}[h!]
+    \centering
+        % 插入第一张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{redflower.png}
+            \caption{A red flower.}
+        \end{subfigure}
+        \vfill
+        % 插入第二张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{yellowFlower.png}
+            \caption{A yellow flower.}
+        \end{subfigure}
+        \vfill
+        % 插入第三张子图
+        \begin{subfigure}{.3\linewidth}
+            \centering
+            \includegraphics[width=.5\linewidth]{blueFlower.png}
+            \caption{A blue flower.}
+        \end{subfigure}
+    \caption{Three flowers with different colors.}
+    \label{fig:fig1}
+    \end{figure}
+
+    \end{document}
+\end{lstlisting}
+
+编译后的图片如图\ref{fig:4}所示。
+
+\begin{center}
+    \includegraphics[width = 0.7\textwidth]{images/eg_11.png}
+    \captionof{figure}{编译后的插图}
+    \label{fig:4}
+\end{center}
+
+\section{图片排列与布局}
+
+通过调整图片排列与布局方式可以创建更专业、更规范的文档。
+
+\subsection{多图并排}
+
+在论文写作中，有时需要将多个图片放在同一行进行排列以便于比较。在figure环境中，使用minnipage环境即可实现图片并排显示，并连续编号。
+
+\emph{【例】}使用figure环境嵌套minnipage环境实现多图并排显示：
+\begin{lstlisting}[language=TeX]
+    \usepackage{graphicx}
+
+    The two figures are displayed side by side.
+
+    \begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth} 
+    \centering
+    \includegraphics[width=6cm]{graphics/butterfly.jpg}
+    \caption{Butterfly-1}
+    \end{minipage}
+
+    \begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=6cm]{graphics/butterfly.jpg}
+    \caption{Butterfly-2}
+    \end{minipage}
+    \end{figure}
+\end{lstlisting}
+
+编译后的图片如图\ref{fig:5}所示。
+
+\begin{center}
+    \includegraphics[width = 0.7\textwidth]{images/eg_12.png}
+    \captionof{figure}{编译后的插图}
+    \label{fig:5}
+\end{center}
