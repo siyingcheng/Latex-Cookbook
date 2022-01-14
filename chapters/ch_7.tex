@@ -412,3 +412,281 @@ cm为单位。
     \caption{绘制后的图形}
     \label{tik:10}
 \end{figure}
+
+\section{节点介绍}
+
+节点是TikZ中的一个常用功能。在绘制节点时，通常需要声明其位置和形状，部分节点可以在其中添
+加文字，同时也可以为节点赋予一个名称，用于后续参考。在本节中，我们将详细介绍节点的相关功
+能及其应用。
+
+\subsection{节点基本介绍}
+
+\emph{【例】}绘制节点，方法一：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+        \path (0,2) node [shape=circle,draw=blue!50,fill=blue!20,thick] {}
+              (0,1) node [shape=circle,draw=blue!50,fill=blue!20,thick] {$C$}
+              (0,0) node [shape=circle,draw=blue!50,fill=blue!20,thick] {}
+              (1,1) node [shape=rectangle,draw=black!50,fill=black!20] {}
+              (-1,1) node [shape=rectangle,draw=black!50,fill=black!20] {};
+    \end{tikzpicture}
+\end{lstlisting}
+
+等价于
+
+\emph{【例】}绘制节点，方法二：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+        \node [shape=circle,draw=blue!50,fill=blue!20,thick] at (0,2)  {};
+        \node [shape=circle,draw=blue!50,fill=blue!20,thick] at (0,1) {$C$};
+        \node [shape=circle,draw=blue!50,fill=blue!20,thick] at (0,0)  {};
+        \node [shape=rectangle,draw=black!50,fill=black!20] at (1,1) {};
+        \node [shape=rectangle,draw=black!50,fill=black!20] at (-1,1) {};
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译后的绘制图形如图\ref{tik:11}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \node [shape=circle,draw=blue!50,fill=blue!20,thick] at (0,2)  {};
+        \node [shape=circle,draw=blue!50,fill=blue!20,thick] at (0,1) {$C$};
+        \node [shape=circle,draw=blue!50,fill=blue!20,thick] at (0,0)  {};
+        \node [shape=rectangle,draw=black!50,fill=black!20] at (1,1) {};
+        \node [shape=rectangle,draw=black!50,fill=black!20] at (-1,1) {};
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:11}
+\end{figure}
+
+这里需要注意的是，在[shape=circle,draw=blue!50,fill=blue!20]中，shape指令声明节点形状，
+draw指令声明是否显现该形状的边框，并用draw=来声明边框颜色，fill命令指明该节点是否要填充，
+并用fill=来声明填充颜色。若要在节点中显示文字，需在后面\{\}中填写对应的文字即可。
+
+\subsection{节点样式}
+
+当某一种形状及颜色的节点需要在不同位置多次出现时，上述代码显得不够优美。我们可以通过一段
+代码提前声明该节点的样式，并反复调用这段代码即可。
+
+\emph{【例】}绘制节点，方法三：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \path (0,2) node [aaa] {}
+            (0,1) node [aaa] {$C$}
+            (0,0) node [aaa] {}
+            (1,1) node [bbb] {}
+            (-1,1) node [bbb] {};
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形与图\ref{tik:11}所示相同。
+
+\subsection{节点命名}
+
+为了将节点相互连接起来，我们需要指明连接哪两个节点。因此，每个节点需要我们声明一个名称。
+声明名称有两种方式，一种是采用name=的方式，另一种是在\texttt{\textbackslash{}node}后
+用括号声明。
+
+\emph{【例】}绘制节点，并声明节点名称，方法一：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \path (0,2) node [aaa,name=a1] {}
+            (0,1) node [aaa,name=a2] {$C$}
+            (0,0) node [aaa,name=a3] {}
+            (1,1) node [bbb,name=b1] {}
+            (-1,1) node [bbb,name=b2] {};
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+\emph{【例】}绘制节点，并声明节点名称，方法二：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa] at (0,2)  {};
+        \node (a2) [aaa] at (0,1) {$C$};
+        \node (a3) [aaa] at (0,0)  {};
+        \node (b1) [bbb] at (1,1) {};
+        \node (b2) [bbb] at (-1,1) {};
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+\subsection{基于相对位置绘制节点}
+
+给每个节点命名后，我们便可以通过above of（上）、below of（下）、left of（左）、right of（右）
+等命令来声明新节点与某个节点的相对位置来绘制图形。
+
+\emph{【例】}利用相对位置绘制节点：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa]                {};
+        \node (a2) [aaa]  [below of=a1] {$C$};
+        \node (a3) [aaa]  [below of=a2] {};
+        \node (b1) [bbb]  [right of=a2] {};
+        \node (b2) [bbb]  [left  of=a2] {};
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形与图\ref{tik:11}所示相同。
+
+\subsection{连接节点}
+
+有了节点名称了，我们就可以对节点进行连接。我们拿连接A与B节点为例，在连接时，我们通常需要
+声明A节点的哪个位置与B节点的哪个位置连接。位置声明通常采用east（右）、west（左）、north
+（上）、south（下）、center（中心）等命令。
+
+\emph{【例】}利用相对位置连接节点：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa]                {$a_1$};
+        \node (a2) [aaa]  [below of=a1] {$C$};
+        \node (a3) [aaa]  [below of=a2] {$a_3$};
+        \node (b1) [bbb]  [right of=a2] {$b_1$};
+        \node (b2) [bbb]  [left  of=a2] {$b_2$};
+        \draw [->] (a2.west) -- (b2.east);
+        \draw [->] (a2.east) -- (b1.west);
+        \draw [->] (a2.north) -- (a1.south);
+        \draw [->] (a2.south) -- (a3.north);
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+该代码等价于
+
+\emph{【例】}利用相对位置连接节点，不声明节点的连接位置：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa]                {$a_1$};
+        \node (a2) [aaa]  [below of=a1] {$C$};
+        \node (a3) [aaa]  [below of=a2] {$a_3$};
+        \node (b1) [bbb]  [right of=a2] {$b_1$};
+        \node (b2) [bbb]  [left  of=a2] {$b_2$};
+        \draw [->] (a2) -- (b2);
+        \draw [->] (a2) -- (b1);
+        \draw [->] (a2) -- (a1);
+        \draw [->] (a2) -- (a3);
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译后的绘制图形如图\ref{tik:12}所示。
+
+\begin{figure}[h]
+    \centering
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa]                {$a_1$};
+        \node (a2) [aaa]  [below of=a1] {$C$};
+        \node (a3) [aaa]  [below of=a2] {$a_3$};
+        \node (b1) [bbb]  [right of=a2] {$b_1$};
+        \node (b2) [bbb]  [left  of=a2] {$b_2$};
+        \draw [->] (a2) -- (b2);
+        \draw [->] (a2) -- (b1);
+        \draw [->] (a2) -- (a1);
+        \draw [->] (a2) -- (a3);
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:12}
+\end{figure}
+
+\emph{【例】}利用edge命令连接节点，方法一：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa]                {$a_1$};
+        \node (a2) [aaa]  [below of=a1] {$C$}   edge [->] (a1);
+        \node (a3) [aaa]  [below of=a2] {$a_3$} edge [<-] (a2);
+        \node (b1) [bbb]  [right of=a2] {$b_1$} edge [<-] (a2);
+        \node (b2) [bbb]  [left  of=a2] {$b_2$} edge [<-] (a2);
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+等价于
+
+\emph{【例】}用edge命令连接节点，方法二：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \path (0,2)  node [aaa,name=a1] {$a_1$}
+            (0,1)  node [aaa,name=a2] {$C$}   edge [->] (a1)
+            (0,0)  node [aaa,name=a3] {$a_3$} edge [<-] (a2)
+            (1,1)  node [bbb,name=b1] {$b_1$} edge [<-] (a2)
+            (-1,1) node [bbb,name=b2] {$b_2$} edge [<-] (a2);
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形与图\ref{tik:12}所示相同。
+
+\emph{【例】}声明每个节点的连接位置，将周围节点边缘连接直中间节点的中心：
+\begin{lstlisting}[language=TeX]
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa]                {$a_1$};
+        \node (a2) [aaa]  [below of=a1] {};
+        \node (a3) [aaa]  [below of=a2] {$a_3$};
+        \node (b1) [bbb]  [right of=a2] {$b_1$};
+        \node (b2) [bbb]  [left  of=a2] {$b_2$};
+        \draw [->] (a2.center) -- (b2.east);
+        \draw [->] (a2.center) -- (b1.west);
+        \draw [->] (a2.center) -- (a1.south);
+        \draw [->] (a2.center) -- (a3.north);
+
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:13}所示。
+
+\begin{figure}[h]
+    \centering
+    \tikzstyle{aaa}=[circle,draw=blue!50,fill=blue!20,thick]
+    \tikzstyle{bbb}=[rectangle,draw=black!50,fill=black!20]
+    \begin{tikzpicture}
+
+        \node (a1) [aaa]                {$a_1$};
+        \node (a2) [aaa]  [below of=a1] {};
+        \node (a3) [aaa]  [below of=a2] {$a_3$};
+        \node (b1) [bbb]  [right of=a2] {$b_1$};
+        \node (b2) [bbb]  [left  of=a2] {$b_2$};
+        \draw [->] (a2.center) -- (b2.east);
+        \draw [->] (a2.center) -- (b1.west);
+        \draw [->] (a2.center) -- (a1.south);
+        \draw [->] (a2.center) -- (a3.north);
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:13}
+\end{figure}
