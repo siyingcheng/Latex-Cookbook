@@ -1068,3 +1068,187 @@ TikZ宏包的强大之处在于，它还提供了可供绘制函数的数学引�
     \label{tik:25}
 \end{figure}
 
+\section{复杂模型实战解析}
+
+在本节中，我们将给出一些科研论文中的复杂模型供读者们进一步解析学习。
+
+\emph{【例】}BCPF：
+\begin{lstlisting}[language=TeX]
+    \documentclass[border=0.1cm]{standalone}
+    \usepackage[utf8]{inputenc}
+
+    \usepackage{tikz}
+    \usepackage{amsfonts}
+    \usepackage{amsmath,amssymb}
+    \usepackage{systeme,mathtools}
+    \usetikzlibrary{positioning,arrows.meta,quotes}
+    \usetikzlibrary{shapes,snakes}
+    \usetikzlibrary{bayesnet}
+    \tikzset{>=latex}
+    \tikzstyle{plate caption} = [caption, node distance=0, inner sep=0pt,
+    below left=5pt and 0pt of #1.south]
+
+    \begin{document}
+    \begin{tikzpicture}
+
+        \node [obs] (x) at (0,0) {\large $x_{\boldsymbol{i}}$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.6cm] (u1) at (-1.2,1.6) { $\boldsymbol{u}_{i_1}^{(1)}$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.6cm] (u3) at (1.2,1.6) { $\boldsymbol{u}_{i_d}^{(d)}$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.65cm] (lambda) at (0,3.0) {\large $\boldsymbol{\lambda}$};
+
+        \node[mark size=1pt,color=black] at (0,1.6) {\pgfuseplotmark{*}};
+        \node[mark size=1pt,color=black] at (-0.2,1.6) {\pgfuseplotmark{*}};
+        \node[mark size=1pt,color=black] at (0.2,1.6) {\pgfuseplotmark{*}};
+
+        \node [text width=0.5cm] (c0) at (0,4) {$\alpha,\beta$};
+        \node [text width=0.5cm] (a0) at (2.5,2.6) {$\alpha,\beta$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.65cm] (tau_epsilon) at (2.5,1.6) {\large $\tau_{\epsilon}$};
+
+        \path [draw,->] (u1) edge (x);
+        \path [draw,->] (u3) edge (x);
+        \path [draw,->] (lambda) edge (u1);
+        \path [draw,->] (lambda) edge (u3);
+
+        \path [draw,->] (c0) edge (lambda);
+        \path [draw,->] (tau_epsilon) edge (x);
+        \path [draw,->] (a0) edge (tau_epsilon);
+        \plate [color=red] {part1} {(x)(u1)} { };
+        \plate [color=blue] {part3} {(x)(u3)(part1.north east)} { };
+
+        \node [text width=2cm] at (-0.6,-0.5) {\large $n_1$};
+        \node [text width=2cm] at (2,-0.5) {\large $n_d$};
+
+    \end{tikzpicture}
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:26}所示。
+
+\begin{figure}[h]
+    \centering
+    \usetikzlibrary{positioning,arrows.meta,quotes}
+    \usetikzlibrary{shapes,snakes}
+    \usetikzlibrary{bayesnet}
+    \tikzset{>=latex}
+    \tikzstyle{plate caption} = [caption, node distance=0, inner sep=0pt,
+    below left=5pt and 0pt of #1.south]
+
+    \begin{tikzpicture}
+
+        \node [obs] (x) at (0,0) {\large $x_{\boldsymbol{i}}$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.6cm] (u1) at (-1.2,1.6) { $\boldsymbol{u}_{i_1}^{(1)}$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.6cm] (u3) at (1.2,1.6) { $\boldsymbol{u}_{i_d}^{(d)}$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.65cm] (lambda) at (0,3.0) {\large $\boldsymbol{\lambda}$};
+
+        \node[mark size=1pt,color=black] at (0,1.6) {\pgfuseplotmark{*}};
+        \node[mark size=1pt,color=black] at (-0.2,1.6) {\pgfuseplotmark{*}};
+        \node[mark size=1pt,color=black] at (0.2,1.6) {\pgfuseplotmark{*}};
+
+        \node [text width=0.5cm] (c0) at (0,4) {$\alpha,\beta$};
+        \node [text width=0.5cm] (a0) at (2.5,2.6) {$\alpha,\beta$};
+        \node [circle,draw=black,fill=white,inner sep=0pt,minimum size=0.65cm] (tau_epsilon) at (2.5,1.6) {\large $\tau_{\epsilon}$};
+
+        \path [draw,->] (u1) edge (x);
+        \path [draw,->] (u3) edge (x);
+        \path [draw,->] (lambda) edge (u1);
+        \path [draw,->] (lambda) edge (u3);
+
+        \path [draw,->] (c0) edge (lambda);
+        \path [draw,->] (tau_epsilon) edge (x);
+        \path [draw,->] (a0) edge (tau_epsilon);
+        \plate [color=red] {part1} {(x)(u1)} { };
+        \plate [color=blue] {part3} {(x)(u3)(part1.north east)} { };
+
+        \node [text width=2cm] at (-0.6,-0.5) {\large $n_1$};
+        \node [text width=2cm] at (2,-0.5) {\large $n_d$};
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:26}
+\end{figure}
+
+\emph{【例】}矩阵分解示意图：
+\begin{lstlisting}[language=TeX]
+    \documentclass[border=0.1cm]{standalone}
+    \usepackage[utf8]{inputenc}
+
+    \usepackage{tikz}
+    \usepackage{amsfonts}
+    \usepackage{amsmath,amssymb}
+    \usepackage{systeme,mathtools}
+    \usetikzlibrary{positioning,arrows.meta,quotes}
+    \usetikzlibrary{shapes,snakes}
+    \usetikzlibrary{bayesnet}
+    \tikzset{>=latex}
+
+    \begin{document}
+    \begin{tikzpicture}
+
+        \draw [very thick] (0,0) rectangle (3.6/2,2.4/2);
+        \filldraw [fill=green!20!white,draw=green!40!black] (0,0) rectangle (3.6/2,2.4/2);
+        \filldraw [fill=white] (0.4/2,0.4/2) rectangle (0.8/2,0.8/2);
+        \filldraw [fill=white] (2.4/2,0.4/2) rectangle (2.8/2,0.8/2);
+        \filldraw [fill=white] (0.8/2,1.2/2) rectangle (1.2/2,1.6/2);
+        \filldraw [fill=white] (2.0/2,1.6/2) rectangle (2.4/2,2.0/2);
+        \filldraw [fill=white] (0.4/2,2.0/2) rectangle (0.8/2,2.4/2);
+        \filldraw [fill=white] (2.4/2,2.0/2) rectangle (2.8/2,2.4/2);
+        \filldraw [fill=white] (2.8/2,1.2/2) rectangle (3.2/2,2.0/2);
+        \draw [step=0.4/2, very thin, color=gray] (0,0) grid (3.6/2,2.4/2);
+        \draw (1.8/2,-0.3) node {{\color{red}\scriptsize{$Y\in\mathbb{R}^{m\times f}$}}};
+        \draw (4.4/2,1.2/2) node {{\color{black}\large{$\approx$}}};
+        \draw [very thick] (5.2/2,0) rectangle (6.0/2,2.4/2);
+        \filldraw [fill=green!20!white,draw=green!40!black] (5.2/2,0) rectangle (6.0/2,2.4/2);
+        \draw [step=0.4/2, very thin, color=gray] (5.2/2,0) grid (6.0/2,2.4/2);
+        \draw (5.6/2,-0.3) node {{\color{black}\scriptsize{$W\in\mathbb{R}^{m\times r}$}}};
+        \draw (6.8/2,1.2/2) node {{\color{black}\large{$\times$}}};
+        \draw [very thick] (7.6/2,0.8/2) rectangle (11.2/2,1.6/2);
+        \filldraw [fill=green!20!white,draw=green!40!black] (7.6/2,0.8/2) rectangle (11.2/2,1.6/2);
+        \draw [step=0.4/2, very thin, color=gray] (7.6/2,0.8/2) grid (11.2/2,1.6/2);
+        \draw (9.4/2,0) node {{\color{red}\scriptsize{$X^{T}\in\mathbb{R}^{r\times f}$}}};
+
+    \end{tikzpicture}
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:28}所示。
+
+\begin{figure}[h]
+    \centering
+    \usetikzlibrary{positioning,arrows.meta,quotes}
+    \usetikzlibrary{shapes,snakes}
+    \usetikzlibrary{bayesnet}
+    \tikzset{>=latex}
+
+    \begin{tikzpicture}
+
+        \draw [very thick] (0,0) rectangle (3.6/2,2.4/2);
+        \filldraw [fill=green!20!white,draw=green!40!black] (0,0) rectangle (3.6/2,2.4/2);
+        \filldraw [fill=white] (0.4/2,0.4/2) rectangle (0.8/2,0.8/2);
+        \filldraw [fill=white] (2.4/2,0.4/2) rectangle (2.8/2,0.8/2);
+        \filldraw [fill=white] (0.8/2,1.2/2) rectangle (1.2/2,1.6/2);
+        \filldraw [fill=white] (2.0/2,1.6/2) rectangle (2.4/2,2.0/2);
+        \filldraw [fill=white] (0.4/2,2.0/2) rectangle (0.8/2,2.4/2);
+        \filldraw [fill=white] (2.4/2,2.0/2) rectangle (2.8/2,2.4/2);
+        \filldraw [fill=white] (2.8/2,1.2/2) rectangle (3.2/2,2.0/2);
+        \draw [step=0.4/2, very thin, color=gray] (0,0) grid (3.6/2,2.4/2);
+        \draw (1.8/2,-0.3) node {{\color{red}\scriptsize{$Y\in\mathbb{R}^{m\times f}$}}};
+        \draw (4.4/2,1.2/2) node {{\color{black}\large{$\approx$}}};
+        \draw [very thick] (5.2/2,0) rectangle (6.0/2,2.4/2);
+        \filldraw [fill=green!20!white,draw=green!40!black] (5.2/2,0) rectangle (6.0/2,2.4/2);
+        \draw [step=0.4/2, very thin, color=gray] (5.2/2,0) grid (6.0/2,2.4/2);
+        \draw (5.6/2,-0.3) node {{\color{black}\scriptsize{$W\in\mathbb{R}^{m\times r}$}}};
+        \draw (6.8/2,1.2/2) node {{\color{black}\large{$\times$}}};
+        \draw [very thick] (7.6/2,0.8/2) rectangle (11.2/2,1.6/2);
+        \filldraw [fill=green!20!white,draw=green!40!black] (7.6/2,0.8/2) rectangle (11.2/2,1.6/2);
+        \draw [step=0.4/2, very thin, color=gray] (7.6/2,0.8/2) grid (11.2/2,1.6/2);
+        \draw (9.4/2,0) node {{\color{red}\scriptsize{$X^{T}\in\mathbb{R}^{r\times f}$}}};
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:28}
+\end{figure}
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black,
+        title=更多模型例子可以参考开源项目：]
+    https://github.com/xinychen/awesome-latex-drawing
+\end{tcolorbox}
