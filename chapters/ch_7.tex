@@ -690,3 +690,381 @@ draw指令声明是否显现该形状的边框，并用draw=来声明边框颜�
     \caption{绘制后的图形}
     \label{tik:13}
 \end{figure}
+
+\section{高级功能}
+
+在本节中，我们将介绍除直线以外的复杂功能，如:非规则曲线、复杂函数绘图、区域填充、填写标签等等。
+
+\subsection{矩形、圆形、曲线}
+
+我们可以通过\texttt{\textbackslash{}draw (x,y) rectangle (w,h);}的方式绘制一个矩形，
+其左下角坐标位于点$(x,y)$处，长度为$𝑤$，高度为$ℎ$。类似地，我们也可以通过\texttt{\textbackslash{}draw (x,y) circle [radius=r];}的方式绘制一个圆形，其圆心落在点$(x,y)$处，半径为$𝑟$。除此之外，我们可以通过
+\texttt{\textbackslash{}draw (x,y) arc [radius=r, start angle=a1, end angle=a2]}
+的方式绘制一条弧线，它从点$(x,y)$处开始绘制，该弧线曲率半径为$𝑟$，其起始角度为所对应曲
+率圆的$𝑎1$处，终止角度为所对应曲率圆的$𝑎2$处。
+
+\emph{【例】}按上述介绍，绘制矩形、圆形以曲线：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+
+        \draw [red] (0,0) rectangle (1.5,1);
+        \draw [blue, ultra thick] (3,0.5) circle [radius=0.5];
+        \draw [green] (6,0) arc [radius=1.5, start angle=45, end angle= 100];
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:14}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \draw [red] (0,0) rectangle (1.5,1);
+        \draw [blue, ultra thick] (3,0.5) circle [radius=0.5];
+        \draw [green] (6,0) arc [radius=1.5, start angle=45, end angle= 100];
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:14}
+\end{figure}
+
+\subsection{平滑过渡曲线}
+
+在绘图时，一种不突兀地连接两条直线的方式是采用平滑过渡圆角/曲线。在本节中，我们将介绍两种
+平滑过渡曲线的绘制方法：绘制带圆角的曲线和绘制过渡曲线。
+
+\emph{【例】}绘制带圆角的坐标系：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+
+        \draw [<->, rounded corners, thick, purple] (0,2) -- (0,0) -- (3,0);
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:15}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \draw [<->, rounded corners, thick, purple] (0,2) -- (0,0) -- (3,0);
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:15}
+\end{figure}
+
+\emph{【例】}绘制过渡曲线：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+
+        \draw[<-, thick] (0,2) -- (0,0.5);
+        \draw[thick,red] (0,0.5) to [out=270,in=180] (0.5,0);
+        \draw[->, thick] (0.5,0) -- (3,0);
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:16}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \draw[<-, thick] (0,2) -- (0,0.5);
+        \draw[thick,red] (0,0.5) to [out=270,in=180] (0.5,0);
+        \draw[->, thick] (0.5,0) -- (3,0);
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:16}
+\end{figure}
+
+\emph{【例】}利用多段过渡曲线绘制S曲线：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+
+        \draw [<->,thick, blue] (0,0) to [out=90,in=180] (1,1) to [out=0,in=180] (3,0) to [out=0,in=-90] (4,1) ;
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:17}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \draw [<->,thick, blue] (0,0) to [out=90,in=180] (1,1) to [out=0,in=180] (3,0) to [out=0,in=-90] (4,1) ;
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:17}
+\end{figure}
+
+\subsection{根据函数绘制曲线}
+
+TikZ宏包的强大之处在于，它还提供了可供绘制函数的数学引擎。在此我们先给出一个示例，再详细
+讲解如何利用该宏包绘制函数所对应的曲线。
+
+\emph{【例】}利用函数绘制正弦曲线：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}[xscale=0.01,yscale=1]
+
+        \draw [<->] (0,1) -- (0,0) -- (370,0);
+        \draw[green, thick, domain=0:360] plot (\x, {sin(\x)}); % 这里需要注意带上{}
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:18}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[xscale=0.01,yscale=1]
+
+        \draw [<->] (0,1) -- (0,0) -- (370,0);
+        \draw[green, thick, domain=0:360] plot (\x, {sin(\x)}); % 这里需要注意带上{}
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:18}
+\end{figure}
+
+在上述例子中，\emph{domain}指令声明了横坐标$x$的范围。在本示例中，我们利用\emph{sin}函
+数绘制了一段正弦曲线。
+
+除了本示例中的正弦曲线\emph{sin}函数，我们还可以调用大量其他函数，在此列举一部分作为示例：
+\begin{itemize}
+    \item 阶乘函数：\texttt{factorial(\textbackslash{}x)}；
+    \item 平方根函数：\texttt{sqrt(\textbackslash{}x)}；
+    \item 幂函数：\texttt{pow(\textbackslash{}x,y)}；
+    \item 指数函数：\texttt{exp(\textbackslash{}x)}；
+    \item 对数函数：\texttt{ln(\textbackslash{}x)}、\texttt{log10(\textbackslash{}x)}、\texttt{log2(\textbackslash{}x)}；
+    \item 绝对值函数：\texttt{abs(\textbackslash{}x)}；
+    \item 取余函数：\texttt{mod(\textbackslash{}x,y)}（即求$𝑥$被$𝑦$除后的余数）；
+    \item 圆整函数：\texttt{round(\textbackslash{}x)}、\texttt{floor(\textbackslash{}x)}、\texttt{ceil(\textbackslash{}x)}；三角函数：\texttt{sin(\textbackslash{}x)}、\texttt{cos(\textbackslash{}x)}、\texttt{tan(\textbackslash{}x)}。
+          ；
+\end{itemize}
+
+值得注意的是，在三角函数中，通常默认自变量$𝑥$以度（°）为单位。若要采用弧度制，则需要将函
+数分别改写为\texttt{sin(\textbackslash{}x r)}、\texttt{cos(\textbackslash{}x r)}、\texttt{tan(\textbackslash{}x r)}。
+除了这部分常用函数之外，我们通常还会使用两个常数$e$($𝑒=2.718281828$)和$pi$($𝑝𝑖=3.141592654$)。
+
+通过组合以上基本函数，我们可以实现更复杂的函数功能。
+
+\emph{【例】}利用函数绘制正弦曲线：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}[yscale=1.5]
+
+        \draw [thick, ->] (0,0) -- (6.5,0);
+        \draw [thick, ->] (0,-1.1) -- (0,1.1);
+        \draw [green,domain=0:2*pi] plot (\x, {(sin(\x r)* ln(\x+1))/2});
+        \draw [red,domain=0:pi] plot (\x, {sin(\x r)});
+        \draw [blue, domain=pi:2*pi] plot (\x, {cos(\x r)*exp(\x/exp(2*pi))});
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:19}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[yscale=1.5]
+
+        \draw [thick, ->] (0,0) -- (6.5,0);
+        \draw [thick, ->] (0,-1.1) -- (0,1.1);
+        \draw [green,domain=0:2*pi] plot (\x, {(sin(\x r)* ln(\x+1))/2});
+        \draw [red,domain=0:pi] plot (\x, {sin(\x r)});
+        \draw [blue, domain=pi:2*pi] plot (\x, {cos(\x r)*exp(\x/exp(2*pi))});
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:19}
+\end{figure}
+
+\subsection{简单图形的区域填充}
+
+我们可以在简单图形的基础上进行区域填充。
+
+\emph{【例】}简单形状的区域填充：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}[yscale=1.5]
+
+        \draw [fill=red,ultra thick] (0,0) rectangle (1,1);
+        \draw [fill=red,ultra thick,red] (2,0) rectangle (3,1); % 这里的第二个red声明了区域周围边框线的颜色
+        \draw [blue, fill=blue] (4,0) -- (5,1) -- (4.75,0.15) -- (4,0);
+        \draw [fill] (7,0.5) circle [radius=0.1];
+        \draw [fill=orange] (9,0) rectangle (11,1);
+        \draw [fill=white] (9.25,0.25) rectangle (10,1.5);
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:20}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[yscale=1.5]
+
+        \draw [fill=red,ultra thick] (0,0) rectangle (1,1);
+        \draw [fill=red,ultra thick,red] (2,0) rectangle (3,1); % 这里的第二个red声明了区域周围边框线的颜色
+        \draw [blue, fill=blue] (4,0) -- (5,1) -- (4.75,0.15) -- (4,0);
+        \draw [fill] (7,0.5) circle [radius=0.1];
+        \draw [fill=orange] (9,0) rectangle (11,1);
+        \draw [fill=white] (9.25,0.25) rectangle (10,1.5);
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:20}
+\end{figure}
+
+如上例中的注释所提，我们可以通过声明图形边框线的颜色来对边框线进行个性化更改。若并不希望
+出现边框线，我们可以采用path命令替换\texttt{\textbackslash{}draw}命令。
+
+\emph{【例】}简单形状的区域填充：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}[yscale=1.5]
+
+        \path [fill=red,thick] (0,0) rectangle (1.5,1);
+        \draw [fill=red,thick] (2,0) rectangle (3.5,1);
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:21}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[yscale=1.5]
+
+        \path [fill=red,thick] (0,0) rectangle (1.5,1);
+        \draw [fill=red,thick] (2,0) rectangle (3.5,1);
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:21}
+\end{figure}
+
+\subsection{在图形中填写标签}
+
+在绘图时，在合适的位置加入适当的文字进行说明，对内容的表达具有很重要的作用。在本节中，我们
+将通过\texttt{\textbackslash{}node}来实现这一功能。
+
+\emph{【例】}在直角坐标系中插入文字：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}[yscale=1.5]
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \node at (1,1) {good};
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:22}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[yscale=1.5]
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \node at (1,1) {good};
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:22}
+\end{figure}
+
+在上例中，我们给出了一个简单的示范，我们将文字"good"的中心位置固定在坐标(1,1)点处。当然，
+我们也可以通过命令，控制文字与所声明坐标的相对位置，如：在坐标上方、下方、左侧、右侧。
+
+\emph{【例】}在(1,1)点下方插入文字：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \draw [fill] (1,1) circle [radius=0.025];
+        \node [below] at (1,1) {good};
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:23}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \draw [fill] (1,1) circle [radius=0.025];
+        \node [below] at (1,1) {good};
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:23}
+\end{figure}
+
+\emph{【例】}在(1,1)点上方、下方、左侧、右侧插入文字：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \draw [fill] (1,1) circle [radius=0.025];
+        \node [below] at (1,1) {below};
+        \node [above] at (1,1) {above};
+        \node [left] at (1,1) {left};
+        \node [right] at (1,1) {right};
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:24}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \draw [fill] (1,1) circle [radius=0.025];
+        \node [below] at (1,1) {below};
+        \node [above] at (1,1) {above};
+        \node [left] at (1,1) {left};
+        \node [right] at (1,1) {right};
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:24}
+\end{figure}
+
+\emph{【例】}在(1,1)点处插入数学符号$\theta$：
+\begin{lstlisting}[language=TeX]
+    \begin{tikzpicture}
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \node [below right] at (2,0) {$x$};
+        \node [left] at (0,2) {$y$};
+        \draw[fill] (1,1) circle [radius=.5pt];
+        \node[above right] at (1,1) {$\theta$};
+    
+    \end{tikzpicture}
+\end{lstlisting}
+
+编译上述代码，得到图形如图\ref{tik:25}所示。
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        \draw [thick, <->] (0,2) -- (0,0) -- (2,0);
+        \node [below right] at (2,0) {$x$};
+        \node [left] at (0,2) {$y$};
+        \draw[fill] (1,1) circle [radius=.5pt];
+        \node[above right] at (1,1) {$\theta$};
+
+    \end{tikzpicture}
+    \caption{绘制后的图形}
+    \label{tik:25}
+\end{figure}
+
