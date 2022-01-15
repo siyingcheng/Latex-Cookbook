@@ -1,0 +1,245 @@
+\chapter{幻灯片制作}
+
+2003年，柏林工业大学的博士生Till Tantau发布了一款用于制作演示文稿的工具Beamer。Beamer
+是Till Tantau利用业余时间开发的，他的初衷是方便自己使用LaTeX制作幻灯片，不过出乎意料的是，
+后来Beamer的受欢迎程度完全超出了他的想象。在Till Tantau开发Beamer期间，他收到了很多人的
+建议和反馈，这些都直接推动了开发工作。2010年，Till Tantau将Beamer交由他人维护和管理。
+
+Beamer作为LaTeX的一种特殊文档类型，它的出现无疑丰富了LaTeX制作演示文稿的功能。虽然Beamer
+并非LaTeX中第一款用于制作演示文稿的工具，但直到今日，Beamer却是最受大家欢迎的一款。Beamer
+的使用方式简单灵活，只需设定LaTeX文档类型为beamer，便可开始创作。同时，Beamer提供了大量
+的幻灯片模板，这些模板包含了丰富多彩的视觉效果，创作者可以直接使用。毫不夸张地说，Beamer
+的出现极大地提高了人们使用LaTeX制作幻灯片的热情。值得一提的是，在2005年，Till Tantau又
+发布了一款非常便捷的LaTeX绘图工具TikZ。TikZ不仅可以辅助Beamer幻灯片的制作，也可以应用于
+科技文档中的各类绘图任务。
+
+Beamer是随着LaTeX的发展而衍生出来的一种特殊文档类型，也常常被看作是一个功能强大的宏包，
+可以支撑科研工作者制作幻灯片的需求。使用Beamer制作幻灯片与Office办公软件（如PowerPoint）
+完全不同，从本质上来说，使用Beamer制作幻灯片其实和LaTeX中的其他文档类型没有太大区别：
+代码结构都是由前导代码和主体代码组成，完全沿用了LaTeX的文档环境与基本命令。因此，使用
+Beamer制作幻灯片也有一个缺点，那就是必须掌握LaTeX制作文档的基础。
+
+在呈现方式上，Beamer制作的幻灯片最终会在LaTeX中被编译成PDF文档，在不同的系统上打开幻灯
+片时不存在不兼容等问题。在功能上，使用Beamer制作幻灯片时，我们可以对常规文本、公式、列
+表、图表甚至动画效果、视觉效果和主题样式等进行调整，最终达到想要的视觉效果。
+
+事实上，LaTeX中用于制作演示文稿的工具并非只有Beamer，但相比其他工具，Beamer具有如下优点：
+\begin{itemize}
+    \item 拥有海量的模板和丰富的主题样式，且使用方便；
+    \item 能满足制作幻灯片的功能性需求，从创建标题、文本和段落到插入图表、参考文献等操作，且与常规文档中的使用规则几乎一致；
+    \item 使用方式简单，在主体代码中使用frame环境就能创建一页幻灯片。
+\end{itemize}
+
+本章主要包括以下内容：Beamer的基本使用方式、在演示稿中添加动画效果、添加文本框等框元素、
+设置主题样式、插入程序源代码、添加参考文献、插入表格、插入与调整图片。
+
+\section{基本介绍}
+
+Beamer是一款灵活的幻灯片制作工具，我们可以在LaTeX中将它作为一种文档类型进行使用。本节主
+要介绍Beamer的基本使用方式，包括创建幻灯片、创建章节、生成目录等操作。
+
+\subsection{Beamer简介}
+
+在上述章节中，我们主要介绍了LaTeX中比较常用的文档类型article，可用于创建期刊论文、技术
+报告等。本章中我们将介绍另一种文档类型：beamer。Beamer的开发者Till Tantau说，“BEAMER is a LATEX class for creating presentations”，显然，Beamer是一种用于制作演示文稿或者幻灯片的文档类型。
+
+从使用角度来说，beamer文档类型和book、article等文档类型一样，都是在以\emph{.tex}为拓展名的文件
+上编写程序和文档内容，然后再通过编译生成PDF文档。当然，Beamer也兼具常用演示文稿如PowerPoint
+的主要功能，可以自行设置动态效果、甚至使用主题样式修改幻灯片的外观。
+
+与其他文档类型相似的是，beamer文档类型中拥有很多视觉效果极好的模板，这些模版已经设置好了
+特定的主题样式，有时候甚至只需要加入创作内容即可得到心仪的幻灯片。使用Beamer制作幻灯片时，
+我们可以体验LaTeX排版论文的几乎所有优点，公式排版、图表排版、参考文献设置等也非常便捷，有
+时候甚至可以将常规文档中的内容直接复制到Beamer文档类型中，稍加调整便能得到样式合适的幻灯
+片。另外，我们也可以根据需要，在前导代码中使用全局设置调整幻灯片的主题样式、颜色主题、字体主题等。
+
+使用beamer制作幻灯片仍然遵循着LaTeX的一般使用方法，代码结构分为前导代码和主体代码，前导
+代码除了申明文档类型为beamer外，即\texttt{\textbackslash{}documentclass\{beamer\}}，
+调用宏包等与常规文档的制作基本是一致的。
+
+\emph{【例】}使用beamer文档类型创建一个简单的幻灯片：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \title{A Simple Beamer Example}
+    \author{Author's Name}
+    \institute{Author's Institute}
+    \date{\today} 
+
+    \begin{document}
+
+    \frame{\titlepage}
+
+    \end{document}
+\end{lstlisting}
+
+在例子中，\texttt{\textbackslash{}title\{\}}、\texttt{\textbackslash{}author\{\}}和
+\texttt{\textbackslash{}date\{\}}这几个命令分别对应着标题、作者以及日期，一般放在标题
+页，如果想在幻灯片首页显示这些信息，可以在使用\texttt{\textbackslash{}frame\{\textbackslash{}titlepage\}}
+命令新建标题页。
+
+总结来说，标题及作者信息对应的特定命令包括：
+\begin{itemize}
+    \item 标题：对应的命令为\texttt{\textbackslash{}title[A]\{B\}}，其中，位置A一般填写的是简化标题，而位置B则填写的是完整标题，这里的完整标题有时候可能会很长。
+    \item 副标题：对应的命令为\texttt{\textbackslash{}subtitle[A]\{B\}}，其中，位置A一般填写的是简化副标题，而位置B则填写的是完整副标题，这里的完整副标题有时候也可能会很长。
+    \item 作者：对应的命令为\texttt{\textbackslash{}author[A]\{B\}}，用法类似。
+    \item 日期：对应的命令为\texttt{\textbackslash{}date[A]\{B\}}，用法类似。
+    \item 单位：对应的命令为\texttt{\textbackslash{}institution[A]\{B\}}，用法类似。
+\end{itemize}
+
+我们知道，在常规文档article中，申明文档类型时可以指定正文字体大小，在文档类型的申明语句
+\texttt{\textbackslash{}documentclass\{beamer\}}中，我们也可以通过特定选项调整幻灯片
+内容的字体大小，一般默认为11pt，我们也可以根据需要使用8pt、9pt、10pt、12pt、14pt、17pt、20pt
+字体大小，例如使用\texttt{\textbackslash{}documentclass[12pt]\{beamer\}}可以将字体大小设置为12pt。
+
+制作幻灯片时，有时候为了达到特定的投影效果，会设置幻灯片的长宽比例，比较常用的两种长宽比
+例分别为4:3和16:9。一般来说，Beamer制作出来的幻灯片默认大小为长128毫米、宽96毫米，对应
+着默认的长宽比例4:3，有时候，我们也可以根据需要将幻灯片的长宽比例调整为16:9、14:9、5:4
+甚至3:2。
+
+\emph{【例】}使用beamer文档类型创建一个简单的幻灯片，将幻灯片的长宽比例调整为16:9：
+\begin{lstlisting}[language=TeX]
+    \documentclass[aspectratio = 169]{beamer}
+
+    \title{A Simple Beamer Example}
+    \author{Author's Name}
+    \institute{Author's Institute}
+    \date{\today} 
+
+    \begin{document}
+
+    \frame{\titlepage}
+
+    \end{document}
+\end{lstlisting}
+
+在例子中，选项aspectratio对应着长宽比例，数字169对应着长宽比例16:9，类似地，149、54、32
+分别对应着长宽比例14:9、5:4、3:2。
+
+\subsection{创建幻灯片}
+
+frame这个词在计算机编程中非常常见，这一英文单词的字面意思可以翻译为“帧”，假如我们将幻灯
+片视作“连环画”，是由一页一页单独的幻灯片组成，那么每一页幻灯片则对应着连环画中的帧。使用
+Beamer制作幻灯片时，幻灯片就是用frame环境创建出来的，然而，有时候为了让幻灯片产生动画视
+觉效果，Beamer中的帧（即frame）与每页幻灯片并非严格意义上的一一对应。
+
+在beamer文档类型中，制作幻灯片的环境一般为frame。在document环境构成的主体代码中，一个frame
+环境一般对应着一页幻灯片。
+
+每张幻灯片一般都有一个标题，有时也会有一个副标题。若要创建标题和副标题，用户可以通过使用
+\texttt{\textbackslash{}begin{frame}\{\}\{\}}的命令格式，其中第一、二个\{\}中分别为
+幻灯片的标题和副标题；此外，用户也可以通过在frame环境中，使用\texttt{\textbackslash{}frametitle\{\}}
+和\texttt{\textbackslash{}framesubtitle\{\}}命令分别创建标题和副标题。由此创建的标题
+和副标题一般位于幻灯片的顶部，标题相对于副标题字体稍大一点。
+
+实际上，Beamer与其他文档类型并没有特别大的差异，常规文档中的基本列表环境都可以在Beamer中
+使用，包括：有序列表环境enumerate、无序列表环境itemize以及解释性列表环境description。
+
+\emph{【例】}使用beamer文档类型创建一个简单的幻灯片：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usefonttheme{professionalfonts}
+
+    \begin{document}
+
+    \begin{frame}
+    \frametitle{Parent function}
+    \framesubtitle{A short list}
+
+    Please check out the following parent function list.
+    \begin{enumerate}
+    \item $y=x$
+    \item $y=|x|$
+    \item $y=x^{2}$
+    \item $y=x^{3}$
+    \item $y=x^{b}$
+    \end{enumerate}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+有时为了简化代码，也可以直接用\texttt{\textbackslash{}frame\{\}}命令取代frame环境囊括
+幻灯片内容。
+
+\emph{【例】}使用beamer文档类型中的frame简化环境命令创建一个简单的幻灯片：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usefonttheme{professionalfonts}
+
+    \begin{document}
+
+    \frame{
+    \frametitle{Parent function}
+    \framesubtitle{A short list}
+
+    Please check out the following parent function list.
+    \begin{enumerate}
+    \item $y=x$
+    \item $y=|x|$
+    \item $y=x^{2}$
+    \item $y=x^{3}$
+    \item $y=x^{b}$
+    \end{enumerate}
+
+    \end{document}
+\end{lstlisting}
+
+使用Beamer制作幻灯片时，幻灯片内容会在标题下方自动居中对齐，如果想调整对其方式，可以在frame
+环境中设置参数，具体而言，有以下几种：
+\begin{itemize}
+    \item [c] 居中对齐，字母c对应着英文单词center的首字母，一般而言，[c]作为默认参数，无需专门设置；
+    \item [t] 让幻灯片内容进行顶部对齐，其中，字母t对应着英文单词top的首字母；
+    \item [b] 让幻灯片内容进行底部对齐，其中，字母b对应着英文单词bottom的首字母。
+\end{itemize}
+
+\emph{【例】}使用beamer文档类型中的frame环境创建一个简单的幻灯片，并让幻灯片内容进行顶部对齐：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usefonttheme{professionalfonts}
+
+    \begin{document}
+
+    \begin{frame}[t]
+    \frametitle{Parent function}
+    \framesubtitle{A short list}
+
+    Please check out the following parent function list.
+    \begin{enumerate}
+    \item $y=x$
+    \item $y=|x|$
+    \item $y=x^{2}$
+    \item $y=x^{3}$
+    \item $y=x^{b}$
+    \end{enumerate}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+上面例子介绍了如何创建单页幻灯片，类似地，可以使用多个frame环境制作多页幻灯片。
+
+\emph{【例】}使用beamer文档类型中的frame环境创建一个多页的幻灯片：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \title{The title}
+    \subtitle{The subtitle}
+    \author{Author's name}
+
+    \begin{document}
+
+    \begin{frame}
+        \titlepage % 创建标题页
+    \end{frame}
+
+    \begin{frame}
+    \frametitle{Frame title}
+    The body of the frame.
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
