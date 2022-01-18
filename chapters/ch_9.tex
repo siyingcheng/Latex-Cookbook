@@ -769,3 +769,277 @@ LaTeX还提供了其它命令可以实现类似的动画效果，同样可以在
     \end{document}
 \end{lstlisting}
 
+\section{块与盒子——添加框元素}
+
+在幻灯片中框选文本或图片等元素是常见的操作，可以对幻灯片内容进行划分或者突出重点内容。在Beamer中，可以通过添加区块环境（block environments）或创建盒子（box）结构的方式将文本等元素放在各式各样的框中。
+
+\subsection{区块环境}
+
+Beamer提供了区块环境（block）可用于编辑文本内容，通过block环境创建的文本内容将放置在一个框中，使其与普通文本区分开。根据内容样式和使用目的的不同，包括三种区块环境：
+\begin{itemize}
+    \item block：一般性区块环境。使用语法为\texttt{\textbackslash{}begin\{block\}<指定显示步骤>\{设置标题\}} \texttt{\textbackslash{}end\{block\}}；
+    \item alertblock：警示性区块环境，主要用于创建警示信息。使用语法为\texttt{\textbackslash{}begin\{alertblock\}<指定显示步骤>\{设置标题\}}  \texttt{\textbackslash{}end\{alertblock\}}；
+    \item exampleblock：示例性区块环境，主要用于创建示例文本。使用语法为\texttt{\textbackslash{}begin\{exampleblock\}<指定显示步骤>\{设置标题\}} \texttt{\textbackslash{}end\{exampleblock\}}。
+\end{itemize}
+
+在三种区块环境的开始命令中（如：\texttt{\textbackslash{}begin\{block\}<指定显示步骤>\{设置标题\}}，“<>”可用于指定当前区块内容显示的步骤，实现动画效果；第二个“\{\}”可用于设置该区块内容的标题，标题将显示在区块内容的上面。此外，区块内容的样式由使用的Beamer主题样式决定。
+
+\emph{【例】}在beamer文档类型中使用block环境插入一个一般文本框、使用alertblock环境插入一个警示性文本框、以及使用exampleblock环境插入一个示例性文本框：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usefonttheme{professionalfonts}
+    \usetheme{Copenhagen}
+
+    \begin{document}
+
+    \begin{frame}
+    \begin{block}<1>{Block1}
+    This is a generic block.
+    \end{block}
+
+    \begin{alertblock}<1>{Block2}
+    This is an alert block.
+    \end{alertblock}
+
+    \begin{exampleblock}<1>{Block3}
+    This is an example block.
+    \end{exampleblock}
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+\subsection{定理类环境}
+
+对于定理、引理、推论、示例等定理类文本，除了可以考虑使用区块环境创建之外，Beamer也预定义了相应的命令环境可供使用，包括：
+\begin{itemize}
+    \item definition：定义环境。使用语法为\texttt{\textbackslash{}begin\{definition\}<指定显示步骤>\{设置名称\}} \texttt{\textbackslash{}end\{definition\}}；
+    \item fact：事实环境。使用语法为\texttt{\textbackslash{}begin\{fact\}<指定显示步骤>\{设置名称\}} \texttt{\textbackslash{}end\{fact\}}；
+    \item theorem：定理环境。使用语法为\texttt{\textbackslash{}begin\{theorem\}<指定显示步骤>\{设置名称\}} \texttt{\textbackslash{}end\{theorem\}}；
+    \item lemma：引理环境。使用语法为\texttt{\textbackslash{}begin\{lemma\}<指定显示步骤>\{设置名称\}} \texttt{\textbackslash{}end\{lemma\}}；
+    \item proof：证明环境。使用语法为\texttt{\textbackslash{}begin\{proof\}<指定显示步骤>\{设置名称\}} \texttt{\textbackslash{}end\{proof\}}；
+    \item corollary：推论环境。使用语法为\texttt{\textbackslash{}begin\{corollary\}<指定显示步骤>\{设置名称\}} \texttt{\textbackslash{}end\{corollary\}}；
+    \item example：示例环境等。使用语法为\texttt{\textbackslash{}begin\{example\}<指定显示步骤>\{设置名称\}} \texttt{\textbackslash{}end\{example\}}。
+\end{itemize}
+
+定理类环境的使用与区块环境类似：使用定理类环境可以创建文本框；开始命令中的“<>”可用于指定当前内容显示的步骤，实现动画效果；第二个“\{\}”可用于设置该定理类内容的名称。不同于区块环境的是：定理类内容的标题默认为对应的定理类型，如在definition环境下，标题即为“Definition”，显示在定理类内容的上方；而定理类内容的名称允许用户自行定制，通常位于定理类内容的左侧，以较大的斜体字标示。
+
+\emph{【例】}在beamer文档类型中使用definition环境插入一个定义文本框、使用theorem环境插入一个定理文本框、以及使用example环境插入一个示例文本框：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usefonttheme{professionalfonts}
+    \usetheme{Copenhagen}
+
+    \begin{document}
+
+    \begin{frame}{Definition, theorem and example}
+    \begin{definition}<1>{Definition Demo}
+    This is a definition.
+    \end{definition}
+
+    \begin{theorem}<1>{Theorem Demo}
+    This is a theorem.
+    \end{theorem}
+
+    \begin{example}<1>{Example Demo}
+    This is an example.
+    \end{example}
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+\subsection{Beamer中的盒子}
+
+Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本、图片等）加上外框，或者说创建盒子（box）。常用的语法包括调用\texttt{\textbackslash{}fbox\{\}}命令绘制简单矩形框、或调用fancybox宏包提供的命令（\texttt{\textbackslash{}shadowbox}，\texttt{\textbackslash{}doublebox}，\texttt{\textbackslash{}ovalbox}和\texttt{\textbackslash{}Ovalbox}）创建不同类型的外框。
+
+\subsubsection{使用fbox命令}
+
+使用\texttt{\textbackslash{}fbox\{\}}命令可以创建简单的矩形盒子，调用以下命令可以对盒子参数进行修改：
+\begin{itemize}
+    \item \texttt{\textbackslash{}setlength\{\textbackslash{}fboxsep\}\{\}}：设置盒子内的元素与其边框之间的距离，默认值为3pt；
+    \item \texttt{\textbackslash{}setlength\{\textbackslash{}fboxrule\}\{\}}：设置盒子边框线的粗细，默认值为0.4pt。
+\end{itemize}
+
+此外，盒子之间的行间距可以使用\texttt{\textbackslash{}vskip}命令进行修改。
+
+\emph{【例】}在beamer文档类型中使用fbox命令三个文本盒子、使用setlength命令设置不同参数、并使用vskip命令设置行间距：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \begin{document}
+
+    \begin{frame}
+    \setlength{\fboxsep}{3pt}
+    \setlength{\fboxrule}{0.4pt}
+    \fbox{This is our 1st text box.}
+    \vskip 5mm
+    \setlength{\fboxsep}{6pt}
+    \setlength{\fboxrule}{0.8pt}
+    \fbox{This is our 2nd text box.}
+    \vskip 5mm
+    \setlength{\fboxsep}{9pt}
+    \setlength{\fboxrule}{1.2pt}
+    \fbox{This is our 3rd text box.}
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+对于较短的文本内容，使用\texttt{\textbackslash{}fbox\{\}}命令可以实现较好的效果。但由于在\texttt{\textbackslash{}fbox\{\}}命令中换行符\texttt{\textbackslash{}\textbackslash{}}不起作用，因此如果要对段落文本或长文本创建盒子，需要先将文本内容放置到段落环境中，然后再调用\texttt{\textbackslash{}fbox\{\}}命令。其中，\texttt{\textbackslash{}begin\{minipage\}[外部对齐方式][高度][内部对齐方式]\{宽度\}\{内容\}} \texttt{\textbackslash{}end\{minipage\}}环境和\texttt{\textbackslash{}parbox[外部对齐][高度][内部对齐]\{宽度\}\{内容\}}命令是比较常用的处理段落的语法。
+
+\emph{【例】}在beamer文档类型中使用fbox命令和minipage环境创建段落文本盒子：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \begin{document}
+
+    \begin{frame}
+
+    \fbox{
+    \begin{minipage}[c][1.8cm][t]{5cm}
+    {This is our paragraph text box. This is our paragraph text box. This is our paragraph text box. This is our paragraph text box.}
+    \end{minipage}}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+类似地，也可以使用\texttt{\textbackslash{}parbox}命令处理段落文本，与minipage环境类似，该命令也能设置外部对齐方式、高度、内部对齐方式、以及宽度参数。用\texttt{\textbackslash{}parbox}命令改写上例代码，编译得到相同的结果，具体语句如下例所示：
+
+\emph{【例】}在beamer文档类型中使用fbox命令和parbox命令创建段落文本盒子：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \begin{document}
+
+    \begin{frame}
+
+    \fbox{
+    \parbox[c][1.8cm][t]{5cm}
+    {This is our paragraph text box. This is our paragraph text box. This is our paragraph text box. This is our paragraph text box.}}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+当然，除了为文本内容创建盒子之外，\texttt{\textbackslash{}fbox}命令也能为图片等非文本内容创建盒子。
+
+\emph{【例】}在beamer文档类型中使用figure环境插入三张图片，并使用fbox命令将三种图片装入一个盒子中：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \begin{document}
+
+    \begin{frame}
+
+    \begin{figure}
+    \centering
+    \fbox{
+    \includegraphics[width=0.2\linewidth]{redflower.png}
+    \includegraphics[width=0.2\linewidth]{yellowflower.png}
+    \includegraphics[width=0.2\linewidth]{blueflower.png}
+    }
+    \caption{Here is a figure box.}
+    \end{figure}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+\subsubsection{调用fancybox宏包}
+
+在fancybox宏包中，提供了以下四个命令用来创建不同样式的盒子：
+\begin{itemize}
+    \item \texttt{\textbackslash{}shadowbox\{\}}：创建阴影盒子；
+    \item \texttt{\textbackslash{}doublebox\{\}}：创建两重线盒子；
+    \item \texttt{\textbackslash{}ovalbox\{\}}：创建细边线椭圆盒子；
+    \item \texttt{\textbackslash{}Ovalbox\{\}}：创建粗边线椭圆盒子。
+\end{itemize}
+
+\emph{【例】}在beamer文档类型中使用shadowbox，doublebox，ovalbox和Ovalbox命令创建不同样式的盒子：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usepackage{fancybox}
+    \begin{document}
+
+    \begin{frame}
+
+    \setlength{\fboxsep}{5pt}
+    \setlength{\fboxrule}{2pt}
+
+    \shadowbox{This is a shadowbox.}
+
+    \vskip 5mm
+
+    \doublebox{This is a doublebox.}
+
+    \vskip 5mm
+
+    \ovalbox{This is an ovalbox.}
+
+    \vskip 5mm
+
+    \Ovalbox{This is an Ovalbox.}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+类似地，也可以使用上述命令为图片等非文本元素创建不同样式的盒子。
+
+\emph{【例】}在beamer文档类型中使用figure环境插入四张图片，使用shadowbox，doublebox，ovalbox和Ovalbox命令分别为每张图片创建盒子，并使用parbox命令把图片和标题均包含在盒子中：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usepackage{fancybox}
+    \begin{document}
+
+    \setlength{\fboxsep}{5pt}
+    \setlength{\fboxrule}{2pt}
+
+    \begin{frame}
+    \begin{figure}
+    \centering
+    \shadowbox{
+    \parbox[c][6cm][t]{5cm}{
+    \includegraphics[width=1\linewidth]{redflower.png}
+    \caption{A red flower.}}}
+    \end{figure}
+    \end{frame}
+
+    \begin{frame}
+    \begin{figure}
+    \centering
+    \doublebox{
+    \parbox[c][6cm][t]{5cm}{
+    \includegraphics[width=1\linewidth]{yellowflower.png}
+    \caption{A yellow flower.}}}
+    \end{figure}
+    \end{frame}
+
+    \begin{frame}
+    \begin{figure}
+    \centering
+    \ovalbox{
+    \parbox[c][6cm][t]{5cm}{
+    \includegraphics[width=1\linewidth]{blueflower.png}
+    \caption{A blue flower.}}}
+    \end{figure}
+    \end{frame}
+
+    \begin{frame}
+    \begin{figure}
+    \centering
+    \Ovalbox{
+    \parbox[c][6cm][t]{5cm}{
+    \includegraphics[width=1\linewidth]{magentaflower.png}
+    \caption{A magenta flower.}}}
+    \end{figure}
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
