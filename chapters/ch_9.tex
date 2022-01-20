@@ -1773,11 +1773,10 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
         y = np.zeros(100)
         for x in range(1, 101):
             y[x] = x ** b
-        \end{lstlisting}
 
-\end{frame}
+    \end{frame}
 
-\end{document}
+    \end{document}
 \end{lstlisting}
 
 编译上述代码，得到幻灯片如图\ref{fig:938}所示。
@@ -1898,3 +1897,81 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
 \end{lstlisting}
 
 \section{插入表格}
+
+在Beamer幻灯片中插入表格的规则与常规文档一致，可以使用tabular环境创建表格内容，或者在tabular环境外额外嵌套一层table环境以创建标题、索引标签等元素，当然对于合并单元格、创建三线表、创建彩色表格等操作也是类似的（详见本书第5章）。
+
+\emph{【例】}在beamer文档类型中使用table环境和tabular环境制作一个简单表格：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \begin{document}
+
+    \begin{frame}
+
+    The created table\ref{tab:table_a} is shown as follows.
+    \begin{table}[bt]
+    \caption{A table in Beamer}
+    \label{tab:table_a}
+        \begin{tabular}{|l|c|c|} \hline
+        \textbf{Code Structure} & \textbf{Component} & \textbf{Others} \\
+        \hline
+        preamble & figures & title \\
+        body & tables & footline \\
+        & equations & list \\
+        & normal texts & block \\
+        \hline
+        \end{tabular}
+    \end{table}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到幻灯片如图\ref{fig:939}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{images/ch_9/eg1.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:939}
+\end{figure}
+
+在Beamer中，我们可以使用前面介绍的动画效果命令（如\texttt{uncover\{\}}）为表格添加动画，让表格中的各单元格内容分步呈现。
+
+\emph{【例】}在beamer文档类型中使用table环境制作一个简单表格，同时使用uncover设置动画格式：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \begin{document}
+
+    \begin{frame}
+
+    \begin{table}[bt]
+    \begin{tabular}{|l|c|c|} \hline
+    \textbf{Code Structure} & \textbf{Component} & \textbf{Others} \\
+    \hline
+    \uncover<1->{preamble} & \uncover<2->{figures} & \uncover<3->{title} \\
+    \uncover<1->{body} & \uncover<2->{tables} & \uncover<3->{footline} \\
+    & \uncover<2->{equations} & \uncover<3->{list} \\
+    & \uncover<2->{normal texts} & \uncover<3->{block} \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到幻灯片如图\ref{fig:940}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/example14_1.png}
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/example14_2.png}
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/example14_3.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:940}
+\end{figure}
+
