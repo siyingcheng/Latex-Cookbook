@@ -985,6 +985,15 @@ Beamer提供了区块环境（block）可用于编辑文本内容，通过block�
     \end{document}
 \end{lstlisting}
 
+编译后得到的幻灯片如图\ref{fig:917}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\linewidth]{images/ch_9/NEWexample05.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:917}
+\end{figure}
+
 \subsection{定理类环境}
 
 对于定理、引理、推论、示例等定理类文本，除了可以考虑使用区块环境创建之外，Beamer也预定义了相应的命令环境可供使用，包括：
@@ -1025,6 +1034,16 @@ Beamer提供了区块环境（block）可用于编辑文本内容，通过block�
     \end{document}
 \end{lstlisting}
 
+编译后得到的幻灯片如图\ref{fig:918}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\linewidth]{images/ch_9/NEWexample04.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:918}
+\end{figure}
+
+
 \subsection{Beamer中的盒子}
 
 Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本、图片等）加上外框，或者说创建盒子（box）。常用的语法包括调用\texttt{\textbackslash{}fbox\{\}}命令绘制简单矩形框、或调用fancybox宏包提供的命令（\texttt{\textbackslash{}shadowbox}，\texttt{\textbackslash{}doublebox}，\texttt{\textbackslash{}ovalbox}和\texttt{\textbackslash{}Ovalbox}）创建不同类型的外框。
@@ -1062,6 +1081,15 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
     \end{document}
 \end{lstlisting}
 
+编译后得到的幻灯片如图\ref{fig:919}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\linewidth]{images/ch_9/NEWexample06new.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:919}
+\end{figure}
+
 对于较短的文本内容，使用\texttt{\textbackslash{}fbox\{\}}命令可以实现较好的效果。但由于在\texttt{\textbackslash{}fbox\{\}}命令中换行符\texttt{\textbackslash{}\textbackslash{}}不起作用，因此如果要对段落文本或长文本创建盒子，需要先将文本内容放置到段落环境中，然后再调用\texttt{\textbackslash{}fbox\{\}}命令。其中，\texttt{\textbackslash{}begin\{minipage\}[外部对齐方式][高度][内部对齐方式]\{宽度\}\{内容\}} \texttt{\textbackslash{}end\{minipage\}}环境和\texttt{\textbackslash{}parbox[外部对齐][高度][内部对齐]\{宽度\}\{内容\}}命令是比较常用的处理段落的语法。
 
 \emph{【例】}在beamer文档类型中使用fbox命令和minipage环境创建段落文本盒子：
@@ -1081,6 +1109,15 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
 
     \end{document}
 \end{lstlisting}
+
+编译后得到的幻灯片如图\ref{fig:920}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\linewidth]{images/ch_9/NEWexample07.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:920}
+\end{figure}
 
 类似地，也可以使用\texttt{\textbackslash{}parbox}命令处理段落文本，与minipage环境类似，该命令也能设置外部对齐方式、高度、内部对齐方式、以及宽度参数。用\texttt{\textbackslash{}parbox}命令改写上例代码，编译得到相同的结果，具体语句如下例所示：
 
@@ -1126,6 +1163,15 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
     \end{document}
 \end{lstlisting}
 
+编译后得到的幻灯片如图\ref{fig:921}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\linewidth]{images/ch_9/NEWexample08.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:921}
+\end{figure}
+
 \subsubsection{调用fancybox宏包}
 
 在fancybox宏包中，提供了以下四个命令用来创建不同样式的盒子：
@@ -1165,6 +1211,15 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
 
     \end{document}
 \end{lstlisting}
+
+编译后得到的幻灯片如图\ref{fig:922}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\linewidth]{images/ch_9/NEWexample09.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:922}
+\end{figure}
 
 类似地，也可以使用上述命令为图片等非文本元素创建不同样式的盒子。
 
@@ -1219,6 +1274,18 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
 
     \end{document}
 \end{lstlisting}
+
+编译后得到的幻灯片如图\ref{fig:923}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample11_1.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample11_2.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample11_3.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample11_4.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:923}
+\end{figure}
 
 \section{设置主题样式}
 
