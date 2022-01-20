@@ -651,6 +651,19 @@ Beamer制作幻灯片时，幻灯片就是用frame环境创建出来的，然而
     \end{document}
 \end{lstlisting}
 
+编译后得到的幻灯片如图\ref{fig:912}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/example6_1.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/example6_2.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/example6_3.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/example6_4.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/example6_5.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:912}
+\end{figure}
+
 \subsection{item<>命令}
 
 对于列表环境中的各项内容，也可以通过设置选项指定在该幻灯片的哪些步骤中显示该项内容，从而更加灵活地定制动画效果。具体是使用\texttt{\textbackslash{}item<>}，其中<>用于指定显示步骤，对于没有指定<>显示范围的内容项默认会在所有幻灯片页面中显示。具体而言，<>中的内容存在以下四种格式：
@@ -692,6 +705,18 @@ Beamer制作幻灯片时，幻灯片就是用frame环境创建出来的，然而
 
     \end{document}
 \end{lstlisting}
+
+编译后得到的幻灯片如图\ref{fig:913}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample7_1.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample7_2.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample7_3.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample7_4.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:913}
+\end{figure}
 
 \emph{【例】}在beamer文档类型中使用item定制内容显示范围并使用color对内容项进行高亮显示：
 \begin{lstlisting}[language=TeX]
@@ -776,6 +801,19 @@ LaTeX还提供了其它命令可以实现类似的动画效果，同样可以在
 
         \end{document}
     \end{lstlisting}
+
+          编译后得到的幻灯片如图\ref{fig:914}所示。
+
+          \begin{figure}[htbp]
+              \centering
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample2_1.png}
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample2_2.png}
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample2_3.png}
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample2_4.png}
+              \caption{编译后的幻灯片效果}
+              \label{fig:914}
+          \end{figure}
+
     \item \texttt{\textbackslash{}invisible<>\{\}}：该命令的作用效果与\texttt{\textbackslash{}visible<>\{\}}相反，用于指定内容在当前幻灯片页放映的第几步不可见。但与\texttt{\textbackslash{}visible<>\{\}}相同的是，使用\texttt{\textbackslash{}invisible<>\{\}}命令时，不可见的内容仍占据着对应的位置，不可用于显示其它内容。
           \emph{【例】}在beamer文档类型中使用invisible命令实现一个简单的动画效果：
           \begin{lstlisting}[language=TeX]
@@ -804,6 +842,18 @@ LaTeX还提供了其它命令可以实现类似的动画效果，同样可以在
 
         \end{document}
     \end{lstlisting}
+
+          编译后得到的幻灯片如图\ref{fig:915}所示。
+
+          \begin{figure}[htbp]
+              \centering
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample3_1.png}
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample3_2.png}
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample3_3.png}
+              \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample3_4.png}
+              \caption{编译后的幻灯片效果}
+              \label{fig:915}
+          \end{figure}
 \end{itemize}
 
 \subsection{自动计数}
@@ -882,6 +932,18 @@ LaTeX还提供了其它命令可以实现类似的动画效果，同样可以在
 
     \end{document}
 \end{lstlisting}
+
+编译后得到的幻灯片如图\ref{fig:916}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample10_1.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample10_2.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample10_3.png}
+    \includegraphics[width = 0.45\linewidth]{images/ch_9/NEWexample10_4.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:916}
+\end{figure}
 
 \section{块与盒子——添加框元素}
 
