@@ -2357,3 +2357,210 @@ Beamer也支持通过绘制外框的方式为幻灯片的元素（如，文本�
     \caption{编译后的幻灯片效果}
     \label{fig:947}
 \end{figure}
+
+\subsubsection{文字浮于图片上方}
+
+图片浮于文字上方是另一种常用的图文布局方式。为此，读者需要使用\texttt{\textbackslash{}usepackage\{tikz\}}语句调用tikz宏包，在tikzpicture环境中使用\texttt{\textbackslash{}node}命令创建一个内容为插入图片的节点、一个内容为文本的节点，并将文本节点的位置设为图片节点的中央。
+
+\emph{【例】}在beamer文档类型中，使用tikzpicture环境创建一个内容为插入图片的节点、一个内容为文本的节点，并设置第一个节点的名称和图片透明度、第二个节点的文本样式和位置：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    % 调用tikz宏包
+    \usepackage{tikz}
+
+    \begin{document}
+    \begin{frame}{Frame1}
+
+    \begin{tikzpicture}
+    % 创建一个内容为图片的节点，节点名为myfirstfigure
+    \node(myfirstfigure)[opacity=0.4]
+    {
+        \includegraphics[width=0.3\linewidth]{greyflower.png}
+        \includegraphics[width=0.3\linewidth]{greyflower.png}
+        \includegraphics[width=0.3\linewidth]{greyflower.png}
+    };
+    % 创建一个内容为文本的节点
+    \node
+    [ 
+        text=teal,
+        font={\huge\bfseries}
+    ] at (myfirstfigure.center) {Text over the picture!};
+    \end{tikzpicture}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到幻灯片如图\ref{fig:948}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{images/ch_9/eg6_8.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:948}
+\end{figure}
+
+\subsection{设置背景图片}
+
+在Beamer中可以很方便地为演示稿设置全局或局部的背景图片，通过使用\texttt{\textbackslash{}setbeamertemplate\{background canvas\}\{插入背景图片\}}语句设置背景画布选项即可。
+
+\emph{【例】}在beamer文档类型中，\texttt{\textbackslash{}setbeamertemplate\{background canvas\}\{插入背景图片\}}语句设置全局及局部背景画布选项：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usetheme{AnnArbor}
+
+    % 设置全局背景画布选项
+    \setbeamertemplate{background canvas}
+    {
+        \includegraphics[width=\paperwidth,height=\paperheight]{lines.png}%
+    }
+
+    \begin{document}
+    % 第一页幻灯片使用全局背景画布
+    \begin{frame}{Frame1}
+    \end{frame}
+    {
+    % 设置局部特定背景画布选项
+    \setbeamertemplate{background canvas}
+    {
+        \includegraphics[width=\paperwidth,height=\paperheight]{AI.png}%
+    }
+    % 第二页幻灯片使用局部特定背景画布
+    \begin{frame}{Frame2}
+    \end{frame}
+    }
+    % 第三页幻灯片使用全局背景画布
+    \begin{frame}{Frame3}
+    \end{frame}
+    % 第四页幻灯片使用全局背景画布
+    \begin{frame}{Frame4}
+    \end{frame}
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到幻灯片如图\ref{fig:949}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/eg6_9_1.png}
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/eg6_9_2.png}
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/eg6_9_3.png}
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/eg6_9_4.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:949}
+\end{figure}
+
+如上例所示，为了让插入的图片充满整个页面，应使用width=\texttt{\textbackslash{}paperwidth}和height=\texttt{\textbackslash{}paperheight}选项；修改局部特定背景画布时，应用\{\}符号将\texttt{\textbackslash{}setbeamertemplate}语句及其作用的局部frame环境放在一起。
+
+\subsection{在标题页中插入图片}
+
+在前面的章节中我们介绍了在Beamer中使用\texttt{\textbackslash{}titlepage}命令创建标题页的语句。事实上，除了可以在标题页中添加标题名称、作者、机构单位等信息之外，在标题页中添加图片或图标也是一种常见的操作。为此，只需要在标题页信息中添加\texttt{\textbackslash{}titlegraphic\{插入图片\}}命令即可，如下例所示：
+
+\emph{【例】}在beamer文档类型中，使用\texttt{\textbackslash{}titlegraphic\{插入图片\}}命令为标题页插入图片，并使用\texttt{\textbackslash{}titlepage}命令创建标题页：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    \usetheme{AnnArbor}
+
+    \begin{document}
+
+    \title{A presentation about AI}
+    \author{The author's name}
+    \institute{The institute's name}
+    \date{2021/1/1}
+    % 在标题页中添加图片
+    \titlegraphic
+    {
+        \includegraphics[width=2cm]{robot.png}
+    }
+    \begin{frame}
+        \titlepage
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到幻灯片如图\ref{fig:950}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{images/ch_9/eg6_10.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:950}
+\end{figure}
+
+此外，可以结合前面介绍的tikz宏包及其命令将图片调整到更合适的位置。
+
+\emph{【例】}在beamer文档类型中，使用\texttt{\textbackslash{}titlegraphic\{插入图片\}}命令为标题页插入图片，并在tikzpicture环境中使用\texttt{\textbackslash{}node}命令调整图片位置为右下方：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+    % 调用tikz宏包
+    \usepackage{tikz}
+    \usetheme{AnnArbor}
+
+    \begin{document}
+
+    \title{A presentation about AI}
+    \author{The author's name}
+    \institute{The institute's name}
+    \date{2021-8-30}
+    % 在标题页中添加图片并指定位置
+    \titlegraphic
+    {
+        \begin{tikzpicture}[overlay, remember picture]
+            \node[above=0.8cm] at (current page.-43){
+            \includegraphics[width=1.5cm]{robot.png}
+            };
+        \end{tikzpicture}
+    }
+    \begin{frame}
+        \titlepage
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到幻灯片如图\ref{fig:951}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{images/ch_9/eg6_11.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:951}
+\end{figure}
+
+\subsection{添加动画效果}
+
+如果想要为图片添加动画效果，使得不同的图片分步显示，使用设置了显示范围选项的\texttt{\textbackslash{}includegraphics<显示范围>\{图片路径\}}命令插入图片即可。
+
+\emph{【例】}在beamer文档类型中使用\texttt{\textbackslash{}includegraphics<>\{\}}命令插入多张图片并分步显示：
+\begin{lstlisting}[language=TeX]
+    \documentclass{beamer}
+
+    \begin{document}
+
+    \begin{frame}
+
+    \includegraphics<1->[width=0.2\linewidth]{redflower.png}
+    \includegraphics<2->[width=0.2\linewidth]{yellowflower.png}
+    \includegraphics<3->[width=0.2\linewidth]{blueflower.png}
+
+    \end{frame}
+
+    \end{document}
+\end{lstlisting}
+
+编译上述代码，得到幻灯片如图\ref{fig:952}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/NEWexample4_1.png}
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/NEWexample4_2.png}
+    \includegraphics[width = 0.45\textwidth]{images/ch_9/NEWexample4_3.png}
+    \caption{编译后的幻灯片效果}
+    \label{fig:952}
+\end{figure}
+
+\section*{本章小结}
+
+本章介绍了LaTeX中一种可用于制作幻灯片的文档类型Beamer以及一些常规用法，例如插入图表、程序源代码、参考文献等。尽管Beamer在使用方法上与常规文档稍有不同，每一页幻灯片是由frame环境定义的，但仍遵循LaTeX的基本用法，也沿用着基本命令。使用Beamer制作幻灯片时，用户可根据自身需要，通过设置或调整Beamer中已经定义好的主题样式、颜色主题、字体主题、内部主题、外部主题等获得所需要的幻灯片显示效果。
