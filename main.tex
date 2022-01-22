@@ -1,4 +1,4 @@
-\documentclass[a4papper, 12pt, utf8, onside]{ctexbook}
+\documentclass[a5papper, 12pt, utf8, onside]{ctexbook}
 
 \usepackage{color}
 \usepackage[table]{xcolor}
@@ -18,10 +18,10 @@
 \hypersetup{hidelinks}
 \geometry{left=3.0cm,right=3.0cm,top=2.5cm,bottom=2.5cm}
 \lstset{
-    backgroundcolor=\color{gray!10},
-    basicstyle=\footnotesize\ttfamily,
-    numbers=left,
-    numberstyle=\tiny\ttfamily,
+    % backgroundcolor=\color{gray!10},
+    basicstyle=\ttfamily,
+    % numbers=left,
+    % numberstyle=\tiny\ttfamily,
     columns=fullflexible,
     breaklines=true,
     captionpos=b,
@@ -47,9 +47,7 @@
 \begin{document}
 \maketitle
 
-\chapter*{摘要}
-本文是根据github上的一个latex-cookbook(https://github.com/xinychen/latex-cookbook)
-学习\LaTeX 的基本使用，本文也使用\LaTeX 编写。
+\include{chapters/ch_abstract.tex}
 
 \tableofcontents
 
