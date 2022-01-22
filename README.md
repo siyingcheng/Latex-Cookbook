@@ -6,7 +6,7 @@
 
 目前国内大部分毕业论文模板还是使用Word的，但部分院校的硕士、博士论文模板也开始提供`LaTeX`模板。而国际期刊依然使用`LaTeX`作为主流排版软件（Word的别人不一定收）。`LaTeX`可以排版书籍(book)、普通文章(article)、学术报告(report)，也可以用来写幻灯片(beamer)。
 
-目前各大视频网站都有`LaTeX`的视频教程，本文是通过github上的https://github.com/xinychen/latex-cookbook项目学习`LaTeX`，内容也几乎相同，大家可以去该项目学习。本文仅记录文字、表格、公式、插图、图形绘制及幻灯片制作的基本使用。
+目前各大视频网站都有`LaTeX`的视频教程，本文是通过github上的[xinychen/latex-cookbook](https://github.com/xinychen/latex-cookbook)项目学习`LaTeX`，内容也几乎相同，大家可以去该项目学习。本文仅记录文字、表格、公式、插图、图形绘制及幻灯片制作的基本使用。
 
 ## 关于环境搭建
 
